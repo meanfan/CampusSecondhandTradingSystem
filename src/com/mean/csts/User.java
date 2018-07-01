@@ -2,13 +2,13 @@ package com.mean.csts;
 
 public class User {
     private int uid;
-    private int type;
+    private String type;
     private String uname;
     private String nickname;
     private String pwd;
     public User(){
         this.uid = -1;
-        this.type = -1;
+        this.type = UserRegistered.Type;
         this.uname = "null";
         this.nickname = "null";
         this.pwd = "";
@@ -19,7 +19,7 @@ public class User {
         this.pwd = pwd;
     }
     public int getUid(){return uid;}
-    public int getType(){return type;}
+    public String getType(){return type;}
     public String getUname(){return uname;}
     public String getNickname(){return nickname;}
     public String getPwd(){return pwd;}
@@ -27,7 +27,7 @@ public class User {
     public void setUid(int uid){
         this.uid = uid;
     }
-    public void setType(int type){
+    public void setType(String type){
         this.type = type;
     }
     public void setUname(String uname){
