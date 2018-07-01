@@ -26,7 +26,7 @@ public class Server {
         }
     }
 
-    public static void main(){
+    public static void main(String[] args){
         System.out.println("--- Server start ---");
         Server server = new Server();
         server.init();

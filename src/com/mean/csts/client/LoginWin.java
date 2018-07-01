@@ -54,7 +54,7 @@ public class LoginWin extends BasicWin implements ActionListener {
         add(baseBox);
         validate();
         try {
-            address = InetAddress.getByName("localhost");
+            address = InetAddress.getByName(super.ADDRESS);
         } catch (UnknownHostException e) { e.printStackTrace(); }
 
         //this.msgListener = msgListener;
@@ -68,16 +68,16 @@ public class LoginWin extends BasicWin implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(tfUname.getText().length() == 0) {
-            JOptionPane.showMessageDialog(null, "请输入用户名");
-            return;
-        }
-        if(tfPwd.getText().length() == 0) {
-            JOptionPane.showMessageDialog(null, "请输入密码");
-            return;
-        }
         JButton bt = (JButton)e.getSource();
         if(bt == btnLogin){
+            if(tfUname.getText().length() == 0) {
+                JOptionPane.showMessageDialog(null, "请输入用户名");
+                return;
+            }
+            if(tfPwd.getText().length() == 0) {
+                JOptionPane.showMessageDialog(null, "请输入密码");
+                return;
+            }
             data = new Data(Data.TYPE_LOGIN,"uname",tfUname.getText());
             msg = new TCPComm(address,data);
             msg.close();
@@ -101,6 +101,8 @@ public class LoginWin extends BasicWin implements ActionListener {
 
                 }
             }
+        }else if(bt == btnRegister){
+            new RegisterWin();
         }
 
     }
