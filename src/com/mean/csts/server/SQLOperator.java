@@ -22,6 +22,25 @@ public class SQLOperator {
             return true;
         } catch (SQLException e) {
             System.out.println("SQLO:用户添加失败");
+            //e.printStackTrace();
+            return false;
+        }
+
+    }
+    public static boolean loginAuth(Connection connection,User user){
+        //TODO 查表
+        String sql = "select uid, type, username, nickname, password from user where username=?,password=?";
+        try {
+            PreparedStatement presta = connection.prepareStatement(sql);
+            //设置语句value值
+            presta.setString(1,user.getUname());
+            presta.setString(2,user.getPwd());
+            //执行sql语句
+            presta.execute();
+            System.out.println("SQLO:用户登录验证成功");
+            return true;
+        } catch (SQLException e) {
+            System.out.println("SQLO:用户登录验证失败");
             e.printStackTrace();
             return false;
         }

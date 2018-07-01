@@ -17,7 +17,7 @@ public class RegisterWin extends BasicWin implements ActionListener {
     public static int winWedth = 400;
     public static int winHeight = 350;
     private Box baseBox,subBoxH1,subBoxH2,boxV1,boxV2;
-    private JTextField tfUname, tfPwd, tfRepPwd;
+    private JTextField tfUname, tfNickname, tfPwd, tfRepPwd;
     private JButton btnSubmit, btnClose;
     private InetAddress address;
     private Socket socket;
@@ -25,6 +25,8 @@ public class RegisterWin extends BasicWin implements ActionListener {
         super(title,winWedth,winHeight);
         boxV1 = Box.createVerticalBox();
         boxV1.add(new JLabel("用户名："));
+        boxV1.add(Box.createVerticalStrut(16));
+        boxV1.add(new JLabel("昵称："));
         boxV1.add(Box.createVerticalStrut(16));
         boxV1.add(new JLabel("密码："));
         boxV1.add(Box.createVerticalStrut(16));
@@ -35,7 +37,11 @@ public class RegisterWin extends BasicWin implements ActionListener {
         tfUname.setText("");
         boxV2.add(tfUname);
         boxV2.add(Box.createVerticalStrut(16));
-        tfPwd = new JPasswordField(16);
+        tfNickname = new JTextField(16);
+        tfNickname.setText("");
+        boxV2.add(tfNickname);
+        boxV2.add(Box.createVerticalStrut(16));
+        tfPwd = new JPasswordField(32);
         tfPwd.setText("");
         boxV2.add(tfPwd);
         boxV2.add(Box.createVerticalStrut(16));
@@ -79,6 +85,9 @@ public class RegisterWin extends BasicWin implements ActionListener {
                 JOptionPane.showMessageDialog(null, "请输入用户名");
                 return;
             }
+            if (tfNickname.getText().length() == 0) {
+                tfNickname.setText(tfUname.getText());
+            }
             if (tfPwd.getText().length() == 0) {
                 JOptionPane.showMessageDialog(null, "请输入密码");
                 return;
@@ -96,7 +105,7 @@ public class RegisterWin extends BasicWin implements ActionListener {
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
                 DataInputStream in = new DataInputStream(socket.getInputStream());
                 out.writeUTF("$register$");
-                out.writeUTF(tfUname.getText() + "|" + tfPwd.getText());
+                out.writeUTF(tfUname.getText() + "#" + tfNickname.getText()+"#" + tfPwd.getText());
                 String msg1 = in.readUTF();
                 if(msg1.compareTo("$register$") == 0){
                     String msg2 = in.readUTF();
@@ -107,6 +116,9 @@ public class RegisterWin extends BasicWin implements ActionListener {
                         tfRepPwd.setEnabled(false);
                         btnSubmit.setEnabled(false);
                         btnSubmit.setText("已注册");
+                    }else if(msg2.compareTo("failure") == 0){
+                        JOptionPane.showMessageDialog(null, "注册失败，用户名已被占用");
+
                     }
                 }
             }catch(Exception ee){
@@ -114,7 +126,7 @@ public class RegisterWin extends BasicWin implements ActionListener {
                 return;
             }
         }else if(bt == btnClose){
-            this.close();
+            close();
         }
     }
 }

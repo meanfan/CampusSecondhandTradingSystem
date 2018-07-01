@@ -4,7 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.net.InetAddress;
+import java.net.Socket;
 import java.net.UnknownHostException;
 import com.mean.csts.data.Data;
 import com.mean.csts.TCPComm;
@@ -78,28 +81,27 @@ public class LoginWin extends BasicWin implements ActionListener {
                 JOptionPane.showMessageDialog(null, "请输入密码");
                 return;
             }
-            data = new Data(Data.TYPE_LOGIN,"uname",tfUname.getText());
-            msg = new TCPComm(address,data);
-            msg.close();
-            Data resp1=msg.getResponse();
-            if(resp1!=null && resp1.getType()==Data.TYPE_FAILURE){
-                JOptionPane.showMessageDialog(null, "登录失败，用户名不存在");
-                return;
-            }
-            data = new Data(Data.TYPE_LOGIN,"uname",tfUname.getText());
-            msg = new TCPComm(address,data);
-            msg.close();
-            Data resp2=msg.getResponse();
-            if(resp2!=null && resp2.getType()==Data.TYPE_FAILURE){
-                JOptionPane.showMessageDialog(null, "登录失败");
-                return;
-            }
-            if(resp1!=null && resp1.getType()==Data.TYPE_SUCCESS) {
-                if(resp2!=null && resp2.getType()==Data.TYPE_SUCCESS) {
-                    JOptionPane.showMessageDialog(null, "登录成功！");
-                    //TODO 登录成功后的操作
-
+            try {
+                Socket socket = new Socket(super.ADDRESS, super.PORT);
+                DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+                DataInputStream in = new DataInputStream(socket.getInputStream());
+                out.writeUTF("$login$");
+                out.writeUTF(tfUname.getText() + "#" + tfPwd.getText());
+                String msg1 = in.readUTF();
+                if(msg1.compareTo("$login$") == 0){
+                    String msg2 = in.readUTF();
+                    if(msg2.compareTo("success") == 0){
+                        JOptionPane.showMessageDialog(null, "登录成功");
+                        tfUname.setEnabled(false);
+                        tfPwd.setEnabled(false);
+                        //TODO 登录成功后操作
+                    }else if(msg2.compareTo("failure") == 0){
+                        JOptionPane.showMessageDialog(null, "登录失败，用户名/密码不正确");
+                    }
                 }
+            }catch(Exception ee){
+                JOptionPane.showMessageDialog(null, "与服务器通信失败");
+                return;
             }
         }else if(bt == btnRegister){
             new RegisterWin();

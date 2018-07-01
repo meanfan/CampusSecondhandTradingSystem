@@ -39,16 +39,13 @@ public class MsgHandlerThread implements Runnable{
             switch(clientInStr){
                 case "$register$": {
                     String registerInfo = in.readUTF(); //获取注册信息
-                    String[] strs = registerInfo.split("|");
-                    //uname查重
-                    //String sql = "select * from user";
-                    //ResultSet rst = statement.executeQuery(sql);
-
+                    String[] strs = registerInfo.split("#");
                     User newUser = new User();
                     newUser.setType(UserRegistered.Type);
                     newUser.setUname(strs[0]);
                     newUser.setNickname(strs[1]);
                     newUser.setPwd(strs[2]);
+                    //SQLOperator.selectUser(connection,newUser);
                     if(SQLOperator.insertUser(connection,newUser)) {
                         out.writeUTF("$register$");
                         out.writeUTF("success");
@@ -59,7 +56,18 @@ public class MsgHandlerThread implements Runnable{
                     break;
                 }
                 case "$login$": {
-
+                    String loginInfo = in.readUTF();
+                    String[] strs = loginInfo.split("#");
+                    User user = new User();
+                    user.setUname(strs[0]);
+                    user.setPwd(strs[1]);
+                    if(SQLOperator.loginAuth(connection,user)){
+                        out.writeUTF("$login$");
+                        out.writeUTF("success");
+                    }else{
+                        out.writeUTF("$login$");
+                        out.writeUTF("failure");
+                    }
                     break;
                 }
                 case "$getGoodsList$": {
