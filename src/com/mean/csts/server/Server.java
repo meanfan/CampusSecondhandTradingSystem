@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Server {
@@ -17,6 +18,7 @@ public class Server {
     private static final String CONNECTION_ACCOUNT = "csts_server";
     private static final String CONNECTION_PWD = "sR8yicaW4XDKV2HC";
     public static List<User> usrlst = new ArrayList<>();
+    public static HashMap<String,String> usrLoggedin = new HashMap<>();
     protected Connection connection;
     protected Statement statement;
     public void init(){

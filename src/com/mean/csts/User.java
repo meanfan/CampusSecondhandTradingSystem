@@ -6,12 +6,16 @@ public class User {
     private String uname;
     private String nickname;
     private String pwd;
+    private int token;
+    private String status;
     public User(){
         this.uid = -1;
         this.type = UserRegistered.Type;
         this.uname = "null";
         this.nickname = "null";
         this.pwd = "";
+        this.token = 0;
+        this.status = "offline";
     }
     User(int uid,int type,String uname,String pwd){
         this.uid = uid;
@@ -23,6 +27,8 @@ public class User {
     public String getUname(){return uname;}
     public String getNickname(){return nickname;}
     public String getPwd(){return pwd;}
+    public int getToken(){return token;}
+    public String getStatus(){return status;}
 
     public void setUid(int uid){
         this.uid = uid;
@@ -43,6 +49,8 @@ public class User {
         }
         return false;
     }
+    public void setToken(int token){this.token = token; }
+    public void setStatus(String status){this.status=status; }
 
     public boolean changePwd(String old_pwd,String new_pwd)
     {
@@ -53,4 +61,8 @@ public class User {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return getUid()+"|"+ getType()+"|"+getUname()+"|"+getNickname()+"|"+getPwd()+"|"+getToken();
+    }
 }

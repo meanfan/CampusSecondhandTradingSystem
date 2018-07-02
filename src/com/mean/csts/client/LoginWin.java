@@ -9,11 +9,13 @@ import java.io.DataOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+
+import com.mean.csts.User;
 import com.mean.csts.data.Data;
 import com.mean.csts.TCPComm;
 
 public class LoginWin extends BasicWin implements ActionListener {
-    public static String title = "注册";
+    public static String title = "登录";
     public static int winWedth = 400;
     public static int winHeight = 350;
     public InetAddress address;
@@ -89,14 +91,25 @@ public class LoginWin extends BasicWin implements ActionListener {
                 out.writeUTF(tfUname.getText() + "#" + tfPwd.getText());
                 String msg1 = in.readUTF();
                 if(msg1.compareTo("$login$") == 0){
-                    String msg2 = in.readUTF();
-                    if(msg2.compareTo("success") == 0){
+                    String[] msg2 = in.readUTF().split("#");
+                    if(msg2[0].compareTo("success") == 0){
                         JOptionPane.showMessageDialog(null, "登录成功");
                         tfUname.setEnabled(false);
                         tfPwd.setEnabled(false);
+                        User currentUser = new User();
+                        currentUser.setUid(Integer.valueOf(msg2[1]));
+                        currentUser.setType(msg2[2]);
+                        currentUser.setUname(msg2[3]);
+                        currentUser.setToken(Integer.valueOf(msg2[4]));
+                        currentUser.setStatus("online");
                         //TODO 登录成功后操作
-                    }else if(msg2.compareTo("failure") == 0){
-                        JOptionPane.showMessageDialog(null, "登录失败，用户名/密码不正确");
+                        System.out.println(currentUser.toString());
+                    }else if(msg2[0].compareTo("failure") == 0){
+                        if(msg2[1].compareTo("user_err")==0){
+                            JOptionPane.showMessageDialog(null, "登录失败，用户不存在");
+                        }else if(msg2[1].compareTo("pwd_err")==0) {
+                            JOptionPane.showMessageDialog(null, "登录失败，密码不正确");
+                        }
                     }
                 }
             }catch(Exception ee){

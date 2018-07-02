@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Random;
 import java.util.logging.SocketHandler;
 
 public class MsgHandlerThread implements Runnable{
@@ -61,12 +62,25 @@ public class MsgHandlerThread implements Runnable{
                     User user = new User();
                     user.setUname(strs[0]);
                     user.setPwd(strs[1]);
-                    if(SQLOperator.loginAuth(connection,user)){
+                    user = SQLOperator.loginAuth(connection,user);
+                    if(user.getStatus().compareTo("online") == 0){
+                        SQLOperator.setUserStatus(connection,user.getUid(),"online");
+                        String str = user.getUname()+ getRandomString(16);
+                        int token = str.hashCode();
+                        user.setToken(token);
+                        SQLOperator.setUserToken(connection,user.getUid(),token);
                         out.writeUTF("$login$");
-                        out.writeUTF("success");
-                    }else{
+                        out.writeUTF("success#"+
+                                String.valueOf(user.getUid()) + "#" +
+                                user.getType() + "#"+
+                                user.getNickname() + "#"+
+                                user.getToken());
+                    }else if(user.getStatus().compareTo("loginF1") == 0){
                         out.writeUTF("$login$");
-                        out.writeUTF("failure");
+                        out.writeUTF("failure#user_err");
+                    }else if(user.getStatus().compareTo("loginF2") == 0){
+                        out.writeUTF("$login$");
+                        out.writeUTF("failure#pwd_err");
                     }
                     break;
                 }
@@ -81,5 +95,35 @@ public class MsgHandlerThread implements Runnable{
         }catch(Exception e){
 
         }
+    }
+    public static String getRandomString(int length){
+        //产生随机数
+        Random random=new Random();
+        StringBuffer sb=new StringBuffer();
+        for(int i=0; i<length; i++){
+            //产生0-2个随机数，既与a-z，A-Z，0-9三种可能
+            int number=random.nextInt(3);
+            long result=0;
+            switch(number){
+                //如果number产生的是数字0；
+                case 0:
+                    //产生A-Z的ASCII码
+                    result=Math.round(Math.random()*25+65);
+                    //将ASCII码转换成字符
+                    sb.append(String.valueOf((char)result));
+                    break;
+                case 1:
+                    //产生a-z的ASCII码
+                    result=Math.round(Math.random()*25+97);
+                    sb.append(String.valueOf((char)result));
+                    break;
+                case 2:
+                    //产生0-9的数字
+                    sb.append(String.valueOf
+                            (new Random().nextInt(10)));
+                    break;
+            }
+        }
+        return sb.toString();
     }
 }
