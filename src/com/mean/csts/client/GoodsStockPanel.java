@@ -13,18 +13,18 @@ import javax.swing.*;
 import com.mean.csts.TCPComm;
 import com.mean.csts.data.Data;
 
-public class GoodsStockWin extends BasicWin implements ActionListener{
-    public static String title = "发布商品";
+public class GoodsStockPanel extends JPanel implements ActionListener{
+    //public static String title = "发布商品";
     public static int winWedth =400;
     public static int winHeight =350;
     public InetAddress address;
+    public int port;
     private Box baseBox,subBoxH1,subBoxH2,boxV1,boxV2;
     private JTextField tfGname, tfGnum,tfGprice,tfGcontent;
     private JButton btnRelease;
-    private Data data;
-    private TCPComm msg;
-    GoodsStockWin(){
-        super(title,winWedth,winHeight);
+
+    GoodsStockPanel(String address,int port){
+        super();
         boxV1 = Box.createVerticalBox();
         boxV1.add(new JLabel("商品名："));
         boxV1.add(Box.createVerticalStrut(20));
@@ -67,11 +67,9 @@ public class GoodsStockWin extends BasicWin implements ActionListener{
         add(baseBox);
         validate();
         try {
-            address = InetAddress.getByName(super.ADDRESS);
-        } catch (UnknownHostException e) { e.printStackTrace(); }
-    }
-    public static void main(String[] args) {
-        new GoodsStockWin();
+            this.address = InetAddress.getByName(address);
+        } catch (UnknownHostException e) {e.printStackTrace();}
+        this.port = port;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -94,7 +92,7 @@ public class GoodsStockWin extends BasicWin implements ActionListener{
             return;
         }
         try {
-            Socket socket = new Socket(super.ADDRESS, super.PORT);
+            Socket socket = new Socket(address, port);
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
             DataInputStream in = new DataInputStream(socket.getInputStream());
             out.writeUTF("$GoodsStock$");

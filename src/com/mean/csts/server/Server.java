@@ -7,6 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,7 +54,16 @@ public class Server {
             System.out.println("Socket异常:"+ e.getMessage());
         }
     }
-
+    public static void closeConn(Connection conn) {
+        if (null != conn) {
+            try {
+                    conn.close();
+            } catch (SQLException e) {
+                System.out.println("关闭数据库连接失败！");
+                e.printStackTrace();
+                }
+        }
+    }
     public static void main(String[] args){
         System.out.println("--- 服务器启动 ---");
         Server server = new Server();

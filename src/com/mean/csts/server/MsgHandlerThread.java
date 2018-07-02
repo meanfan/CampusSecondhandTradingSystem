@@ -90,6 +90,10 @@ public class MsgHandlerThread implements Runnable{
                 case "$purchaseRequest$": {
                     break;
                 }
+                case "$GoodsStock$":{
+
+                    break;
+                }
 
             }
         }catch(Exception e){

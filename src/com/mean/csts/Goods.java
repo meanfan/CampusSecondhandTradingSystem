@@ -9,4 +9,16 @@ public class Goods {
     public Image image;
     public String content;
     public double price;
+    public Goods(){
+        gid = -1;
+        name = "unknown";
+        amount = 0;
+        image = null;
+        content = "null";
+    }
+    public Goods(String name,int amount){
+        this();
+        this.name = name;
+        this.amount = amount;
+    }
 }

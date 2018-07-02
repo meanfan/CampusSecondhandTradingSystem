@@ -28,7 +28,6 @@ public class SQLOperator {
 
     }
     public static User loginAuth(Connection connection,User user){
-        //TODO 查表
         String sql = "select * from user where username='"+user.getUname()+"'";
         try {
             Statement statement = connection.createStatement();
