@@ -69,6 +69,7 @@ public class RegisterWin extends BasicWin implements ActionListener {
         baseBox.add(Box.createVerticalStrut(150));
         add(baseBox);
         validate();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         try {
             address = InetAddress.getByName(super.ADDRESS);
         } catch (UnknownHostException e) {e.printStackTrace(); }
@@ -126,7 +127,7 @@ public class RegisterWin extends BasicWin implements ActionListener {
                 return;
             }
         }else if(bt == btnClose){
-            close();
+            this.dispose();
         }
     }
 }

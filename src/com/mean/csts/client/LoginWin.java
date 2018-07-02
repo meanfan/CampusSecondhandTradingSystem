@@ -58,6 +58,7 @@ public class LoginWin extends BasicWin implements ActionListener {
         baseBox.add(Box.createVerticalStrut(150));
         add(baseBox);
         validate();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         try {
             address = InetAddress.getByName(super.ADDRESS);
         } catch (UnknownHostException e) { e.printStackTrace(); }
@@ -102,8 +103,9 @@ public class LoginWin extends BasicWin implements ActionListener {
                         currentUser.setUname(msg2[3]);
                         currentUser.setToken(Integer.valueOf(msg2[4]));
                         currentUser.setStatus("online");
-                        //TODO 登录成功后操作
+                        new MainWin(currentUser);
                         System.out.println(currentUser.toString());
+                        this.dispose();
                     }else if(msg2[0].compareTo("failure") == 0){
                         if(msg2[1].compareTo("user_err")==0){
                             JOptionPane.showMessageDialog(null, "登录失败，用户不存在");

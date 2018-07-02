@@ -9,27 +9,43 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GoodsListPanel extends JPanel implements ActionListener {
-    public static int winWedth =400;
-    public static int winHeight =350;
-    private JScrollPane scrolPane;
+
+    private JPanel jPanel;
+    private JScrollPane scrollPane;
     private Box topBox,subBox1,subBox2;
-    private JList<ItemView> list;
+    private ItemView[] iv;
     private JButton btnPrev,btnNext;
     private JLabel labelPage;
-    private List<ItemView> itemView;
     public InetAddress address;
     public int port;
     public GoodsListPanel(String address,int port) {
         super();
         subBox1 = Box.createVerticalBox();
-        itemViewBoxRefresh(1);
+        ItemView[] iv = new ItemView[5];
+        jPanel = new JPanel();
+        GridLayout gl = new GridLayout(5,1);
+        gl.setHgap(1);
+        gl.setVgap(1);
+        jPanel.setLayout(gl);
+        jPanel.setPreferredSize(new Dimension(512,640));
+        jPanel.setBackground(Color .BLACK);
+
+        for(ItemView it:iv){
+            it = new ItemView(new Goods("a",1));
+            jPanel.add(it);
+        }
+        //jPanel.add(new ItemView(new Goods()));
+        scrollPane = new JScrollPane(jPanel);
+        subBox1.add(scrollPane);
+        //subBox1.add(new ItemView(new Goods("a",1)));
         subBox2 = Box.createHorizontalBox();
         btnPrev = new JButton("上一页");
         btnNext = new JButton("下一页");
-        labelPage = new JLabel("1");
+        labelPage = new JLabel(" 1 ");
         subBox2.add(btnPrev);
         subBox2.add(labelPage);
         subBox2.add(btnNext);
@@ -39,7 +55,6 @@ public class GoodsListPanel extends JPanel implements ActionListener {
         add(topBox);
         validate();
         setVisible(true);
-
         try {
             this.address = InetAddress.getByName(address);
         } catch (UnknownHostException e) {e.printStackTrace();}
@@ -54,25 +69,36 @@ public class GoodsListPanel extends JPanel implements ActionListener {
 
     }
 }
+
 class ItemView extends JPanel{
     private ImageIcon imageIcon;
     private JLabel labelIcon, labelName, labelAmount, labelPrice;
     public ItemView(Goods goods){
-        FlowLayout fl = new FlowLayout();
-        fl.setAlignment(FlowLayout.LEFT);
-        fl.setHgap(2);
-        setLayout(fl);
+        super();
+        setBackground(Color.WHITE);
+        setGoods(goods);
+    }
+    public void setGoods(Goods goods){
+        GridLayout gl = new GridLayout(1,3);
+        gl.setHgap(4);
+        setLayout(gl);
+
+        labelIcon = new JLabel();
         if(goods.image!=null){
-            imageIcon = new ImageIcon();
-            imageIcon.setImage(goods.image);
-            labelIcon.setIcon(imageIcon);
+            labelIcon.setIcon(goods.image);
+        }else{
+            labelIcon.setIcon(new ImageIcon("src/com/mean/csts/client/default.jpg"));
         }
+        add(labelIcon);
         labelName= new JLabel();
         labelName.setText(goods.name);
+        add(labelName);
         labelAmount = new JLabel();
         labelAmount.setText("×"+String.valueOf(goods.amount));
+        add(labelAmount);
         labelPrice = new JLabel();
         labelPrice.setText(String.valueOf(goods.price));
+        add(labelPrice);
         validate();
         setVisible(true);
     }
