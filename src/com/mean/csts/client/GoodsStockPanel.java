@@ -14,6 +14,7 @@ import javax.imageio.stream.FileImageOutputStream;
 import javax.swing.*;
 
 import com.mean.csts.TCPComm;
+import com.mean.csts.User;
 import com.mean.csts.data.Data;
 
 public class GoodsStockPanel extends JPanel implements ActionListener{
@@ -25,8 +26,7 @@ public class GoodsStockPanel extends JPanel implements ActionListener{
     private Box baseBox,subBoxH0,subBoxH1,subBoxH2,boxV0,boxV1,boxV2;
     private JTextField tfGname, tfGnum,tfGprice,tfGcontent;
     private JButton btnRelease,btnOpen;
-    private Data data;
-    private TCPComm msg;
+    private User user;
     private String path;
     private Icon icon1=null;
     private JLabel imageView;
@@ -93,6 +93,7 @@ public class GoodsStockPanel extends JPanel implements ActionListener{
         } catch (UnknownHostException e) {e.printStackTrace();}
         this.port = port;
     }
+    public void setUser(User user){this.user=user;}
     public byte[] image2byte(String path){
         byte[] data = null;
         FileImageInputStream input = null;
@@ -116,18 +117,7 @@ public class GoodsStockPanel extends JPanel implements ActionListener{
         }
         return data;
     }
-    public void byte2image(byte[] data,String path){
-        if(data.length<3||path.equals("")) return;
-        try{
-            FileImageOutputStream imageOutput = new FileImageOutputStream(new File(path));
-            imageOutput.write(data, 0, data.length);
-            imageOutput.close();
-            System.out.println("Make Picture success,Please find image in " + path);
-        } catch(Exception ex) {
-            System.out.println("Exception: " + ex);
-            ex.printStackTrace();
-        }
-    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton bt = (JButton)e.getSource();
@@ -146,6 +136,10 @@ public class GoodsStockPanel extends JPanel implements ActionListener{
 
         }
         if(bt==btnRelease) {
+            if(user == null){
+                JOptionPane.showMessageDialog(null, "未登录不能发布商品");
+                return;
+            }
             if(tfGname.getText().length() == 0) {
                 JOptionPane.showMessageDialog(null, "请输入商品名");
                 return;
@@ -167,6 +161,7 @@ public class GoodsStockPanel extends JPanel implements ActionListener{
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
                 DataInputStream in = new DataInputStream(socket.getInputStream());
                 out.writeUTF("$GoodsStock$");
+                out.writeUTF(String.valueOf(user.getToken()));
                 out.write(image2byte(path));
                 out.writeUTF(tfGname.getText() + "#" + tfGnum.getText()+"#"+tfGprice.getText()+"#"+tfGcontent.getText());
                 String msg1 = in.readUTF();

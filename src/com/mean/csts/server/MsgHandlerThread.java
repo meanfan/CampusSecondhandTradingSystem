@@ -1,10 +1,13 @@
 package com.mean.csts.server;
 
+import com.mean.csts.Goods;
 import com.mean.csts.User;
 import com.mean.csts.UserRegistered;
 
+import javax.imageio.stream.FileImageOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.net.Socket;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -84,14 +87,41 @@ public class MsgHandlerThread implements Runnable{
                     }
                     break;
                 }
-                case "$getGoodsList$": {
+                case "$getGoods$": {
+                    String info = in.readUTF();
+                    int gid = Integer.valueOf(info);
+                    Goods goods = SQLOperator.selectGoods(connection,gid);
+                    if(goods != null){
+                        out.writeUTF("$GoodsInfo$");
+                        out.writeUTF("success#" + goods.name + "#" + goods.amount+"#"+goods.price+"#"+goods.content);
+                        out.write(goods.image);
+                    }else{
+                        out.writeUTF("$GoodsInfo$");
+                        out.writeUTF("failure");
+                    }
                     break;
                 }
                 case "$purchaseRequest$": {
                     break;
                 }
                 case "$GoodsStock$":{
-
+                    int token = Integer.valueOf(in.readUTF());
+                    byte[] buf=new byte[3145728];
+                    in.read(buf);
+                    String str = in.readUTF();
+                    String[] strs = str.split("#");
+                    Goods goods = new Goods();
+                    goods.name = strs[0];
+                    goods.amount = Integer.valueOf(strs[1]);
+                    goods.price = Double.valueOf(strs[2]);
+                    goods.content = strs[3];
+                    User user = SQLOperator.loginViladate(connection,token);
+                    if(user == null){
+                        System.out.println("商品上架失败,用户验证失败");
+                    }else{
+                        SQLOperator.insertGoods(connection,goods,buf,user.getUid());
+                        System.out.println("商品上架成功");
+                    }
                     break;
                 }
 
@@ -100,6 +130,7 @@ public class MsgHandlerThread implements Runnable{
 
         }
     }
+
     public static String getRandomString(int length){
         //产生随机数
         Random random=new Random();
@@ -109,7 +140,7 @@ public class MsgHandlerThread implements Runnable{
             int number=random.nextInt(3);
             long result=0;
             switch(number){
-                //如果number产生的是数字0；
+                //如果number产生的是数字0
                 case 0:
                     //产生A-Z的ASCII码
                     result=Math.round(Math.random()*25+65);

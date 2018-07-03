@@ -32,6 +32,7 @@ public class MainWin extends BasicWin{
     public MainWin(User currentUser){
         this();
         user = currentUser;
+        goodsStockPanel.setUser(user);
     }
     public static void main(String[] args){
         new MainWin();

@@ -17,8 +17,9 @@ public class User {
         this.token = 0;
         this.status = "offline";
     }
-    User(int uid,int type,String uname,String pwd){
+    public User(int uid,String type,String uname,String pwd){
         this.uid = uid;
+        this.type = type;
         this.uname = uname;
         this.pwd = pwd;
     }

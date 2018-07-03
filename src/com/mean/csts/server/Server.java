@@ -15,7 +15,7 @@ import java.util.List;
 
 public class Server {
     public static final int PORT = 23333;
-    private static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/csts?useSSL=false&serverTimeZone=Asia/Shanghai";
+    private static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/csts?&useSSL=false&serverTimeZone=Asia/Shanghai";
     private static final String CONNECTION_ACCOUNT = "csts_server";
     private static final String CONNECTION_PWD = "sR8yicaW4XDKV2HC";
     public static List<User> usrlst = new ArrayList<>();

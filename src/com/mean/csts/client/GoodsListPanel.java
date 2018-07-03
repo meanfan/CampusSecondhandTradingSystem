@@ -1,16 +1,17 @@
 package com.mean.csts.client;
 
 import com.mean.csts.Goods;
+import com.mean.csts.User;
 
 import javax.swing.*;
-import javax.swing.text.IconView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 import java.net.InetAddress;
+import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class GoodsListPanel extends JPanel implements ActionListener {
 
@@ -22,6 +23,7 @@ public class GoodsListPanel extends JPanel implements ActionListener {
     private JLabel labelPage;
     public InetAddress address;
     public int port;
+    private int currenPage;
     public GoodsListPanel(String address,int port) {
         super();
         subBox1 = Box.createVerticalBox();
@@ -44,7 +46,9 @@ public class GoodsListPanel extends JPanel implements ActionListener {
         //subBox1.add(new ItemView(new Goods("a",1)));
         subBox2 = Box.createHorizontalBox();
         btnPrev = new JButton("上一页");
+        btnPrev.setEnabled(false);
         btnNext = new JButton("下一页");
+        btnPrev.setEnabled(true);
         labelPage = new JLabel(" 1 ");
         subBox2.add(btnPrev);
         subBox2.add(labelPage);
@@ -55,18 +59,67 @@ public class GoodsListPanel extends JPanel implements ActionListener {
         add(topBox);
         validate();
         setVisible(true);
+        currenPage =1;
         try {
             this.address = InetAddress.getByName(address);
         } catch (UnknownHostException e) {e.printStackTrace();}
         this.port = port;
     }
-    private void itemViewBoxRefresh(int page){
-
+    private void refreshGoodsList(int page){
+        int i =0;
+        //TODO
+    }
+    private Goods getGoods(int gid){
+        try {
+            Socket socket = new Socket(address, port);
+            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+            DataInputStream in = new DataInputStream(socket.getInputStream());
+            out.writeUTF("$getGoods$");
+            out.writeUTF(String.valueOf(gid));
+            String msg1 = in.readUTF();
+            if(msg1.compareTo("$getGoods$") == 0){
+                String[] msg2 = in.readUTF().split("#");
+                if(msg2[0].compareTo("success") == 0){
+                    Goods goods = new Goods();
+                    goods.gid = gid;
+                    goods.name = msg2[1];
+                    goods.amount = Integer.valueOf(msg2[2]);
+                    goods.price = Double.valueOf(msg2[3]);
+                    goods.content = msg2[4];
+                    in.read(goods.image);
+                    return goods;
+                }else if(msg2[0].compareTo("failure") == 0){
+                    System.out.println("商品获取失败");
+                    return null;
+                }
+            }
+        }catch(Exception ee){
+            //JOptionPane.showMessageDialog(null, "商品获取失败, 与服务器通信失败");
+            return null;
+        }
+        return null;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        JButton bt = (JButton)e.getSource();
+        if(bt == btnPrev){
+            if(currenPage>1) {
+                currenPage--;
+                getGoods(currenPage);
+            }
+            if(currenPage == 1){
+                bt.setEnabled(false);
+            }else{
+                bt.setEnabled(true);
+            }
+            return;
+        }
+        if(bt == btnNext){
+            //TODO
+            currenPage++;
+            getGoods(currenPage);
+        }
     }
 }
 
@@ -85,7 +138,7 @@ class ItemView extends JPanel{
 
         labelIcon = new JLabel();
         if(goods.image!=null){
-            labelIcon.setIcon(goods.image);
+            labelIcon.setIcon(new ImageIcon(byte2image(goods.image)));
         }else{
             labelIcon.setIcon(new ImageIcon("src/com/mean/csts/client/default.jpg"));
         }
@@ -94,13 +147,17 @@ class ItemView extends JPanel{
         labelName.setText(goods.name);
         add(labelName);
         labelAmount = new JLabel();
-        labelAmount.setText("×"+String.valueOf(goods.amount));
+        labelAmount.setText("数量：" + String.valueOf(goods.amount));
         add(labelAmount);
         labelPrice = new JLabel();
-        labelPrice.setText(String.valueOf(goods.price));
+        labelPrice.setText("售价：" + String.valueOf(goods.price));
         add(labelPrice);
         validate();
         setVisible(true);
+    }
+    public Image byte2image(byte[] data){
+            Image img=Toolkit.getDefaultToolkit().createImage(data,0,data.length);
+            return img;
     }
 
 }
