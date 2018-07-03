@@ -1,5 +1,6 @@
 package com.mean.csts.client;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
@@ -7,6 +8,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import javax.imageio.ImageIO;
 import javax.imageio.stream.FileImageInputStream;
 import javax.imageio.stream.FileImageOutputStream;
 import javax.swing.*;
@@ -62,6 +64,8 @@ public class GoodsStockPanel extends JPanel implements ActionListener{
         btnOpen=new JButton("打开文件");
         btnOpen.addActionListener(this);
         imageView = new JLabel();
+        imageView.setPreferredSize(new Dimension(128,128));
+        imageView.setIcon(new ImageIcon("src/com/mean/csts/client/default.jpg"));
         subBoxH0.add(imageView);
         subBoxH0.add(btnOpen);
         subBoxH1 = Box.createHorizontalBox();
@@ -133,7 +137,10 @@ public class GoodsStockPanel extends JPanel implements ActionListener{
             jfc.showDialog(new JLabel(), "选择");
             File file=jfc.getSelectedFile();
             path=file.getAbsolutePath();
-            icon1=new ImageIcon("path");
+            //System.out.println(path);
+            try {
+                icon1=new ImageIcon(ImageIO.read(new File(path)));
+            } catch (IOException e1) { e1.printStackTrace(); }
             imageView.setIcon(icon1);
             validate();
 
