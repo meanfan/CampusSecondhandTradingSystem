@@ -10,18 +10,16 @@ import java.net.UnknownHostException;
 
 import javax.imageio.ImageIO;
 import javax.imageio.stream.FileImageInputStream;
-import javax.imageio.stream.FileImageOutputStream;
 import javax.swing.*;
 
-import com.mean.csts.TCPComm;
-import com.mean.csts.User;
-import com.mean.csts.data.Data;
+import com.mean.csts.data.User;
 
 public class GoodsStockPanel extends JPanel implements ActionListener{
     //public static String title = "发布商品";
     public static int winWedth =400;
     public static int winHeight =350;
     public InetAddress address;
+    private Socket socket;
     public int port;
     private Box baseBox,subBoxH0,subBoxH1,subBoxH2,boxV0,boxV1,boxV2;
     private JTextField tfGname, tfGnum,tfGprice,tfGcontent;
@@ -157,7 +155,7 @@ public class GoodsStockPanel extends JPanel implements ActionListener{
                 return;
             }
             try {
-                Socket socket = new Socket(address, port);
+                socket = new Socket(address, port);
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
                 DataInputStream in = new DataInputStream(socket.getInputStream());
                 out.writeUTF("$GoodsStock$");
@@ -172,10 +170,12 @@ public class GoodsStockPanel extends JPanel implements ActionListener{
                         tfGname.setEnabled(false);
                         tfGnum.setEnabled(false);
                         //TODO 发布成功成功后操作
+
                     }else if(msg2.compareTo("failure") == 0){
                         JOptionPane.showMessageDialog(null, "发布失败");
                     }
                 }
+                socket.close();
             }catch(Exception ee){
                 JOptionPane.showMessageDialog(null, "与服务器通信失败");
                 return;

@@ -1,7 +1,7 @@
 package com.mean.csts.server;
 
 
-import com.mean.csts.User;
+import com.mean.csts.data.User;
 
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -14,8 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Server {
-    public static final int PORT = 23333;
-    private static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/csts?&useSSL=false&serverTimeZone=Asia/Shanghai";
+    public static final int PORT = 2333;
+    private static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/csts?&useSSL=false&allowPublicKeyRetrieval=true&serverTimeZone=Asia/Shanghai";
     private static final String CONNECTION_ACCOUNT = "csts_server";
     private static final String CONNECTION_PWD = "sR8yicaW4XDKV2HC";
     public static List<User> usrlst = new ArrayList<>();

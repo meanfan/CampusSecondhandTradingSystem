@@ -8,7 +8,7 @@ import java.net.InetAddress;
 
 public class BasicWin extends JFrame {
     public String ADDRESS = "localhost";
-    public int PORT = 23333;
+    public int PORT = 2333;
     public int SCREEN_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
     public int SCREEN_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
     public String title = "BasicWin";

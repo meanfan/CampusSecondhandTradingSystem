@@ -1,12 +1,14 @@
 package com.mean.csts.client;
 
-import com.mean.csts.Goods;
-import com.mean.csts.User;
+import com.mean.csts.data.Goods;
+import com.mean.csts.data.User;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -15,6 +17,8 @@ import java.net.UnknownHostException;
 
 public class GoodsListPanel extends JPanel implements ActionListener {
 
+    public User user;
+    public Goods[] goodsList;
     private JPanel jPanel;
     private JScrollPane scrollPane;
     private Box topBox,subBox1,subBox2;
@@ -23,11 +27,18 @@ public class GoodsListPanel extends JPanel implements ActionListener {
     private JLabel labelPage;
     public InetAddress address;
     public int port;
-    private int currenPage;
+    private Socket socket;
+    private int currenPage, numOfEachPage;
     public GoodsListPanel(String address,int port) {
         super();
+        currenPage = 1;
+        numOfEachPage = 5;
+        iv = new ItemView[5];
+        try {
+            this.address = InetAddress.getByName(address);
+        } catch (UnknownHostException e) {e.printStackTrace();}
+        this.port = port;
         subBox1 = Box.createVerticalBox();
-        ItemView[] iv = new ItemView[5];
         jPanel = new JPanel();
         GridLayout gl = new GridLayout(5,1);
         gl.setHgap(1);
@@ -35,20 +46,15 @@ public class GoodsListPanel extends JPanel implements ActionListener {
         jPanel.setLayout(gl);
         jPanel.setPreferredSize(new Dimension(512,640));
         jPanel.setBackground(Color .BLACK);
-
-        for(ItemView it:iv){
-            it = new ItemView(new Goods("a",1));
-            jPanel.add(it);
-        }
-        //jPanel.add(new ItemView(new Goods()));
         scrollPane = new JScrollPane(jPanel);
         subBox1.add(scrollPane);
-        //subBox1.add(new ItemView(new Goods("a",1)));
         subBox2 = Box.createHorizontalBox();
         btnPrev = new JButton("上一页");
         btnPrev.setEnabled(false);
+        btnPrev.addActionListener(this);
         btnNext = new JButton("下一页");
-        btnPrev.setEnabled(true);
+        btnNext.setEnabled(true);
+        btnNext.addActionListener(this);
         labelPage = new JLabel(" 1 ");
         subBox2.add(btnPrev);
         subBox2.add(labelPage);
@@ -59,42 +65,94 @@ public class GoodsListPanel extends JPanel implements ActionListener {
         add(topBox);
         validate();
         setVisible(true);
-        currenPage =1;
-        try {
-            this.address = InetAddress.getByName(address);
-        } catch (UnknownHostException e) {e.printStackTrace();}
-        this.port = port;
+        new Thread(new GetGoodsListThread()).start();
     }
-    private void refreshGoodsList(int page){
-        int i =0;
-        //TODO
+    class GetGoodsListThread implements Runnable{
+        @Override
+        public void run() {
+            System.out.println("开始获取商品列表线程");
+            refreshGoodsList(1,numOfEachPage);
+        }
     }
-    private Goods getGoods(int gid){
+    public void setUser(User user){this.user=user;}
+    private void refreshGoodsList(int page,int num){
+        goodsList = getGoods(page,num);
+        if(goodsList[0] == null) { //没有商品
+            JOptionPane.showMessageDialog(null, "没有更多商品");
+        }else{
+            jPanel.removeAll();
+            btnNext.setEnabled(true);
+            btnPrev.setEnabled(true);
+            for(int i=0;i<5;i++){
+                if(goodsList[i] != null){
+                    System.out.println("1:"+goodsList[i].toString());
+                    iv[i] = new ItemView(address,port,goodsList[i],user);
+                    iv[i].addMouseListener(iv[i]);
+                }else{
+                    iv[i] = new ItemView();
+                    btnNext.setEnabled(false);
+                }
+                jPanel.add(iv[i]);
+            }
+            currenPage = page;
+            if(currenPage == 1)
+                btnPrev.setEnabled(false);
+            labelPage.setText(String.valueOf(currenPage));
+        }
+        jPanel.validate();
+        validate();
+    }
+    private Goods[] getGoods(int page,int num){
+        goodsList = new Goods[num];
         try {
-            Socket socket = new Socket(address, port);
+            socket = new Socket(address, port);
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
             DataInputStream in = new DataInputStream(socket.getInputStream());
             out.writeUTF("$getGoods$");
-            out.writeUTF(String.valueOf(gid));
+            out.writeUTF(String.valueOf(page)+"#"+String.valueOf(num));
             String msg1 = in.readUTF();
-            if(msg1.compareTo("$getGoods$") == 0){
+            if(msg1.compareTo("$GoodsInfo$") == 0){
                 String[] msg2 = in.readUTF().split("#");
                 if(msg2[0].compareTo("success") == 0){
-                    Goods goods = new Goods();
-                    goods.gid = gid;
-                    goods.name = msg2[1];
-                    goods.amount = Integer.valueOf(msg2[2]);
-                    goods.price = Double.valueOf(msg2[3]);
-                    goods.content = msg2[4];
-                    in.read(goods.image);
-                    return goods;
+                    int gotNum = Integer.valueOf(msg2[1]);
+                    System.out.println("GotNum:"+gotNum);
+                    int i;
+                    for(i=0;i<gotNum;i++){
+                        goodsList[i] = new Goods();
+                        byte[] image = new byte[3145728];
+                        //in.read(image);
+                        goodsList[i].setImage(image);
+                        String str3 = in.readUTF();
+                        System.out.println("str("+str3+")");
+                        String[] msg3 = str3.split("#");
+
+                        goodsList[i].setGid(Integer.valueOf(msg3[0]));
+                        goodsList[i].setName(msg3[1]);
+                        goodsList[i].setAmount(Integer.valueOf(msg3[2]));
+                        goodsList[i].setPrice(Double.valueOf(msg3[3]));
+                        goodsList[i].setContent(msg3[4]);
+                        goodsList[i].setUid(Integer.valueOf(msg3[5]));
+                        System.out.println("3:"+goodsList[i].toString());
+                    }
+                    for(;i<num;i++){
+                        goodsList[i] = null;
+                    }
+                    System.out.println("商品获得数量:"+gotNum);
+                    return goodsList;
                 }else if(msg2[0].compareTo("failure") == 0){
-                    System.out.println("商品获取失败");
-                    return null;
+                        System.out.println("无商品");
+                        goodsList = new Goods[num];
+                        for(int i=0;i<num;i++)
+                            goodsList[i] = null;
+                        return goodsList;
+                }else{
+                    System.out.println("?");
                 }
             }
+            System.out.println("??");
         }catch(Exception ee){
-            //JOptionPane.showMessageDialog(null, "商品获取失败, 与服务器通信失败");
+            JOptionPane.showMessageDialog(null, "商品获取失败, 与服务器通信失败");
+            ee.printStackTrace();
             return null;
         }
         return null;
@@ -104,60 +162,92 @@ public class GoodsListPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JButton bt = (JButton)e.getSource();
         if(bt == btnPrev){
-            if(currenPage>1) {
-                currenPage--;
-                getGoods(currenPage);
-            }
-            if(currenPage == 1){
-                bt.setEnabled(false);
-            }else{
-                bt.setEnabled(true);
+            if(currenPage>1){
+                refreshGoodsList(currenPage-1,numOfEachPage);
             }
             return;
         }
         if(bt == btnNext){
-            //TODO
-            currenPage++;
-            getGoods(currenPage);
+            refreshGoodsList(currenPage+1,numOfEachPage);
+            return;
         }
     }
 }
 
-class ItemView extends JPanel{
-    private ImageIcon imageIcon;
+class ItemView extends JPanel implements MouseListener {
+    private Goods goods;
+    private User user;
+    private InetAddress address;
+    private int port;
     private JLabel labelIcon, labelName, labelAmount, labelPrice;
-    public ItemView(Goods goods){
+    public ItemView(){
         super();
         setBackground(Color.WHITE);
-        setGoods(goods);
     }
-    public void setGoods(Goods goods){
+    public ItemView(InetAddress address,int port,Goods goods,User user){
+        super();
+        setAddress(address,port);
+        setUser(user);
+        System.out.println("2:"+goods.toString());
+        setBackground(Color.WHITE);
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        this.goods = goods;
         GridLayout gl = new GridLayout(1,3);
         gl.setHgap(4);
         setLayout(gl);
-
         labelIcon = new JLabel();
-        if(goods.image!=null){
-            labelIcon.setIcon(new ImageIcon(byte2image(goods.image)));
+        if(goods.getImage()!=null){
+            labelIcon.setIcon(new ImageIcon(byte2image(goods.getImage())));
         }else{
             labelIcon.setIcon(new ImageIcon("src/com/mean/csts/client/default.jpg"));
         }
         add(labelIcon);
         labelName= new JLabel();
-        labelName.setText(goods.name);
+        labelName.setText(goods.getName());
         add(labelName);
         labelAmount = new JLabel();
-        labelAmount.setText("数量：" + String.valueOf(goods.amount));
+        labelAmount.setText("数量：" + String.valueOf(goods.getAmount()));
         add(labelAmount);
         labelPrice = new JLabel();
-        labelPrice.setText("售价：" + String.valueOf(goods.price));
+        labelPrice.setText("售价：" + String.valueOf(goods.getPrice()));
         add(labelPrice);
         validate();
         setVisible(true);
+    }
+    public void setUser(User user){
+        this.user = user;
+    }
+    public void setAddress(InetAddress address,int port){
+        this.address = address;
+        this.port = port;
     }
     public Image byte2image(byte[] data){
             Image img=Toolkit.getDefaultToolkit().createImage(data,0,data.length);
             return img;
     }
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        new GoodsPurchaseWin(address,port,goods,user);
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
 }

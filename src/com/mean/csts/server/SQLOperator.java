@@ -1,8 +1,7 @@
 package com.mean.csts.server;
 
-import com.mean.csts.Goods;
-import com.mean.csts.User;
-import com.mean.csts.UserRegistered;
+import com.mean.csts.data.Goods;
+import com.mean.csts.data.User;
 
 import java.sql.*;
 
@@ -50,32 +49,68 @@ public class SQLOperator {
             return false;
         }
     }
-    public static Goods selectGoods(Connection connection,int gid){
-        String sql = "select * from user where gid="+gid;
+    public static Goods[] getGoods(Connection connection, int page, int limit){
+        int count=0;
+        int totalPages=0;
+        Statement statement;
+        ResultSet resultSet;
         try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
-            resultSet.next();
-            String name = resultSet.getString("name");
-            byte[] image = resultSet.getBytes("image");
-            String content = resultSet.getString("content");
-            double price = resultSet.getDouble("price");
-            int uid = resultSet.getInt("uid");
-            Goods goods = new Goods();
-            goods.gid = gid;
-            goods.name = name;
-            goods.content = content;
-            goods.price = price;
-            goods.image = image;
-            return goods;
-
-        } catch (SQLException e) {
-
-            System.out.println("SQLO:商品查询失败：商品不存在");
-            //e.printStackTrace();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("select count(*) from goods"); //获得总数
+            if (resultSet.next()) {
+                count = resultSet.getInt(1);//获取总数值
+            }
+            totalPages = (int) Math.ceil(count / (limit * 1.0));//得到总页数
+            if (page <= 0) { //保证页号合法性
+                page = 1;
+            } else if (page > totalPages) {
+                page = totalPages;
+            }
+            //System.out.println("TotalPagesGot:"+totalPages);
+            resultSet = statement.executeQuery("select * from goods limit " + (page - 1) * limit + "," + limit);
+            int rowCount =0 ;
+        }catch (SQLException e){
+            System.out.println("SQLO:商品分页查询失败");
             return null;
         }
+        int rstNum=0;
+        Goods[] goods = new Goods[limit];
+        for(int i=0;i<limit;i++) {
+            try {
+                resultSet.next();
+                rstNum++;
+                //System.out.println("rstNum:"+rstNum);
+                int gid = resultSet.getInt(1);
+                //System.out.println("gid got:"+gid);
+                String name = resultSet.getString(2);
+                //System.out.println("name got:"+name);
+                int amount = resultSet.getInt(3);
+                //System.out.println("amount got:"+amount);
+                byte[] image;
+                image = resultSet.getBytes(4);
+                String content = resultSet.getString(5);
+                double price = resultSet.getDouble(6);
+                int uid = resultSet.getInt(7);
+                goods[i] = new Goods();
+                goods[i].setGid(gid);
+                goods[i].setName(name);
+                goods[i].setAmount(amount);
+                goods[i].setImage(image);
+                goods[i].setContent(content);
+                goods[i].setPrice(price);
+                goods[i].setUid(uid);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                for (; i < limit; i++) {
+                    goods[i] = null;
+                }
+                break;
+            }
+        }
+        System.out.println("returnGoods");
+        return goods;
     }
+
     public static User loginAuth(Connection connection,User user){
         String sql = "select * from user where username='"+user.getUname()+"'";
         try {
@@ -134,10 +169,10 @@ public class SQLOperator {
             presta.setInt(2,uid);
             //执行sql语句
             presta.execute();
-            System.out.println("SQLO:用户状态已更新");
+            System.out.println("SQLO:用户token已更新");
             return true;
         } catch (SQLException e) {
-            System.out.println("SQLO:用户状态更新失败");
+            System.out.println("SQLO:用户token更新失败");
             e.printStackTrace();
             return false;
         }

@@ -1,7 +1,6 @@
 package com.mean.csts.client;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.DataInputStream;
@@ -10,9 +9,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import com.mean.csts.User;
-import com.mean.csts.data.Data;
-import com.mean.csts.TCPComm;
+import com.mean.csts.data.User;
 
 public class LoginWin extends BasicWin implements ActionListener {
     public static String title = "登录";
@@ -22,8 +19,6 @@ public class LoginWin extends BasicWin implements ActionListener {
     private Box baseBox,subBoxH1,subBoxH2,boxV1,boxV2;
     private JTextField tfUname, tfPwd;
     private JButton btnLogin,btnRegister;
-    private Data data;
-    private TCPComm msg;
     LoginWin(){
         super(title,winWedth,winHeight);
         boxV1 = Box.createVerticalBox();
@@ -101,8 +96,10 @@ public class LoginWin extends BasicWin implements ActionListener {
                         currentUser.setUid(Integer.valueOf(msg2[1]));
                         currentUser.setType(msg2[2]);
                         currentUser.setUname(msg2[3]);
-                        currentUser.setToken(Integer.valueOf(msg2[4]));
+                        currentUser.setNickname(msg2[4]);
+                        currentUser.setToken(Integer.valueOf(msg2[5]));
                         currentUser.setStatus("online");
+                        currentUser.setWallet(Double.valueOf(msg2[6]));
                         new MainWin(currentUser);
                         System.out.println(currentUser.toString());
                         this.dispose();
@@ -114,6 +111,7 @@ public class LoginWin extends BasicWin implements ActionListener {
                         }
                     }
                 }
+                socket.close();
             }catch(Exception ee){
                 JOptionPane.showMessageDialog(null, "与服务器通信失败");
                 return;

@@ -1,6 +1,6 @@
 package com.mean.csts.client;
 
-import com.mean.csts.User;
+import com.mean.csts.data.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +12,7 @@ public class MainWin extends BasicWin{
     public User user;
     private GoodsListPanel goodsListPanel;
     private GoodsStockPanel goodsStockPanel;
-    private AccountPanel accoountPanel;
+    private AccountPanel accountPanel;
     public MainWin() {
         super(title,winWedth,winHeight);
         JTabbedPane p=new JTabbedPane(JTabbedPane.TOP);
@@ -21,8 +21,8 @@ public class MainWin extends BasicWin{
         p.validate();
         goodsStockPanel = new GoodsStockPanel(super.ADDRESS,super.PORT);
         p.add("上架",goodsStockPanel);
-        accoountPanel = new AccountPanel(super.ADDRESS,super.PORT);
-        p.add("账户",accoountPanel);
+        accountPanel = new AccountPanel(super.ADDRESS,super.PORT);
+        p.add("账户",accountPanel);
         p.validate();
         this.add(p,BorderLayout.CENTER);
         this.validate();;
@@ -33,6 +33,7 @@ public class MainWin extends BasicWin{
         this();
         user = currentUser;
         goodsStockPanel.setUser(user);
+        goodsListPanel.setUser(user);
     }
     public static void main(String[] args){
         new MainWin();

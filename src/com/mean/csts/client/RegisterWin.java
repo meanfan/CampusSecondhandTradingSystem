@@ -1,8 +1,5 @@
 package com.mean.csts.client;
 
-import com.mean.csts.User;
-import com.mean.csts.UserRegistered;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -122,6 +119,7 @@ public class RegisterWin extends BasicWin implements ActionListener {
 
                     }
                 }
+                socket.close();
             }catch(Exception ee){
                 JOptionPane.showMessageDialog(null, "与服务器通信失败");
                 return;

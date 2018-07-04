@@ -1,20 +1,17 @@
 package com.mean.csts.server;
 
-import com.mean.csts.Goods;
-import com.mean.csts.User;
-import com.mean.csts.UserRegistered;
+import com.mean.csts.data.Goods;
+import com.mean.csts.data.User;
+import com.mean.csts.data.UserRegistered;
 
-import javax.imageio.stream.FileImageOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.File;
+import java.io.IOException;
 import java.net.Socket;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Random;
-import java.util.logging.SocketHandler;
 
 public class MsgHandlerThread implements Runnable{
     private Socket socket;
@@ -37,7 +34,6 @@ public class MsgHandlerThread implements Runnable{
     public void run() {
         try {
             DataInputStream in = new DataInputStream(socket.getInputStream());
-            // 向客户端回复信息的流
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
             String clientInStr = in.readUTF();
             switch(clientInStr){
@@ -76,8 +72,10 @@ public class MsgHandlerThread implements Runnable{
                         out.writeUTF("success#"+
                                 String.valueOf(user.getUid()) + "#" +
                                 user.getType() + "#"+
+                                user.getUname() + "#"+
                                 user.getNickname() + "#"+
-                                user.getToken());
+                                String.valueOf(user.getToken())+ "#"+
+                                String.valueOf(user.getWallet()));
                     }else if(user.getStatus().compareTo("loginF1") == 0){
                         out.writeUTF("$login$");
                         out.writeUTF("failure#user_err");
@@ -88,16 +86,41 @@ public class MsgHandlerThread implements Runnable{
                     break;
                 }
                 case "$getGoods$": {
-                    String info = in.readUTF();
-                    int gid = Integer.valueOf(info);
-                    Goods goods = SQLOperator.selectGoods(connection,gid);
-                    if(goods != null){
+                    System.out.println("收到请求：getGoods");
+                    String str = in.readUTF();
+                    String[] strs = str.split("#");
+                    int page = Integer.valueOf(strs[0]);
+                    int num = Integer.valueOf(strs[1]);
+                    System.out.println("page:"+page+",num:"+num);
+                    Goods[] goods = SQLOperator.getGoods(connection,page,num);
+                    System.out.println("resultSetGot");
+                    int i=0;
+                    for(;i<num;i++){
+                        if(goods[i] == null)
+                            break;
+                    }
+                    int rstNum = i;
+                    try {
                         out.writeUTF("$GoodsInfo$");
-                        out.writeUTF("success#" + goods.name + "#" + goods.amount+"#"+goods.price+"#"+goods.content);
-                        out.write(goods.image);
-                    }else{
-                        out.writeUTF("$GoodsInfo$");
-                        out.writeUTF("failure");
+                        if(rstNum == 0) {
+                            out.writeUTF("failure#none");
+                        }else{
+                            out.writeUTF("success#"+String.valueOf(rstNum));
+                            for(i=0;i<rstNum;i++){
+                                System.out.println(goods[i].toString());
+                                //out.write(goods[i].getImage());
+                                out.writeUTF(String.valueOf(goods[i].getGid()) + "#" +
+                                        goods[i].getName() + "#" +
+                                        String.valueOf(goods[i].getAmount())+ "#" +
+                                        String.valueOf(goods[i].getPrice()) + "#" +
+                                        goods[i].getContent() + "#" +
+                                        goods[i].getGid()
+                                );
+                                System.out.println("rstSent:"+rstNum);
+                            }
+                        }
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
                     }
                     break;
                 }

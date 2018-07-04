@@ -1,4 +1,4 @@
-package com.mean.csts;
+package com.mean.csts.data;
 
 public class User {
     private int uid;
@@ -8,6 +8,7 @@ public class User {
     private String pwd;
     private int token;
     private String status;
+    private Double wallet;
     public User(){
         this.uid = -1;
         this.type = UserRegistered.Type;
@@ -16,6 +17,7 @@ public class User {
         this.pwd = "";
         this.token = 0;
         this.status = "offline";
+        this.wallet = 0.0;
     }
     public User(int uid,String type,String uname,String pwd){
         this.uid = uid;
@@ -30,6 +32,7 @@ public class User {
     public String getPwd(){return pwd;}
     public int getToken(){return token;}
     public String getStatus(){return status;}
+    public Double getWallet(){return wallet;}
 
     public void setUid(int uid){
         this.uid = uid;
@@ -52,6 +55,7 @@ public class User {
     }
     public void setToken(int token){this.token = token; }
     public void setStatus(String status){this.status=status; }
+    public void setWallet(Double wallet){this.wallet = wallet;}
 
     public boolean changePwd(String old_pwd,String new_pwd)
     {
