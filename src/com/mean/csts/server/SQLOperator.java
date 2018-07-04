@@ -148,7 +148,8 @@ public class SQLOperator {
 //                    break;
 //                }
             } catch (SQLException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
+                //System.out.println(i);
                 for (; i < limit; i++) {
                     goods[i] = null;
                 }
@@ -219,19 +220,23 @@ public class SQLOperator {
             String nickname = resultSet.getString("nickname");
             String pwd = resultSet.getString("password");
             double wallet = resultSet.getDouble("wallet");
-            if(user.getPwd().compareTo(pwd)==0){
-                user.setUid(uid);
-                user.setType(type);
-                user.setNickname(nickname);
-                user.setPwd(pwd);
-                user.setStatus("online");
-                user.setWallet(wallet);
-                System.out.println("SQLO:用户登录成功");
+            if(type.compareTo("new") == 0){
+                user.setStatus("loginF3");
+                System.out.println("SQLO:用户登录失败：注册未批准");
             }else{
-                user.setStatus("loginF2");
-                System.out.println("SQLO:用户登录失败：密码错误");
+                if(user.getPwd().compareTo(pwd)==0){
+                    user.setUid(uid);
+                    user.setType(type);
+                    user.setNickname(nickname);
+                    user.setPwd(pwd);
+                    user.setStatus("online");
+                    user.setWallet(wallet);
+                    System.out.println("SQLO:用户登录成功");
+                }else{
+                    user.setStatus("loginF2");
+                    System.out.println("SQLO:用户登录失败：密码错误");
+                }
             }
-
         } catch (SQLException e) {
             user.setStatus("loginF1");
             System.out.println("SQLO:用户登录失败：用户不存在");
@@ -329,7 +334,7 @@ public class SQLOperator {
     }
 
 
-        public static boolean setUserStatus(Connection connection,int uid,String status){
+    public static boolean setUserStatus(Connection connection,int uid,String status){
         String sql = "update user SET status =? where uid=?";
         try {
             //预处理sql语句
@@ -343,6 +348,24 @@ public class SQLOperator {
             return true;
         } catch (SQLException e) {
             System.out.println("SQLO:用户状态更新失败");
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public static boolean setUserType(Connection connection,int uid,String type){
+        String sql = "update user SET type =? where uid=?";
+        try {
+            //预处理sql语句
+            PreparedStatement presta = connection.prepareStatement(sql);
+            //设置语句value值
+            presta.setString(1,type);
+            presta.setInt(2,uid);
+            //执行sql语句
+            presta.execute();
+            System.out.println("SQLO:用户类型已更新");
+            return true;
+        } catch (SQLException e) {
+            System.out.println("SQLO:用户类型更新失败");
             e.printStackTrace();
             return false;
         }
@@ -395,6 +418,42 @@ public class SQLOperator {
             return users;
         } catch (SQLException e) {
             System.out.println("SQLO:无用户");
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public static User[] getAllUnapprovedUser(Connection connection){
+        String sql1 = "select count(*) as num from user where type='new'";
+        String sql2 = "select * from user where type='new'";
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql1);
+            resultSet.next();
+            int num = resultSet.getInt(1); //获得总数
+            System.out.println("num:"+num);
+            User[] users = new User[num];
+            resultSet = statement.executeQuery(sql2);
+            for(int i=0;i<num;i++){
+                resultSet.next();
+                int uid = resultSet.getInt("uid");
+                String type = resultSet.getString("type");
+                String uname = resultSet.getString("username");
+                String nickname = resultSet.getString("nickname");
+                String pwd = resultSet.getString("password");
+                String status = resultSet.getString("status");
+                double wallet = resultSet.getDouble("wallet");
+                users[i] = new User();
+                users[i].setUid(uid);
+                users[i].setType(type);
+                users[i].setUname(uname);
+                users[i].setNickname(nickname);
+                users[i].setPwd(pwd);
+                users[i].setStatus(status);
+                users[i].setWallet(wallet);
+            }
+            return users;
+        } catch (SQLException e) {
+            System.out.println("SQLO:无未批准用户");
             e.printStackTrace();
             return null;
         }

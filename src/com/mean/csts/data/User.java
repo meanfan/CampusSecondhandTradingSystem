@@ -11,7 +11,7 @@ public class User {
     private Double wallet;
     public User(){
         this.uid = -1;
-        this.type = UserRegistered.Type;
+        this.type = UserNew.Type;
         this.uname = "null";
         this.nickname = "null";
         this.pwd = "";

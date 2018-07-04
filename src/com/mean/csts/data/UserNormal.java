@@ -1,6 +1,6 @@
 package com.mean.csts.data;
 
-public class UserRegistered {
+public class UserNormal extends User {
     public static final String Type = "normal";
 
 }

@@ -127,9 +127,12 @@ public class LoginWin extends BasicWin implements ActionListener {
                         this.dispose();
                     }else if(msg2[0].compareTo("failure") == 0){
                         if(msg2[1].compareTo("user_err")==0){
-                            JOptionPane.showMessageDialog(null, "登录失败，用户不存在");
+                            JOptionPane.showMessageDialog(null, "登录失败，用户不存在或注册被拒绝");
                         }else if(msg2[1].compareTo("pwd_err")==0) {
                             JOptionPane.showMessageDialog(null, "登录失败，密码不正确");
+                        }else if(msg2[1].compareTo("user_new")==0) {
+                            JOptionPane.showMessageDialog(null, "登录失败，注册还未被批准");
+
                         }
                     }
                 }

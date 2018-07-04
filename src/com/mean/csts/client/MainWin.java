@@ -34,6 +34,7 @@ public class MainWin extends BasicWin{
         user = currentUser;
         goodsStockPanel.setUser(user);
         goodsListPanel.setUser(user);
+        accountPanel.setUser(user);
     }
     public static void main(String[] args){
         new MainWin();

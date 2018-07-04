@@ -15,9 +15,6 @@ import javax.swing.*;
 import com.mean.csts.data.User;
 
 public class GoodsStockPanel extends JPanel implements ActionListener{
-    //public static String title = "发布商品";
-    public static int winWedth =400;
-    public static int winHeight =350;
     public InetAddress address;
     private Socket socket;
     public int port;

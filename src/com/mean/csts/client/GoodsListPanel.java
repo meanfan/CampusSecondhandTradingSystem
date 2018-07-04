@@ -123,7 +123,7 @@ public class GoodsListPanel extends JPanel implements ActionListener {
                         //in.read(image);
                         goodsList[i].setImage(image);
                         String str3 = in.readUTF();
-                        System.out.println("str("+str3+")");
+                        //System.out.println("str("+str3+")");
                         String[] msg3 = str3.split("#");
 
                         goodsList[i].setGid(Integer.valueOf(msg3[0]));
@@ -132,7 +132,7 @@ public class GoodsListPanel extends JPanel implements ActionListener {
                         goodsList[i].setPrice(Double.valueOf(msg3[3]));
                         goodsList[i].setContent(msg3[4]);
                         goodsList[i].setUid(Integer.valueOf(msg3[5]));
-                        System.out.println("3:"+goodsList[i].toString());
+                        //System.out.println("3:"+goodsList[i].toString());
                     }
                     for(;i<num;i++){
                         goodsList[i] = null;
@@ -196,11 +196,14 @@ class ItemView extends JPanel implements MouseListener {
         gl.setHgap(4);
         setLayout(gl);
         labelIcon = new JLabel();
+        /*
         if(goods.getImage()!=null){
             labelIcon.setIcon(new ImageIcon(byte2image(goods.getImage())));
         }else{
             labelIcon.setIcon(new ImageIcon("src/com/mean/csts/client/default.jpg"));
         }
+        */
+        labelIcon.setIcon(new ImageIcon("src/com/mean/csts/client/default.jpg"));
         add(labelIcon);
         labelName= new JLabel();
         labelName.setText(goods.getName());

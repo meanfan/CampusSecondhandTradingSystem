@@ -2,7 +2,8 @@ package com.mean.csts.server;
 
 import com.mean.csts.data.Goods;
 import com.mean.csts.data.User;
-import com.mean.csts.data.UserRegistered;
+import com.mean.csts.data.UserNew;
+import com.mean.csts.data.UserNormal;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -42,7 +43,7 @@ public class MsgHandlerThread implements Runnable{
                     String registerInfo = in.readUTF(); //获取注册信息
                     String[] strs = registerInfo.split("#");
                     User newUser = new User();
-                    newUser.setType(UserRegistered.Type);
+                    newUser.setType(UserNew.Type);
                     newUser.setUname(strs[0]);
                     newUser.setNickname(strs[1]);
                     newUser.setPwd(strs[2]);
@@ -83,6 +84,9 @@ public class MsgHandlerThread implements Runnable{
                     }else if(user.getStatus().compareTo("loginF2") == 0){
                         out.writeUTF("$login$");
                         out.writeUTF("failure#pwd_err");
+                    }else if(user.getStatus().compareTo("loginF3") == 0){
+                        out.writeUTF("$login$");
+                        out.writeUTF("failure#user_new");
                     }
                     break;
                 }
@@ -247,6 +251,53 @@ public class MsgHandlerThread implements Runnable{
                         double wallet = Double.valueOf(strs[5]);
                         users[i] = new User(uid,type,uname,nickname,pwd,0,null,wallet);
                         SQLOperator.updateUser(connection,users[i]);
+                    }
+                    break;
+                }
+                case "$requestAllNewUser$":{
+                    int num;
+                    User[] users;
+                    users = SQLOperator.getAllUnapprovedUser(connection);
+                    if(users == null){
+                        num = 0;
+                    }else {
+                        num = users.length;
+                    }
+                    out.writeUTF("$requestAllNewUser$");
+                    out.writeUTF(String.valueOf(num));
+                    for(int i=0;i<num;i++) {
+                        if(users[i]==null) {
+                            users[i] = new User();
+                        }
+                        out.writeUTF(users[i].getUid()+"#"+
+                                users[i].getUname()+"#"+
+                                users[i].getNickname()
+                        );
+                        System.out.println("unapprovedUser sent");
+                    }
+                    break;
+                }
+                case "$NewUserApprove$":{
+                    String[] strs = in.readUTF().split("#");
+                    int uid = Integer.valueOf(strs[0]);
+                    String type = strs[1];
+                    if(SQLOperator.setUserType(connection,uid,type)){
+                        out.writeUTF("$NewUserApprove$");
+                        out.writeUTF("success");
+                    }else{
+                        out.writeUTF("$NewUserApprove$");
+                        out.writeUTF("failure");
+                    }
+                }
+                case "$NewUserRefuse$":{
+                    String strs = in.readUTF();
+                    int uid = Integer.valueOf(strs);
+                    if(SQLOperator.deleteUser(connection,uid)){
+                        out.writeUTF("$NewUserRefuse$");
+                        out.writeUTF("success");
+                    }else{
+                        out.writeUTF("$NewUserRefuse$");
+                        out.writeUTF("failure");
                     }
                     break;
                 }

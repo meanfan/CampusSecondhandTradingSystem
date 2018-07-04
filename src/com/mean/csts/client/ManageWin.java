@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.sql.SQLException;
 import java.util.Vector;
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
@@ -33,8 +34,14 @@ public class ManageWin  extends BasicWin implements ActionListener,TableModelLis
     private Vector<Integer> uidDeleted;
     //private Vector<Integer> rowAdded;
     private Vector<Integer> rowUpdated;
+    private Vector<Integer>uidApproved;
+    private Vector<Integer>uidRefused;
     Object a[][];
+    Object a2[][];
+
     Object name[]= {"UID","用户类型","用户名","昵称","密码","状态","钱包"};
+    Object name2[]= {"UID","用户名","昵称","设置权限（用户类型）"};
+
     private int Duid[]=new int[20];
     public InetAddress address;
     public int port;
@@ -194,7 +201,59 @@ public class ManageWin  extends BasicWin implements ActionListener,TableModelLis
                     }
                 }
             }else if(list.getSelectedIndex() == 1){ //用户批准
-                
+                if(tfsearch.getText().length() == 0) //为空则获取所有
+                {
+                    try {
+                        Socket socket = new Socket(address, port);
+                        DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+                        DataInputStream in = new DataInputStream(socket.getInputStream());
+                        out.writeUTF("$requestAllNewUser$");
+                        String msg1 = in.readUTF();
+                        if(msg1.compareTo("$requestAllNewUser$") == 0){
+                            String msg2 = in.readUTF();
+                            int num = Integer.valueOf(msg2);
+                            System.out.println(num);
+                            if(num > 0){
+                                a2=new Object[num][3];
+                                for(int i=0;i<num;i++) {
+                                    String[] strs = in.readUTF().split("#");
+                                    for(int j=0;j<3;j++) {
+                                        a2[i][j]=strs[j];
+                                    }
+                                }
+                                tableModel = new DefaultTableModel(){
+                                    @Override
+                                    public boolean isCellEditable(int row, int column) {
+                                        if(column == 3){
+                                            return true;
+                                        }
+                                        return false;
+                                    }
+                                };
+                                tableModel.setDataVector(a2,name2);
+                                table = new JTable(tableModel);
+                                table.setRowHeight(20);
+                                tableModel.addTableModelListener(this);
+                                //add(table,BorderLayout.CENTER);
+                                //table.setEnabled(true);
+                                remove(jScrollPane);
+                                jScrollPane = new JScrollPane(table);
+                                add(jScrollPane,BorderLayout.CENTER);
+                                uidRefused = new Vector<>();
+                                uidApproved = new Vector<>();
+                                validate();
+                            }else{
+                                remove(jScrollPane);
+                                validate();
+                                JOptionPane.showMessageDialog(null, "没有用户");
+                            }
+                        }
+                    }catch(Exception ee){
+                        JOptionPane.showMessageDialog(null, "与服务器通信失败");
+                        ee.printStackTrace();
+                        return;
+                    }
+                }
             }
 
         }
@@ -247,7 +306,6 @@ public class ManageWin  extends BasicWin implements ActionListener,TableModelLis
                 btnSubmit.setVisible(true);
                 btnApprove.setVisible(false);
                 btnRefuse.setVisible(false);
-
                 validate();
 
             }else if(selected == 1){
@@ -259,6 +317,61 @@ public class ManageWin  extends BasicWin implements ActionListener,TableModelLis
 
                 validate();
 
+            }
+        }else if(e.getSource() == btnApprove){
+            int row = table.getSelectedRow();
+            if(row == -1){
+                JOptionPane.showMessageDialog(null, "请先在列表中选中用户");
+            }else{
+                String uidStr = (String) tableModel.getValueAt(row, 0);
+                String type = (String)tableModel.getValueAt(row,3);
+                if(type == null || type == ""){
+                    type = "normal";
+                }
+                try{
+                    Socket socket = new Socket(address, port);
+                    DataInputStream in = new DataInputStream(socket.getInputStream());
+                    DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+                    out.writeUTF("$NewUserApprove$");
+                    out.writeUTF(uidStr+"#"+type);
+                    String str = in.readUTF();
+                    if(str.compareTo("$NewUserApprove$") == 0) {
+                        String msg2 = in.readUTF();
+                        if (msg2.compareTo("success") == 0) {
+                            JOptionPane.showMessageDialog(null, "批准操作成功");
+                            tableModel.removeRow(row);
+                        } else if (msg2.compareTo("failure") == 0) {
+                            JOptionPane.showMessageDialog(null, "批准操作失败");
+                        }
+                    }
+                }catch (Exception ee){
+                    ee.printStackTrace();
+                }
+            }
+        }else if(e.getSource() == btnRefuse){
+            int row = table.getSelectedRow();
+            if(row == -1){
+                JOptionPane.showMessageDialog(null, "请先在列表中选中用户");
+            }else{
+                String uidStr = (String) tableModel.getValueAt(row, 0);
+                try {
+                    Socket socket = new Socket(address, port);
+                    DataInputStream in = new DataInputStream(socket.getInputStream());
+                    DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+                    out.writeUTF("$NewUserRefuse$");
+                    out.writeUTF(uidStr);
+                    String str = in.readUTF();
+                    if(str.compareTo("$NewUserRefuse$") == 0){
+                        String str2 = in.readUTF();
+                        if(str2.compareTo("success") == 0){
+                            JOptionPane.showMessageDialog(null, "拒绝操作成功");
+                        } else if (str2.compareTo("failure") == 0) {
+                            JOptionPane.showMessageDialog(null, "拒绝操作失败");
+                        }
+                    }
+                } catch (IOException ee) {
+                    ee.printStackTrace();
+                }
             }
         }
     }
@@ -323,16 +436,18 @@ public class ManageWin  extends BasicWin implements ActionListener,TableModelLis
     }
     @Override
     public void tableChanged(TableModelEvent e) {
-        if(e.getType() == TableModelEvent.INSERT){
+        if (list.getSelectedIndex() == 0) {
+            if (e.getType() == TableModelEvent.INSERT) {
 
-        } else if(e.getType() == TableModelEvent.UPDATE){ //包括了插入(有效插入要求用户update)
-            int row = table.getSelectedRow();
-            System.out.println("UPDATE row:"+row);
-            if(!rowUpdated.contains(row)){
-                rowUpdated.add(row);
+            } else if (e.getType() == TableModelEvent.UPDATE) { //包括了插入(有效插入要求用户update)
+                int row = table.getSelectedRow();
+                System.out.println("UPDATE row:" + row);
+                if (!rowUpdated.contains(row)) {
+                    rowUpdated.add(row);
+                }
+            } else if (e.getType() == TableModelEvent.DELETE) {
+
             }
-        }else if(e.getType() == TableModelEvent.DELETE){
-
         }
     }
 }

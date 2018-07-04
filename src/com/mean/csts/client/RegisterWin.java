@@ -108,12 +108,12 @@ public class RegisterWin extends BasicWin implements ActionListener {
                 if(msg1.compareTo("$register$") == 0){
                     String[] msg2 = in.readUTF().split("#");
                     if(msg2[0].compareTo("success") == 0){
-                        JOptionPane.showMessageDialog(null, "注册成功");
+                        JOptionPane.showMessageDialog(null, "注册请求发送成功，请等待批准");
                         tfUname.setEnabled(false);
                         tfPwd.setEnabled(false);
                         tfRepPwd.setEnabled(false);
                         btnSubmit.setEnabled(false);
-                        btnSubmit.setText("已注册");
+                        btnSubmit.setText("等待批准");
                     }else if(msg2[0].compareTo("failure") == 0){
                         JOptionPane.showMessageDialog(null, "注册失败，用户名已被占用");
 
