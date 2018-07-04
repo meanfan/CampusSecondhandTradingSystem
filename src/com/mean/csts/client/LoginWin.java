@@ -1,6 +1,7 @@
 package com.mean.csts.client;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.DataInputStream;
@@ -14,13 +15,19 @@ import com.mean.csts.data.User;
 public class LoginWin extends BasicWin implements ActionListener {
     public static String title = "登录";
     public static int winWedth = 400;
-    public static int winHeight = 350;
+    public static int winHeight = 380;
     public InetAddress address;
-    private Box baseBox,subBoxH1,subBoxH2,boxV1,boxV2;
+    public int port;
+    private Box topBox, subBoxH1,subBoxH2, subBoxH3,boxV1,boxV2;
     private JTextField tfUname, tfPwd;
-    private JButton btnLogin,btnRegister;
+    private JButton btnLogin,btnRegister,btnGuest;
     LoginWin(){
         super(title,winWedth,winHeight);
+        subBoxH1 = Box.createHorizontalBox();
+        JLabel pic = new JLabel();
+        pic.setPreferredSize(new Dimension(400,200));
+        pic.setIcon(new ImageIcon("src/com/mean/csts/client/loginPic.jpg"));
+        subBoxH1.add(pic);
         boxV1 = Box.createVerticalBox();
         boxV1.add(new JLabel("用户名："));
         boxV1.add(Box.createVerticalStrut(16));
@@ -33,31 +40,40 @@ public class LoginWin extends BasicWin implements ActionListener {
         tfPwd = new JPasswordField(16);
         tfPwd.setText("");
         boxV2.add(tfPwd);
-        subBoxH1 = Box.createHorizontalBox();
-        subBoxH1.add(boxV1);
-        subBoxH1.add(Box.createHorizontalStrut(20));
-        subBoxH1.add(boxV2);
         subBoxH2 = Box.createHorizontalBox();
-        btnLogin = new JButton("登录");
+        subBoxH2.add(Box.createHorizontalStrut(20));
+        subBoxH2.add(boxV1);
+        subBoxH2.add(Box.createHorizontalStrut(20));
+        subBoxH2.add(boxV2);
+        subBoxH2.add(Box.createHorizontalStrut(20));
+        subBoxH3 = Box.createHorizontalBox();
+        btnLogin = new JButton("        登录        ");
+        getRootPane().setDefaultButton(btnLogin);
         btnLogin.addActionListener(this);
         btnRegister = new JButton("注册");
         btnRegister.addActionListener(this);
-        subBoxH2.add(btnLogin);
-        subBoxH2.add(Box.createHorizontalStrut(20));
-        subBoxH2.add(btnRegister);
-        baseBox = Box.createVerticalBox();
-        baseBox.add(Box.createVerticalStrut(100));
-        baseBox.add(subBoxH1);
-        baseBox.add(Box.createVerticalStrut(20));
-        baseBox.add(subBoxH2);
-        baseBox.add(Box.createVerticalStrut(150));
-        add(baseBox);
+        btnGuest = new JButton("游客");
+        btnGuest.addActionListener(this);
+        subBoxH3.add(btnLogin);
+        subBoxH3.add(Box.createHorizontalStrut(20));
+        subBoxH3.add(btnRegister);
+        subBoxH3.add(Box.createHorizontalStrut(20));
+        subBoxH3.add(btnGuest);
+        topBox = Box.createVerticalBox();
+        //topBox.add(Box.createVerticalStrut(100));
+        topBox.add(subBoxH1);
+        topBox.add(Box.createVerticalStrut(20));
+        topBox.add(subBoxH2);
+        topBox.add(Box.createVerticalStrut(20));
+        topBox.add(subBoxH3);
+        topBox.add(Box.createVerticalStrut(20));
+        add(topBox);
         validate();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         try {
             address = InetAddress.getByName(super.ADDRESS);
         } catch (UnknownHostException e) { e.printStackTrace(); }
-
+        this.port = super.PORT;
         //this.msgListener = msgListener;
     }
     public static void main(String[] args) {
@@ -100,7 +116,13 @@ public class LoginWin extends BasicWin implements ActionListener {
                         currentUser.setToken(Integer.valueOf(msg2[5]));
                         currentUser.setStatus("online");
                         currentUser.setWallet(Double.valueOf(msg2[6]));
-                        new MainWin(currentUser);
+                        if(currentUser.getType().compareTo("admin") == 0){
+                            new ManageWin(address,port);
+                        }else if(currentUser.getType().compareTo("normal") == 0){
+                            new MainWin(currentUser);
+                        }else if(currentUser.getType().compareTo("guest") == 0){
+                            new MainWin(null);
+                        }
                         System.out.println(currentUser.toString());
                         this.dispose();
                     }else if(msg2[0].compareTo("failure") == 0){
@@ -118,7 +140,8 @@ public class LoginWin extends BasicWin implements ActionListener {
             }
         }else if(bt == btnRegister){
             new RegisterWin();
+        }else if(bt == btnGuest){
+            new MainWin(null);
         }
-
     }
 }

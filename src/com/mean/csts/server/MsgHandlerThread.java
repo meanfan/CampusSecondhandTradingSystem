@@ -95,33 +95,40 @@ public class MsgHandlerThread implements Runnable{
                     Goods[] goods = SQLOperator.getGoods(connection,page,num);
                     System.out.println("resultSetGot");
                     int i=0;
-                    for(;i<num;i++){
-                        if(goods[i] == null)
-                            break;
-                    }
-                    int rstNum = i;
-                    try {
+                    if(goods == null){
                         out.writeUTF("$GoodsInfo$");
-                        if(rstNum == 0) {
-                            out.writeUTF("failure#none");
-                        }else{
-                            out.writeUTF("success#"+String.valueOf(rstNum));
-                            for(i=0;i<rstNum;i++){
-                                System.out.println(goods[i].toString());
-                                //out.write(goods[i].getImage());
-                                out.writeUTF(String.valueOf(goods[i].getGid()) + "#" +
-                                        goods[i].getName() + "#" +
-                                        String.valueOf(goods[i].getAmount())+ "#" +
-                                        String.valueOf(goods[i].getPrice()) + "#" +
-                                        goods[i].getContent() + "#" +
-                                        goods[i].getGid()
-                                );
-                                System.out.println("rstSent:"+rstNum);
-                            }
+                        out.writeUTF("failure#none");
+                    }else{
+                        for(;i<num;i++){
+                            if(goods[i] == null)
+                                break;
                         }
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
+                        int rstNum = i;
+                        try {
+                            out.writeUTF("$GoodsInfo$");
+                            if(rstNum == 0) {
+                                out.writeUTF("failure#none");
+                            }else{
+                                out.writeUTF("success#"+String.valueOf(rstNum));
+                                for(i=0;i<rstNum;i++){
+                                    System.out.println(goods[i].toString());
+                                    //out.write(goods[i].getImage());
+                                    out.writeUTF(String.valueOf(goods[i].getGid()) + "#" +
+                                            goods[i].getName() + "#" +
+                                            String.valueOf(goods[i].getAmount())+ "#" +
+                                            String.valueOf(goods[i].getPrice()) + "#" +
+                                            goods[i].getContent() + "#" +
+                                            goods[i].getGid()
+                                    );
+                                    System.out.println("rstSent:"+rstNum);
+                                }
+                            }
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+
                     }
+
                     break;
                 }
                 case "$purchaseRequest$": {
@@ -160,22 +167,53 @@ public class MsgHandlerThread implements Runnable{
                 case "$GoodsStock$":{
                     int token = Integer.valueOf(in.readUTF());
                     byte[] buf=new byte[3145728];
-                    in.read(buf);
+                    //in.read(buf);
                     String str = in.readUTF();
                     String[] strs = str.split("#");
                     Goods goods = new Goods();
-                    goods.name = strs[0];
-                    goods.amount = Integer.valueOf(strs[1]);
-                    goods.price = Double.valueOf(strs[2]);
-                    goods.content = strs[3];
+                    goods.setName(strs[0]);
+                    goods.setAmount(Integer.valueOf(strs[1]));
+                    goods.setPrice(Double.valueOf(strs[2]));
+                    goods.setContent(strs[3]);
                     User user = SQLOperator.loginViladate(connection,token);
                     if(user == null){
                         System.out.println("商品上架失败,用户验证失败");
+                        out.writeUTF("$GoodsStock$");
+                        out.writeUTF("failure");
                     }else{
+                        goods.setUid(user.getUid());
                         SQLOperator.insertGoods(connection,goods,buf,user.getUid());
                         System.out.println("商品上架成功");
+                        out.writeUTF("$GoodsStock$");
+                        out.writeUTF("success");
                     }
                     break;
+                }
+                case "$requestAllUser$":{
+                    int num;
+                    User[] users;
+                    users = SQLOperator.getAllUser(connection);
+                    if(users == null){
+                        num = 0;
+                    }else {
+                        num = users.length;
+                    }
+                    out.writeUTF("$requestAllUser$");
+                    out.writeUTF(String.valueOf(num));
+                    for(int i=0;i<num;i++) {
+                        if(users[i]==null) {
+                            users[i] = new User();
+                        }
+                        out.writeUTF(users[i].getUid()+"#"+
+                                users[i].getType()+"#"+
+                                users[i].getUname()+"#"+
+                                users[i].getNickname()+"#"+
+                                users[i].getPwd()+"#"+
+                                users[i].getStatus()+"#"+
+                                users[i].getWallet()
+                        );
+                        System.out.println("user sent");
+                    }
                 }
 
             }

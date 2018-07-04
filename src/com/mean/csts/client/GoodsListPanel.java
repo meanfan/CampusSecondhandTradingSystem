@@ -228,7 +228,12 @@ class ItemView extends JPanel implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        new GoodsPurchaseWin(address,port,goods,user);
+        if(user != null)
+            new GoodsPurchaseWin(address,port,goods,user);
+        else {
+            JOptionPane.showMessageDialog(null, "未登录不能购买");
+
+        }
     }
 
     @Override

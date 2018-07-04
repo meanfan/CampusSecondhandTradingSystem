@@ -160,10 +160,10 @@ public class GoodsStockPanel extends JPanel implements ActionListener{
                 DataInputStream in = new DataInputStream(socket.getInputStream());
                 out.writeUTF("$GoodsStock$");
                 out.writeUTF(String.valueOf(user.getToken()));
-                out.write(image2byte(path));
+                //out.write(image2byte(path));
                 out.writeUTF(tfGname.getText() + "#" + tfGnum.getText()+"#"+tfGprice.getText()+"#"+tfGcontent.getText());
                 String msg1 = in.readUTF();
-                if(msg1.compareTo("$GoodStock$") == 0){
+                if(msg1.compareTo("$GoodsStock$") == 0){
                     String msg2 = in.readUTF();
                     if(msg2.compareTo("success") == 0){
                         JOptionPane.showMessageDialog(null, "发布成功");
@@ -174,6 +174,8 @@ public class GoodsStockPanel extends JPanel implements ActionListener{
                     }else if(msg2.compareTo("failure") == 0){
                         JOptionPane.showMessageDialog(null, "发布失败");
                     }
+                }else{
+                    System.out.println("!!");
                 }
                 socket.close();
             }catch(Exception ee){

@@ -56,7 +56,7 @@ public class SQLOperator {
         ResultSet resultSet;
         try {
             statement = connection.createStatement();
-            resultSet = statement.executeQuery("select count(*) from goods"); //获得总数
+            resultSet = statement.executeQuery("select count(*) as num from goods"); //获得总数
             if (resultSet.next()) {
                 count = resultSet.getInt(1);//获取总数值
             }
@@ -64,9 +64,10 @@ public class SQLOperator {
             if (page <= 0) { //保证页号合法性
                 page = 1;
             } else if (page > totalPages) {
-                page = totalPages;
+                return null;
             }
-            //System.out.println("TotalPagesGot:"+totalPages);
+            System.out.println("count:"+count);
+            System.out.println("TotalPagesGot:"+totalPages);
             resultSet = statement.executeQuery("select * from goods limit " + (page - 1) * limit + "," + limit);
             int rowCount =0 ;
         }catch (SQLException e){
@@ -91,10 +92,16 @@ public class SQLOperator {
                 goods[i].setGid(gid);
                 goods[i].setName(name);
                 goods[i].setAmount(amount);
-                goods[i].setImage(image);
+                //goods[i].setImage(image);
                 goods[i].setContent(content);
                 goods[i].setPrice(price);
                 goods[i].setUid(uid);
+//                if(resultSet.isLast()){
+//                    for (; i < limit; i++) {
+//                        goods[i] = null;
+//                    }
+//                    break;
+//                }
             } catch (SQLException e) {
                 e.printStackTrace();
                 for (; i < limit; i++) {
@@ -104,6 +111,9 @@ public class SQLOperator {
             }
         }
         System.out.println("returnGoods");
+        try {
+            resultSet.close();
+        } catch (SQLException e) { e.printStackTrace(); }
         return goods;
     }
     public static Goods getGoodsByGid(Connection connection, int gid){
@@ -248,7 +258,7 @@ public class SQLOperator {
         String sql = "delete from goods where gid="+gid;
         try {
             Statement statement = connection.createStatement();
-            statement.executeQuery(sql);
+            statement.execute(sql);
             System.out.println("SQLO:商品已删除:"+gid);
             return true;
         } catch (SQLException e) {
@@ -293,6 +303,40 @@ public class SQLOperator {
         }
 
     }
+    public static User[] getAllUser(Connection connection){
+        String sql1 = "select count(*) as num from user"; //获得总数
 
-
+        String sql2 = "select * from user";
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql1);
+            resultSet.next();
+            int num = resultSet.getInt(1);
+            User[] users = new User[num];
+            resultSet = statement.executeQuery(sql2);
+            for(int i=0;i<num;i++){
+                resultSet.next();
+                int uid = resultSet.getInt("uid");
+                String type = resultSet.getString("type");
+                String uname = resultSet.getString("username");
+                String nickname = resultSet.getString("nickname");
+                String pwd = resultSet.getString("password");
+                String status = resultSet.getString("status");
+                double wallet = resultSet.getDouble("wallet");
+                users[i] = new User();
+                users[i].setUid(uid);
+                users[i].setType(type);
+                users[i].setUname(uname);
+                users[i].setNickname(nickname);
+                users[i].setPwd(pwd);
+                users[i].setStatus(status);
+                users[i].setWallet(wallet);
+            }
+            return users;
+        } catch (SQLException e) {
+            System.out.println("SQLO:无用户");
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
