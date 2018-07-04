@@ -26,6 +26,51 @@ public class SQLOperator {
             return false;
         }
     }
+    public static boolean updateUser(Connection connection, User user){
+        if(user.getUid() == -2){ //新增用户
+            String sql = "insert into user (type,username,nickname,password,wallet)" + "values(?,?,?,?,?)";
+            try {
+                //预处理sql语句
+                PreparedStatement presta = connection.prepareStatement(sql);
+                //设置语句value值
+                presta.setString(1,user.getType());
+                presta.setString(2,user.getUname());
+                presta.setString(3,user.getNickname());
+                presta.setString(4,user.getPwd());
+                presta.setDouble(5,user.getWallet());
+                //执行sql语句
+                presta.execute();
+                System.out.println("SQLO:用户新增成功");
+                    return true;
+            } catch (SQLException e) {
+                System.out.println("SQLO:用户新增失败");
+                //e.printStackTrace();
+                return false;
+        }
+        }else { //更新用户
+            try{
+            Statement statement= connection.createStatement();
+            try{
+                ResultSet resultSet = statement.executeQuery("select * from goods where uid="+user.getUid());
+                resultSet.next();
+            }catch (SQLException e){
+                System.out.println("SQLO:用户更新失败，用户不存在");
+                e.printStackTrace();
+                return false;
+            }
+            statement.executeUpdate("update user SET type ='"+user.getType()+"' where uid="+user.getUid());
+            statement.executeUpdate("update user SET username ='"+user.getUname()+"' where uid="+user.getUid());
+            statement.executeUpdate("update user SET nickname ='"+user.getNickname()+"' where uid="+user.getUid());
+            statement.executeUpdate("update user SET password ='"+user.getPwd()+"' where uid="+user.getUid());
+            statement.executeUpdate("update user SET wallet ="+user.getWallet()+" where uid="+user.getUid());
+            return true;
+            }catch(SQLException e){
+                System.out.println("SQLO:用户更新失败");
+                e.printStackTrace();
+                return  false;
+            }
+        }
+    }
     public static boolean insertGoods(Connection connection, Goods goods,byte[] image,int uid){
         String sql = "insert into goods (name,amount,image,content,price,uid)" + "values(?,?,?,?,?,?)";
         try {
@@ -145,6 +190,21 @@ public class SQLOperator {
             e.printStackTrace();
             System.out.println("SQLO:商品依据未找到:gid="+gid);
             return null;
+        }
+
+    }
+    public static boolean deleteUser(Connection connection, int uid){
+        Statement statement;
+        try {
+            statement = connection.createStatement();
+            statement.execute("delete from user where uid="+uid);
+            System.out.println("SQLO:用户已删除:uid="+uid);
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("SQLO:用户删除失败:uid="+uid);
+            return false;
         }
 
     }

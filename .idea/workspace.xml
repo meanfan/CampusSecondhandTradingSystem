@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="733fc19e-5f2b-4c64-9935-26282be6184c" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/mean/csts/client/loginPic.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mean/csts/client/GoodsListPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mean/csts/client/GoodsListPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mean/csts/client/GoodsStockPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mean/csts/client/GoodsStockPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mean/csts/client/LoginWin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mean/csts/client/LoginWin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/mean/csts/client/ManageWin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mean/csts/client/ManageWin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mean/csts/data/Goods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mean/csts/data/Goods.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/mean/csts/server/MsgHandlerThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mean/csts/server/MsgHandlerThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/mean/csts/server/SQLOperator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mean/csts/server/SQLOperator.java" afterDir="false" />
     </list>
@@ -52,11 +46,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LoginWin.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="LoginWin.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/LoginWin.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="48" column="47" selection-start-line="48" selection-start-column="47" selection-end-line="48" selection-end-column="47" />
+            <state relative-caret-position="152">
+              <caret line="94" column="46" selection-start-line="94" selection-end-line="95" />
             </state>
           </provider>
         </entry>
@@ -73,18 +67,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ManageWin.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ManageWin.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/ManageWin.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="627">
-              <caret line="33" column="37" selection-start-line="33" selection-start-column="37" selection-end-line="33" selection-end-column="37" />
+            <state relative-caret-position="289">
+              <caret line="63" column="26" selection-start-line="63" selection-start-column="26" selection-end-line="63" selection-end-column="26" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2750#2999#0" expanded="true" />
-                <element signature="e#2998#2999#0" expanded="true" />
+                <element signature="e#4878#5334#0" expanded="true" />
+                <element signature="e#5333#5334#0" expanded="true" />
                 <element signature="e#7481#7491#0" expanded="true" />
-                <element signature="e#10650#10651#0" expanded="true" />
-                <element signature="e#10695#10696#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -93,8 +85,8 @@
       <file leaf-file-name="MsgHandlerThread.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/mean/csts/server/MsgHandlerThread.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4066">
-              <caret line="214" column="53" selection-start-line="214" selection-start-column="53" selection-end-line="214" selection-end-column="53" />
+            <state relative-caret-position="118">
+              <caret line="251" column="17" selection-start-line="251" selection-start-column="17" selection-end-line="251" selection-end-column="17" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -105,8 +97,8 @@
       <file leaf-file-name="SQLOperator.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/mean/csts/server/SQLOperator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-9">
-              <caret line="255" column="5" lean-forward="true" selection-start-line="255" selection-start-column="5" selection-end-line="255" selection-end-column="5" />
+            <state relative-caret-position="1178">
+              <caret line="62" column="57" selection-start-line="62" selection-start-column="57" selection-end-line="62" selection-end-column="57" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -117,8 +109,8 @@
       <file leaf-file-name="GoodsStockPanel.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/GoodsStockPanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="802">
-              <caret line="165" column="41" selection-start-line="165" selection-start-column="41" selection-end-line="165" selection-end-column="41" />
+            <state relative-caret-position="251">
+              <caret line="160" column="45" lean-forward="true" selection-start-line="160" selection-start-column="16" selection-end-line="160" selection-end-column="45" />
             </state>
           </provider>
         </entry>
@@ -169,15 +161,15 @@
         <option value="$PROJECT_DIR$/src/com/mean/csts/client/GoodsPurchaseWin.java" />
         <option value="$PROJECT_DIR$/src/com/mean/csts/client/GoodsListPanel.java" />
         <option value="$PROJECT_DIR$/src/com/mean/csts/client/GoodsStockPanel.java" />
-        <option value="$PROJECT_DIR$/src/com/mean/csts/server/SQLOperator.java" />
-        <option value="$PROJECT_DIR$/src/com/mean/csts/server/MsgHandlerThread.java" />
         <option value="$PROJECT_DIR$/src/com/mean/csts/data/Goods.java" />
-        <option value="$PROJECT_DIR$/src/com/mean/csts/client/ManageWin.java" />
         <option value="$PROJECT_DIR$/src/com/mean/csts/client/LoginWin.java" />
+        <option value="$PROJECT_DIR$/src/com/mean/csts/server/MsgHandlerThread.java" />
+        <option value="$PROJECT_DIR$/src/com/mean/csts/server/SQLOperator.java" />
+        <option value="$PROJECT_DIR$/src/com/mean/csts/client/ManageWin.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="420" />
     <option name="y" value="73" />
     <option name="width" value="1400" />
@@ -271,7 +263,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.LoginWin">
+  <component name="RunManager" selected="Application.ManageWin">
     <configuration name="GoodsPurchaseWin" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.mean.csts.client.GoodsPurchaseWin" />
       <module name="CampusSecondhandTradingSystem" />
@@ -377,9 +369,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.LoginWin" />
         <item itemvalue="Application.ManageWin" />
         <item itemvalue="Application.Server" />
+        <item itemvalue="Application.LoginWin" />
         <item itemvalue="Application.MainWin" />
         <item itemvalue="Application.GoodsPurchaseWin" />
       </list>
@@ -408,12 +400,12 @@
       <window_info anchor="right" id="Palette&#9;" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="5" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.37653062" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.16938776" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="right" id="Coverage" order="0" side_tool="true" weight="0.32953313" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info id="Designer" order="5" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18132465" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18132465" />
       <window_info anchor="bottom" id="Statistic" order="10" weight="0.32959184" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32857144" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -576,13 +568,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/RegisterWin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="124" column="31" selection-start-line="124" selection-start-column="31" selection-end-line="124" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/mean/csts/data/Data.java" />
     <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/MsgHandlerThread.java" />
     <entry file="file://$PROJECT_DIR$/src/com/mean/csts/server/Server.java">
@@ -624,37 +609,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/MainWin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="10" column="38" lean-forward="true" selection-start-line="8" selection-start-column="4" selection-end-line="10" selection-end-column="38" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/BasicWin.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
           <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/server/MsgHandlerThread.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4066">
-          <caret line="214" column="53" selection-start-line="214" selection-start-column="53" selection-end-line="214" selection-end-column="53" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/data/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-38">
-          <caret line="16" column="22" lean-forward="true" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
         </state>
       </provider>
     </entry>
@@ -669,38 +627,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/server/SQLOperator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-9">
-          <caret line="255" column="5" lean-forward="true" selection-start-line="255" selection-start-column="5" selection-end-line="255" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/GoodsStockPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="802">
-          <caret line="165" column="41" selection-start-line="165" selection-start-column="41" selection-end-line="165" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/ManageWin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="627">
-          <caret line="33" column="37" selection-start-line="33" selection-start-column="37" selection-end-line="33" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2750#2999#0" expanded="true" />
-            <element signature="e#2998#2999#0" expanded="true" />
-            <element signature="e#7481#7491#0" expanded="true" />
-            <element signature="e#10650#10651#0" expanded="true" />
-            <element signature="e#10695#10696#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/mean/csts/data/UserAnonymous.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="57">
@@ -708,10 +634,74 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/GoodsStockPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="160" column="45" lean-forward="true" selection-start-line="160" selection-start-column="16" selection-end-line="160" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/RegisterWin.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="479">
+          <caret line="119" column="21" lean-forward="true" selection-start-line="101" selection-start-column="16" selection-end-line="119" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/data/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-38">
+          <caret line="16" column="22" lean-forward="true" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/server/SQLOperator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1178">
+          <caret line="62" column="57" selection-start-line="62" selection-start-column="57" selection-end-line="62" selection-end-column="57" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/server/MsgHandlerThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="118">
+          <caret line="251" column="17" selection-start-line="251" selection-start-column="17" selection-end-line="251" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/MainWin.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="10" column="38" lean-forward="true" selection-start-line="8" selection-start-column="4" selection-end-line="10" selection-end-column="38" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/LoginWin.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="48" column="47" selection-start-line="48" selection-start-column="47" selection-end-line="48" selection-end-column="47" />
+        <state relative-caret-position="152">
+          <caret line="94" column="46" selection-start-line="94" selection-end-line="95" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/ManageWin.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="63" column="26" selection-start-line="63" selection-start-column="26" selection-end-line="63" selection-end-column="26" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4878#5334#0" expanded="true" />
+            <element signature="e#5333#5334#0" expanded="true" />
+            <element signature="e#7481#7491#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

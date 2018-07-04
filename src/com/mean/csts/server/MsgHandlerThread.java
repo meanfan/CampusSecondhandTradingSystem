@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Random;
+import java.util.Vector;
 
 public class MsgHandlerThread implements Runnable{
     private Socket socket;
@@ -214,8 +215,41 @@ public class MsgHandlerThread implements Runnable{
                         );
                         System.out.println("user sent");
                     }
+                    break;
                 }
-
+                case "$UserDelete$":{
+                    Vector<Integer> deleteFailUid= new Vector<>();
+                    String numStr = in.readUTF();
+                    Integer num = Integer.valueOf(numStr);
+                    System.out.println("UserDelete num:"+num);
+                    for(int i=0;i<num;i++){
+                        String str = in.readUTF();
+                        int deleteUid = Integer.valueOf(str);
+                        System.out.println("deleteUid:"+deleteUid);
+                        if(!SQLOperator.deleteUser(connection, deleteUid)){
+                            deleteFailUid.add(deleteUid);
+                        }
+                    }
+                    break;
+                }
+                case "$UserUpdate$":{
+                    String numStr = in.readUTF();
+                    Integer num = Integer.valueOf(numStr);
+                    System.out.println("UserUpdate num:"+num);
+                    User[] users = new User[num];
+                    for(int i=0;i<num;i++){
+                        String[] strs = in.readUTF().split("#");
+                        int uid = Integer.valueOf(strs[0]);
+                        String type = strs[1];
+                        String uname = strs[2];
+                        String nickname = strs[3];
+                        String pwd = strs[4];
+                        double wallet = Double.valueOf(strs[5]);
+                        users[i] = new User(uid,type,uname,nickname,pwd,0,null,wallet);
+                        SQLOperator.updateUser(connection,users[i]);
+                    }
+                    break;
+                }
             }
         }catch(Exception e){
 
