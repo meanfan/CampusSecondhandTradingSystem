@@ -125,6 +125,36 @@ public class MsgHandlerThread implements Runnable{
                     break;
                 }
                 case "$purchaseRequest$": {
+                    String msg = in.readUTF();
+                    String[] strs = msg.split("#");
+                    int token = Integer.valueOf(strs[0]);
+                    User user = SQLOperator.loginViladate(connection,token);
+                    int gid = Integer.valueOf(strs[1]);
+                    int num = Integer.valueOf(strs[2]);
+                    Goods goods = SQLOperator.getGoodsByGid(connection,gid);
+                    out.writeUTF("$purchaseResponse$");
+                    if(user == null) { //未登录或登录过期
+                        out.writeUTF("failure#no_user");
+                    }if(goods == null){ //商品未找到
+                        out.writeUTF("failure#none");
+                    }else if(goods.getAmount()<num){
+                        out.writeUTF("failure#lack_stock");
+                    }else{
+                        double userWalletRest = user.getWallet() - goods.getPrice()*num;
+                        if(userWalletRest<0.0){
+                            out.writeUTF("failure#lack_wallet");
+                        }else{
+                            user.setWallet(userWalletRest);
+                            SQLOperator.setUserWallet(connection,user.getUid(),user.getWallet());
+                            goods.setAmount(goods.getAmount()-num);
+                            if(goods.getAmount() == 0){
+                                SQLOperator.deleteGoods(connection,goods.getGid());
+                            }else {
+                                SQLOperator.setGoodsAmount(connection, goods.getGid(), goods.getAmount());
+                            }
+                            out.writeUTF("success#"+user.getWallet());
+                        }
+                    }
                     break;
                 }
                 case "$GoodsStock$":{

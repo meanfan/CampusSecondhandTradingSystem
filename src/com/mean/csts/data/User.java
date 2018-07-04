@@ -25,6 +25,16 @@ public class User {
         this.uname = uname;
         this.pwd = pwd;
     }
+    public User(int uid,String type,String uname,String nickname,String pwd,int token,String status,double wallet){
+        this.uid = uid;
+        this.type = type;
+        this.uname = uname;
+        this.nickname = nickname;
+        this.pwd = pwd;
+        this.token = token;
+        this.status = status;
+        this.wallet = wallet;
+    }
     public int getUid(){return uid;}
     public String getType(){return type;}
     public String getUname(){return uname;}
@@ -68,6 +78,6 @@ public class User {
 
     @Override
     public String toString() {
-        return getUid()+"|"+ getType()+"|"+getUname()+"|"+getNickname()+"|"+getPwd()+"|"+getToken();
+        return getUid()+"|"+ getType()+"|"+getUname()+"|"+getNickname()+"|"+getPwd()+"|"+getToken()+"|"+getWallet();
     }
 }

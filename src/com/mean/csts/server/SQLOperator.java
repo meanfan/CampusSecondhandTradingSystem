@@ -79,13 +79,9 @@ public class SQLOperator {
             try {
                 resultSet.next();
                 rstNum++;
-                //System.out.println("rstNum:"+rstNum);
                 int gid = resultSet.getInt(1);
-                //System.out.println("gid got:"+gid);
                 String name = resultSet.getString(2);
-                //System.out.println("name got:"+name);
                 int amount = resultSet.getInt(3);
-                //System.out.println("amount got:"+amount);
                 byte[] image;
                 image = resultSet.getBytes(4);
                 String content = resultSet.getString(5);
@@ -110,7 +106,38 @@ public class SQLOperator {
         System.out.println("returnGoods");
         return goods;
     }
+    public static Goods getGoodsByGid(Connection connection, int gid){
+        Statement statement;
+        ResultSet resultSet;
+        Goods goods;
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("select * from goods where gid="+gid);
+            resultSet.next();
+            String name = resultSet.getString(2);
+            int amount = resultSet.getInt(3);
+            byte[] image;
+            image = resultSet.getBytes(4);
+            String content = resultSet.getString(5);
+            double price = resultSet.getDouble(6);
+            int uid = resultSet.getInt(7);
+            goods = new Goods();
+            goods.setGid(gid);
+            goods.setName(name);
+            goods.setAmount(amount);
+            goods.setImage(image);
+            goods.setContent(content);
+            goods.setPrice(price);
+            goods.setUid(uid);
+            return goods;
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("SQLO:商品依据未找到:gid="+gid);
+            return null;
+        }
+
+    }
     public static User loginAuth(Connection connection,User user){
         String sql = "select * from user where username='"+user.getUname()+"'";
         try {
@@ -121,12 +148,14 @@ public class SQLOperator {
             String type = resultSet.getString("type");
             String nickname = resultSet.getString("nickname");
             String pwd = resultSet.getString("password");
+            double wallet = resultSet.getDouble("wallet");
             if(user.getPwd().compareTo(pwd)==0){
                 user.setUid(uid);
-                user.setNickname(nickname);
                 user.setType(type);
+                user.setNickname(nickname);
                 user.setPwd(pwd);
                 user.setStatus("online");
+                user.setWallet(wallet);
                 System.out.println("SQLO:用户登录成功");
             }else{
                 user.setStatus("loginF2");
@@ -150,9 +179,11 @@ public class SQLOperator {
             int uid = resultSet.getInt("uid");
             String type = resultSet.getString("type");
             String uname = resultSet.getString("username");
-            //String nickname = resultSet.getString("nickname");
+            String nickname = resultSet.getString("nickname");
             String pwd = resultSet.getString("password");
-            return new User(uid,type,uname,pwd);
+            String status = resultSet.getString("status");
+            double wallet = resultSet.getDouble("wallet");
+            return new User(uid,type,uname,nickname,pwd,token,status,wallet);
         } catch (SQLException e) {
             System.out.println("SQLO:用户登录验证失败：用户token不存在");
             return null;
@@ -177,8 +208,58 @@ public class SQLOperator {
             return false;
         }
     }
+    public static boolean setUserWallet(Connection connection,int uid,double wallet){
+        String sql = "update user SET wallet =? where uid=?";
+        try {
+            //预处理sql语句
+            PreparedStatement presta = connection.prepareStatement(sql);
+            //设置语句value值
+            presta.setDouble(1,wallet);
+            presta.setInt(2,uid);
+            //执行sql语句
+            presta.execute();
+            System.out.println("SQLO:用户wallet已更新:"+wallet);
+            return true;
+        } catch (SQLException e) {
+            System.out.println("SQLO:用户wallet更新失败");
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public static boolean setGoodsAmount(Connection connection,int gid,int amount){
+        String sql = "update goods SET amount =? where gid=?";
+        try {
+            //预处理sql语句
+            PreparedStatement presta = connection.prepareStatement(sql);
+            //设置语句value值
+            presta.setInt(1,amount);
+            presta.setInt(2,gid);
+            //执行sql语句
+            presta.execute();
+            System.out.println("SQLO:商品amount已更新:"+amount);
+            return true;
+        } catch (SQLException e) {
+            System.out.println("SQLO:商品amount更新失败");
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public static boolean deleteGoods(Connection connection,int gid){
+        String sql = "delete from goods where gid="+gid;
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeQuery(sql);
+            System.out.println("SQLO:商品已删除:"+gid);
+            return true;
+        } catch (SQLException e) {
+            System.out.println("SQLO:商品删除失败");
+            e.printStackTrace();
+            return false;
+        }
+    }
 
-    public static boolean setUserStatus(Connection connection,int uid,String status){
+
+        public static boolean setUserStatus(Connection connection,int uid,String status){
         String sql = "update user SET status =? where uid=?";
         try {
             //预处理sql语句

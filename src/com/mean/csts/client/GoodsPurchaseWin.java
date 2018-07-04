@@ -18,12 +18,17 @@ public class GoodsPurchaseWin extends BasicWin implements ActionListener{
     private Box baseBox,subBoxV1,subBoxH2,subBoxH3,subBoxH4,boxV1,boxV2,boxV3,boxV4;
     private JButton btnPurchs,btnCancel;
     private JTextField tfGnum;
+    private JLabel jLabelWallet;
     public InetAddress address;
     public int port;
     public User user;
     public Goods goods;
     public GoodsPurchaseWin(InetAddress address,int port,Goods goods,User user) {
         super();
+        this.address = address;
+        this.port = port;
+        this.user = user;
+        this.goods = goods;
         subBoxV1 = Box.createVerticalBox();
         iv=new ItemView(address,port,goods,user);
         subBoxV1.add(iv);
@@ -45,16 +50,17 @@ public class GoodsPurchaseWin extends BasicWin implements ActionListener{
         boxV4=Box.createVerticalBox();
         boxV3.add(new JLabel("账户余额："));
         if(user != null) {
-            boxV4.add(new JLabel(String.valueOf(user.getUid())));
+            jLabelWallet = new JLabel(String.valueOf(user.getWallet()));
         }else {
-            boxV4.add(new JLabel("-1"));
+            jLabelWallet =new JLabel("-1");
         }
+        boxV4.add(jLabelWallet);
         subBoxH3.add(boxV3);
         subBoxH3.add(Box.createHorizontalStrut(20));
         subBoxH3.add(boxV4);
-        btnPurchs=new JButton("确认支付");
+        btnPurchs=new JButton("购买");
         btnPurchs.addActionListener(this);
-        btnCancel=new JButton("取消支付");
+        btnCancel=new JButton("关闭");
         btnCancel.addActionListener(this);
         subBoxH4.add(btnPurchs);
         subBoxH4.add(Box.createHorizontalStrut(20));
@@ -72,8 +78,6 @@ public class GoodsPurchaseWin extends BasicWin implements ActionListener{
         add(baseBox);
         validate();
         setVisible(true);
-        this.address = address;
-        this.port = port;
     }
     public static void main(String[] strs){
         try {
@@ -88,8 +92,8 @@ public class GoodsPurchaseWin extends BasicWin implements ActionListener{
                 JOptionPane.showMessageDialog(null, "请输入数量");
                 return;
             }
-            if(user.getWallet()<(goods.price*Integer.valueOf(tfGnum.getText()))) {
-                JOptionPane.showMessageDialog(null, "余额不足！请充值");
+            if(user.getWallet()<(goods.getPrice()*Integer.valueOf(tfGnum.getText()))) {
+                JOptionPane.showMessageDialog(null, "余额不足");
                 return;
             }
             try {
@@ -97,16 +101,33 @@ public class GoodsPurchaseWin extends BasicWin implements ActionListener{
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
                 DataInputStream in = new DataInputStream(socket.getInputStream());
                 out.writeUTF("$purchaseRequest$");
-                out.writeUTF(tfGnum.getText()+"#"+goods.gid);
+                out.writeUTF(String.valueOf(user.getToken())+"#"+goods.getGid()+"#"+tfGnum.getText());
                 String msg1 = in.readUTF();
-                if(msg1.compareTo("$purchaseRequest$") == 0){
+                if(msg1.compareTo("$purchaseResponse$") == 0){
                     String msg2 = in.readUTF();
-                    if(msg2.compareTo("success") == 0){
+                    String strs[] = msg2.split("#");
+                    if(strs[0].compareTo("success") == 0){
+                        user.setWallet(Double.valueOf(strs[1]));
                         JOptionPane.showMessageDialog(null, "支付成功");
+                        jLabelWallet.setText(String.valueOf(user.getWallet()));
                         tfGnum.setEnabled(false);
-                        //TODO 支付成功成功后操作
-                    }else if(msg2.compareTo("failure") == 0){
-                        JOptionPane.showMessageDialog(null, "支付失败");
+                        btnPurchs.setEnabled(false);
+                    }else if(strs[0].compareTo("failure") == 0){
+                        switch(strs[1]){
+                            case "no_user":{
+                                JOptionPane.showMessageDialog(null, "支付失败,未登录或登录过期");
+                                break;
+                            }
+                            case "none":
+                                JOptionPane.showMessageDialog(null, "支付失败,商品不存在或已下架");
+                                break;
+                            case "lack_stock":
+                                JOptionPane.showMessageDialog(null, "支付失败,库存数量不足");
+                                break;
+                            case "lack_wallet":
+                                JOptionPane.showMessageDialog(null, "支付失败,钱包余额不足");
+                        }
+
                     }
                 }
             }catch(Exception ee){
