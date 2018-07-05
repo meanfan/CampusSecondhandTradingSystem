@@ -110,6 +110,7 @@ public class RegisterWin extends BasicWin implements ActionListener {
                     if(msg2[0].compareTo("success") == 0){
                         JOptionPane.showMessageDialog(null, "注册请求发送成功，请等待批准");
                         tfUname.setEnabled(false);
+                        tfNickname.setEnabled(false);
                         tfPwd.setEnabled(false);
                         tfRepPwd.setEnabled(false);
                         btnSubmit.setEnabled(false);

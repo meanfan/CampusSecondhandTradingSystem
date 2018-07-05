@@ -139,12 +139,13 @@ public class LoginWin extends BasicWin implements ActionListener {
                 socket.close();
             }catch(Exception ee){
                 JOptionPane.showMessageDialog(null, "与服务器通信失败");
-                return;
             }
         }else if(bt == btnRegister){
             new RegisterWin();
         }else if(bt == btnGuest){
             new MainWin(null);
+            this.dispose();
+
         }
     }
 }

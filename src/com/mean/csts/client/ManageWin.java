@@ -9,13 +9,13 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.sql.SQLException;
 import java.util.Vector;
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-
 import com.mean.csts.data.User;
 
 public class ManageWin  extends BasicWin implements ActionListener,TableModelListener {
@@ -52,7 +52,7 @@ public class ManageWin  extends BasicWin implements ActionListener,TableModelLis
         {
             Duid[i]=0;
         }
-        btnSearch=new JButton("搜索");
+        btnSearch=new JButton("查询全部");
         btnAdd =new JButton("添加");
         btnDelete =new JButton("删除");
         btnSubmit=new JButton("提交");
@@ -72,6 +72,27 @@ public class ManageWin  extends BasicWin implements ActionListener,TableModelLis
         list.addActionListener(this);
         tfsearch=new JTextField(20);
         tfsearch.setText("");
+        tfsearch.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                //System.out.println("!!!");
+                if(tfsearch.getText().trim().equals("")){
+                    btnSearch.setText("查询全部");
+                }else{
+                    btnSearch.setText("    查询    ");
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+
+            }
+        });
         boxH1=Box.createHorizontalBox();
         boxH2=Box.createHorizontalBox();
         pSouth=new JPanel();
@@ -101,6 +122,7 @@ public class ManageWin  extends BasicWin implements ActionListener,TableModelLis
         this.port = port;
         validate();
         setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     public static void main(String[] args){
         try {

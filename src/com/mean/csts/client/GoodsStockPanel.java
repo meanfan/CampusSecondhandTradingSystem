@@ -164,10 +164,6 @@ public class GoodsStockPanel extends JPanel implements ActionListener{
                     String msg2 = in.readUTF();
                     if(msg2.compareTo("success") == 0){
                         JOptionPane.showMessageDialog(null, "发布成功");
-                        tfGname.setEnabled(false);
-                        tfGnum.setEnabled(false);
-                        //TODO 发布成功成功后操作
-
                     }else if(msg2.compareTo("failure") == 0){
                         JOptionPane.showMessageDialog(null, "发布失败");
                     }
