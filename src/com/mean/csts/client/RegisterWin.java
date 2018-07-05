@@ -28,7 +28,6 @@ public class RegisterWin extends BasicWin implements ActionListener {
         boxV1.add(new JLabel("密码："));
         boxV1.add(Box.createVerticalStrut(16));
         boxV1.add(new JLabel("确认密码："));
-
         boxV2 = Box.createVerticalBox();
         tfUname = new JTextField(16);
         tfUname.setText("");
@@ -76,8 +75,9 @@ public class RegisterWin extends BasicWin implements ActionListener {
         new RegisterWin();
     }
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e) {   //注册
         JButton bt = (JButton) e.getSource();
+        //输入内容合法性检查
         if (bt == btnSubmit) {
             if (tfUname.getText().length() == 0) {
                 JOptionPane.showMessageDialog(null, "请输入用户名");
@@ -98,16 +98,16 @@ public class RegisterWin extends BasicWin implements ActionListener {
                 JOptionPane.showMessageDialog(null, "两次密码输入不一致，请重新输入");
                 return;
             }
-            try {
+            try {       //与服务器通讯
                 socket = new Socket(super.ADDRESS, super.PORT);
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
                 DataInputStream in = new DataInputStream(socket.getInputStream());
-                out.writeUTF("$register$");
-                out.writeUTF(tfUname.getText() + "#" + tfNickname.getText()+"#" + tfPwd.getText());
+                out.writeUTF("$register$");          //请求类型
+                out.writeUTF(tfUname.getText() + "#" + tfNickname.getText()+"#" + tfPwd.getText()); //请求数据
                 String msg1 = in.readUTF();
-                if(msg1.compareTo("$register$") == 0){
+                if(msg1.compareTo("$register$") == 0){  //回复类型
                     String[] msg2 = in.readUTF().split("#");
-                    if(msg2[0].compareTo("success") == 0){
+                    if(msg2[0].compareTo("success") == 0){ //回复数据
                         JOptionPane.showMessageDialog(null, "注册请求发送成功，请等待批准");
                         tfUname.setEnabled(false);
                         tfNickname.setEnabled(false);
@@ -117,7 +117,6 @@ public class RegisterWin extends BasicWin implements ActionListener {
                         btnSubmit.setText("等待批准");
                     }else if(msg2[0].compareTo("failure") == 0){
                         JOptionPane.showMessageDialog(null, "注册失败，用户名已被占用");
-
                     }
                 }
                 socket.close();

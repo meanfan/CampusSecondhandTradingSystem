@@ -130,8 +130,8 @@ public class GoodsStockPanel extends JPanel implements ActionListener{
             validate();
 
         }
-        if(bt==btnRelease) {
-            if(user == null){
+        if(bt==btnRelease) {     //发布商品
+            if(user == null){   //数据合法性检查
                 JOptionPane.showMessageDialog(null, "未登录不能发布商品");
                 return;
             }
@@ -155,14 +155,14 @@ public class GoodsStockPanel extends JPanel implements ActionListener{
                 socket = new Socket(address, port);
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
                 DataInputStream in = new DataInputStream(socket.getInputStream());
-                out.writeUTF("$GoodsStock$");
-                out.writeUTF(String.valueOf(user.getToken()));
+                out.writeUTF("$GoodsStock$"); //请求类型
+                out.writeUTF(String.valueOf(user.getToken())); //请求数据
                 //out.write(image2byte(path));
                 out.writeUTF(tfGname.getText() + "#" + tfGnum.getText()+"#"+tfGprice.getText()+"#"+tfGcontent.getText());
                 String msg1 = in.readUTF();
-                if(msg1.compareTo("$GoodsStock$") == 0){
-                    String msg2 = in.readUTF();
-                    if(msg2.compareTo("success") == 0){
+                if(msg1.compareTo("$GoodsStock$") == 0){ //回复类型
+                    String msg2 = in.readUTF();          //回复数据
+                    if(msg2.compareTo("success") == 0){  //回复数据处理
                         JOptionPane.showMessageDialog(null, "发布成功");
                     }else if(msg2.compareTo("failure") == 0){
                         JOptionPane.showMessageDialog(null, "发布失败");

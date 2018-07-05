@@ -6,7 +6,7 @@ import com.mean.csts.data.User;
 import java.sql.*;
 
 public class SQLOperator {
-    public static boolean insertUser(Connection connection, User user){
+    public static boolean insertUser(Connection connection, User user){ //添加用户
         String sql = "insert into user (type,username,nickname,password)" + "values(?,?,?,?)";
         try {
             //预处理sql语句
@@ -26,7 +26,7 @@ public class SQLOperator {
             return false;
         }
     }
-    public static boolean updateUser(Connection connection, User user){
+    public static boolean updateUser(Connection connection, User user){ //更新用户
         if(user.getUid() == -2){ //新增用户
             String sql = "insert into user (type,username,nickname,password,wallet)" + "values(?,?,?,?,?)";
             try {
@@ -71,7 +71,7 @@ public class SQLOperator {
             }
         }
     }
-    public static boolean insertGoods(Connection connection, Goods goods,byte[] image,int uid){
+    public static boolean insertGoods(Connection connection, Goods goods,byte[] image,int uid){  //添加商品
         String sql = "insert into goods (name,amount,image,content,price,uid)" + "values(?,?,?,?,?,?)";
         try {
             //预处理sql语句
@@ -94,7 +94,7 @@ public class SQLOperator {
             return false;
         }
     }
-    public static Goods[] getGoods(Connection connection, int page, int limit){
+    public static Goods[] getGoods(Connection connection, int page, int limit){          //获得商品
         int count=0;
         int totalPages=0;
         Statement statement;
@@ -162,7 +162,7 @@ public class SQLOperator {
         } catch (SQLException e) { e.printStackTrace(); }
         return goods;
     }
-    public static Goods getGoodsByGid(Connection connection, int gid){
+    public static Goods getGoodsByGid(Connection connection, int gid){                  //根据gid获得商品
         Statement statement;
         ResultSet resultSet;
         Goods goods;
@@ -194,7 +194,7 @@ public class SQLOperator {
         }
 
     }
-    public static boolean deleteUser(Connection connection, int uid){
+    public static boolean deleteUser(Connection connection, int uid){             //根据uid删除用户
         Statement statement;
         try {
             statement = connection.createStatement();
@@ -209,7 +209,7 @@ public class SQLOperator {
         }
 
     }
-    public static User loginAuth(Connection connection,User user){
+    public static User loginAuth(Connection connection,User user){                //用户密码验证
         String sql = "select * from user where username='"+user.getUname()+"'";
         try {
             Statement statement = connection.createStatement();
@@ -245,7 +245,7 @@ public class SQLOperator {
         return user;
 
     }
-    public static User loginViladate(Connection connection,int token){
+    public static User loginViladate(Connection connection,int token){        //用户登录状态token验证
         String sql = "select * from user where token="+token;
         try {
             Statement statement = connection.createStatement();
@@ -265,7 +265,7 @@ public class SQLOperator {
             //e.printStackTrace();
         }
     }
-    public static boolean setUserToken(Connection connection,int uid,int token){
+    public static boolean setUserToken(Connection connection,int uid,int token){   //设置用户token
         String sql = "update user SET token =? where uid=?";
         try {
             //预处理sql语句
@@ -283,7 +283,7 @@ public class SQLOperator {
             return false;
         }
     }
-    public static boolean setUserWallet(Connection connection,int uid,double wallet){
+    public static boolean setUserWallet(Connection connection,int uid,double wallet){  //设置用户钱包
         String sql = "update user SET wallet =? where uid=?";
         try {
             //预处理sql语句
@@ -301,7 +301,7 @@ public class SQLOperator {
             return false;
         }
     }
-    public static boolean setGoodsAmount(Connection connection,int gid,int amount){
+    public static boolean setGoodsAmount(Connection connection,int gid,int amount){  //更新商品数量
         String sql = "update goods SET amount =? where gid=?";
         try {
             //预处理sql语句
@@ -334,7 +334,7 @@ public class SQLOperator {
     }
 
 
-    public static boolean setUserStatus(Connection connection,int uid,String status){
+    public static boolean setUserStatus(Connection connection,int uid,String status){  //设置用户状态
         String sql = "update user SET status =? where uid=?";
         try {
             //预处理sql语句
@@ -352,7 +352,7 @@ public class SQLOperator {
             return false;
         }
     }
-    public static boolean setUserType(Connection connection,int uid,String type){
+    public static boolean setUserType(Connection connection,int uid,String type){   //设置用户类型
         String sql = "update user SET type =? where uid=?";
         try {
             //预处理sql语句
@@ -370,23 +370,7 @@ public class SQLOperator {
             return false;
         }
     }
-    public static boolean selectUser(Connection connection,User user){
-        String sql = "select uid, type, username, nickname, password from user";
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
-            System.out.println(rs.getString("uid") +" | " + rs.getString("username") +
-                    rs.getString("nickname") + rs.getString("password"));
-            System.out.println("SQLO:用户查询成功");
-            return true;
-        } catch (SQLException e) {
-            System.out.println("SQLO:用户查询失败");
-            e.printStackTrace();
-            return false;
-        }
-
-    }
-    public static User[] getAllUser(Connection connection){
+    public static User[] getAllUser(Connection connection){          //获得所有用户
         String sql1 = "select count(*) as num from user"; //获得总数
 
         String sql2 = "select * from user";
@@ -422,7 +406,7 @@ public class SQLOperator {
             return null;
         }
     }
-    public static User[] getAllUnapprovedUser(Connection connection){
+    public static User[] getAllNewUser(Connection connection){   //获得所有新用户
         String sql1 = "select count(*) as num from user where type='new'";
         String sql2 = "select * from user where type='new'";
         try {
@@ -453,7 +437,7 @@ public class SQLOperator {
             }
             return users;
         } catch (SQLException e) {
-            System.out.println("SQLO:无未批准用户");
+            System.out.println("SQLO:无新用户");
             e.printStackTrace();
             return null;
         }

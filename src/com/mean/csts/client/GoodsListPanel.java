@@ -102,18 +102,18 @@ public class GoodsListPanel extends JPanel implements ActionListener {
         jPanel.validate();
         validate();
     }
-    private Goods[] getGoods(int page,int num){
+    private Goods[] getGoods(int page,int num){         //从服务器获取指定页号和数量的商品
         goodsList = new Goods[num];
         try {
             socket = new Socket(address, port);
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
             DataInputStream in = new DataInputStream(socket.getInputStream());
-            out.writeUTF("$getGoods$");
-            out.writeUTF(String.valueOf(page)+"#"+String.valueOf(num));
+            out.writeUTF("$getGoods$");             //请求类型
+            out.writeUTF(String.valueOf(page)+"#"+String.valueOf(num)); //请求数据，页号和数量
             String msg1 = in.readUTF();
-            if(msg1.compareTo("$GoodsInfo$") == 0){
-                String[] msg2 = in.readUTF().split("#");
-                if(msg2[0].compareTo("success") == 0){
+            if(msg1.compareTo("$GoodsInfo$") == 0){              //回复类型
+                String[] msg2 = in.readUTF().split("#");  //回复数据
+                if(msg2[0].compareTo("success") == 0){           //回复数据处理判断
                     int gotNum = Integer.valueOf(msg2[1]);
                     System.out.println("GotNum:"+gotNum);
                     int i;
@@ -125,7 +125,6 @@ public class GoodsListPanel extends JPanel implements ActionListener {
                         String str3 = in.readUTF();
                         //System.out.println("str("+str3+")");
                         String[] msg3 = str3.split("#");
-
                         goodsList[i].setGid(Integer.valueOf(msg3[0]));
                         goodsList[i].setName(msg3[1]);
                         goodsList[i].setAmount(Integer.valueOf(msg3[2]));
@@ -139,7 +138,7 @@ public class GoodsListPanel extends JPanel implements ActionListener {
                     }
                     System.out.println("商品获得数量:"+gotNum);
                     return goodsList;
-                }else if(msg2[0].compareTo("failure") == 0){
+                }else if(msg2[0].compareTo("failure") == 0){ //失败处理
                         System.out.println("无商品");
                         goodsList = new Goods[num];
                         for(int i=0;i<num;i++)
@@ -163,17 +162,17 @@ public class GoodsListPanel extends JPanel implements ActionListener {
         JButton bt = (JButton)e.getSource();
         if(bt == btnPrev){
             if(currenPage>1){
-                refreshGoodsList(currenPage-1,numOfEachPage);
+                refreshGoodsList(currenPage-1,numOfEachPage); //获取上一页
             }
             return;
         }
         if(bt == btnNext){
-            refreshGoodsList(currenPage+1,numOfEachPage);
+            refreshGoodsList(currenPage+1,numOfEachPage);     //获取下一页
             return;
         }
     }
 }
-
+/*商品条目类*/
 class ItemView extends JPanel implements MouseListener {
     private Goods goods;
     private User user;
@@ -196,13 +195,6 @@ class ItemView extends JPanel implements MouseListener {
         gl.setHgap(4);
         setLayout(gl);
         labelIcon = new JLabel();
-        /*
-        if(goods.getImage()!=null){
-            labelIcon.setIcon(new ImageIcon(byte2image(goods.getImage())));
-        }else{
-            labelIcon.setIcon(new ImageIcon("src/com/mean/csts/client/default.jpg"));
-        }
-        */
         labelIcon.setIcon(new ImageIcon("src/com/mean/csts/client/default.jpg"));
         add(labelIcon);
         labelName= new JLabel();
@@ -232,7 +224,7 @@ class ItemView extends JPanel implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         if(user != null)
-            new GoodsPurchaseWin(address,port,goods,user);
+            new GoodsPurchaseWin(address,port,goods,user);  //购买
         else {
             JOptionPane.showMessageDialog(null, "未登录不能购买");
 

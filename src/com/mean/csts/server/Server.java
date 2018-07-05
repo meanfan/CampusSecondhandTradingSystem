@@ -1,25 +1,17 @@
 package com.mean.csts.server;
 
-
-import com.mean.csts.data.User;
-
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 public class Server {
-    public static final int PORT = 2333;
-    private static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/csts?&useSSL=false&allowPublicKeyRetrieval=true&serverTimeZone=Asia/Shanghai";
-    private static final String CONNECTION_ACCOUNT = "csts_server";
-    private static final String CONNECTION_PWD = "sR8yicaW4XDKV2HC";
-    public static List<User> usrlst = new ArrayList<>();
-    public static HashMap<String,String> usrLoggedin = new HashMap<>();
+    public static final int PORT = 2333; //端口
+    private static final String CONNECTION_URL = //数据库URL
+            "jdbc:mysql://localhost:3306/csts?&useSSL=false&allowPublicKeyRetrieval=true&serverTimeZone=Asia/Shanghai";
+    private static final String CONNECTION_ACCOUNT = "csts_server"; //数据库用户名
+    private static final String CONNECTION_PWD = "sR8yicaW4XDKV2HC"; //数据库密码
     protected Connection connection;
     protected Statement statement;
     public void init(){
@@ -27,14 +19,14 @@ public class Server {
         try {
             System.out.println("连接到数据库...");
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(CONNECTION_URL, CONNECTION_ACCOUNT, CONNECTION_PWD);
+            connection = DriverManager.getConnection(CONNECTION_URL, CONNECTION_ACCOUNT, CONNECTION_PWD); //获取数据库连接
             if(!connection.isClosed()) {
                 System.out.println("数据库连接成功");
             }else{
                 System.out.println("数据库连接已关闭");
                 System.exit(1);
             }
-            statement = connection.createStatement();
+            //statement = connection.createStatement();
         } catch (Exception e) {
             System.out.println("数据库连接失败");
             e.printStackTrace();
@@ -48,7 +40,7 @@ public class Server {
                 Socket client = serversocket.accept();
                 //阻塞消除，处理连接请求
                 System.out.println("处理请求...");
-                new MsgHandlerThread(client, connection);
+                new MsgHandlerThread(client, connection); //新线程处理消息
             }
         }catch (Exception e){
             System.out.println("Socket异常:"+ e.getMessage());

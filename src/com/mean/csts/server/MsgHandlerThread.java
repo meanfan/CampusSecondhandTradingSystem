@@ -3,31 +3,22 @@ package com.mean.csts.server;
 import com.mean.csts.data.Goods;
 import com.mean.csts.data.User;
 import com.mean.csts.data.UserNew;
-import com.mean.csts.data.UserNormal;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Random;
 import java.util.Vector;
 
 public class MsgHandlerThread implements Runnable{
     private Socket socket;
     private Connection connection;
-    private Statement statement;
 
     public MsgHandlerThread(Socket client, Connection connection){
         socket = client;
         this.connection = connection;
-        try {
-            statement = connection.createStatement();
-        } catch (SQLException e) {
-            System.out.println("数据库获取statement失败");
-        }
         new Thread(this).start();
         System.out.println("线程调用处理");
     }
@@ -40,7 +31,7 @@ public class MsgHandlerThread implements Runnable{
             String clientInStr = in.readUTF();
             switch(clientInStr){
                 case "$register$": {
-                    String registerInfo = in.readUTF(); //获取注册信息
+                    String registerInfo = in.readUTF();            //获取注册信息
                     String[] strs = registerInfo.split("#");
                     User newUser = new User();
                     newUser.setType(UserNew.Type);
@@ -57,7 +48,7 @@ public class MsgHandlerThread implements Runnable{
                     }
                     break;
                 }
-                case "$login$": {
+                case "$login$": {                                  //获取登录信息
                     String loginInfo = in.readUTF();
                     String[] strs = loginInfo.split("#");
                     User user = new User();
@@ -90,9 +81,9 @@ public class MsgHandlerThread implements Runnable{
                     }
                     break;
                 }
-                case "$getGoods$": {
+                case "$getGoods$": {                            //获取商品信息
                     System.out.println("收到请求：getGoods");
-                    String str = in.readUTF();
+                    String str = in.readUTF();     //获取商品信息
                     String[] strs = str.split("#");
                     int page = Integer.valueOf(strs[0]);
                     int num = Integer.valueOf(strs[1]);
@@ -136,7 +127,7 @@ public class MsgHandlerThread implements Runnable{
 
                     break;
                 }
-                case "$purchaseRequest$": {
+                case "$purchaseRequest$": {                            //购买请求
                     String msg = in.readUTF();
                     String[] strs = msg.split("#");
                     int token = Integer.valueOf(strs[0]);
@@ -169,7 +160,7 @@ public class MsgHandlerThread implements Runnable{
                     }
                     break;
                 }
-                case "$GoodsStock$":{
+                case "$GoodsStock$":{                                 //上架商品
                     int token = Integer.valueOf(in.readUTF());
                     byte[] buf=new byte[3145728];
                     //in.read(buf);
@@ -194,7 +185,7 @@ public class MsgHandlerThread implements Runnable{
                     }
                     break;
                 }
-                case "$requestAllUser$":{
+                case "$requestAllUser$":{                            //请求所有用户信息
                     int num;
                     User[] users;
                     users = SQLOperator.getAllUser(connection);
@@ -221,7 +212,7 @@ public class MsgHandlerThread implements Runnable{
                     }
                     break;
                 }
-                case "$UserDelete$":{
+                case "$UserDelete$":{                                //删除用户
                     Vector<Integer> deleteFailUid= new Vector<>();
                     String numStr = in.readUTF();
                     Integer num = Integer.valueOf(numStr);
@@ -236,7 +227,7 @@ public class MsgHandlerThread implements Runnable{
                     }
                     break;
                 }
-                case "$UserUpdate$":{
+                case "$UserUpdate$":{                              //更新用户
                     String numStr = in.readUTF();
                     Integer num = Integer.valueOf(numStr);
                     System.out.println("UserUpdate num:"+num);
@@ -254,10 +245,10 @@ public class MsgHandlerThread implements Runnable{
                     }
                     break;
                 }
-                case "$requestAllNewUser$":{
+                case "$requestAllNewUser$":{                      //获取所有新用户
                     int num;
                     User[] users;
-                    users = SQLOperator.getAllUnapprovedUser(connection);
+                    users = SQLOperator.getAllNewUser(connection);
                     if(users == null){
                         num = 0;
                     }else {
@@ -277,7 +268,7 @@ public class MsgHandlerThread implements Runnable{
                     }
                     break;
                 }
-                case "$NewUserApprove$":{
+                case "$NewUserApprove$":{                         //批准新用户
                     String[] strs = in.readUTF().split("#");
                     int uid = Integer.valueOf(strs[0]);
                     String type = strs[1];
@@ -289,7 +280,7 @@ public class MsgHandlerThread implements Runnable{
                         out.writeUTF("failure");
                     }
                 }
-                case "$NewUserRefuse$":{
+                case "$NewUserRefuse$":{                         //拒绝新用户
                     String strs = in.readUTF();
                     int uid = Integer.valueOf(strs);
                     if(SQLOperator.deleteUser(connection,uid)){

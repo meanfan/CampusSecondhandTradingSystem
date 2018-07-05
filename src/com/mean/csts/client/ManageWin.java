@@ -29,7 +29,6 @@ public class ManageWin  extends BasicWin implements ActionListener,TableModelLis
     private JTextField tfsearch;
     private JButton btnSearch, btnAdd, btnDelete,btnSubmit,btnApprove,btnRefuse;
     private JTable table;
-    public Object domain;
     private DefaultTableModel tableModel;
     private Vector<Integer> uidDeleted;
     //private Vector<Integer> rowAdded;
@@ -222,8 +221,8 @@ public class ManageWin  extends BasicWin implements ActionListener,TableModelLis
                         return;
                     }
                 }
-            }else if(list.getSelectedIndex() == 1){ //用户批准
-                if(tfsearch.getText().length() == 0) //为空则获取所有
+            }else if(list.getSelectedIndex() == 1){   //用户批准
+                if(tfsearch.getText().length() == 0)  //为空则获取所有
                 {
                     try {
                         Socket socket = new Socket(address, port);
@@ -283,24 +282,24 @@ public class ManageWin  extends BasicWin implements ActionListener,TableModelLis
             if(table != null){
                 Vector<String[]> dataVector=new Vector<String[]>();
                 tableModel.addRow(dataVector);
-                int count=table.getRowCount();//获得总行数
+                int count=table.getRowCount();                    //获得总行数
                 table.requestFocus();
-                table.setRowSelectionInterval(count-1, count-1);//最后一行获得焦点
+                table.setRowSelectionInterval(count-1, count-1);  //最后一行获得焦点
             }
         }
         else if(e.getSource() == btnDelete) {
             int selectedRow = table.getSelectedRow();
             if (selectedRow != -1) {
                 String uidStr = (String) tableModel.getValueAt(selectedRow, 0);
-                if (uidStr != null) { //原行删除
+                if (uidStr != null) {                             //原行删除
                     int uid = Integer.valueOf(uidStr);
                     if (!uidDeleted.contains(uid)) {
                         uidDeleted.add(uid);
                     }
                 } else {
-                    rowUpdated.removeElement(selectedRow); //新行删除
+                    rowUpdated.removeElement(selectedRow);         //新行删除
                 }
-                for (int i = 0; i < rowUpdated.size(); i++) { //rowUpdate后续行号更新
+                for (int i = 0; i < rowUpdated.size(); i++) {       //rowUpdate后续行号更新
                     if (rowUpdated.get(i) > selectedRow) {
                         rowUpdated.set(i, rowUpdated.get(i) - 1);
                     }
@@ -317,8 +316,8 @@ public class ManageWin  extends BasicWin implements ActionListener,TableModelLis
             for(int i=0;i<rowUpdated.size();i++){
                 System.out.println(rowUpdated.get(i));
             }
-            sendUidDeleted();
-            sendUserUpdate();
+            sendUidDeleted();      //发送删除用户请求
+            sendUserUpdate();     //发送用户更新请求
         }else if(list == e.getSource()){
             //System.out.println(list.getSelectedItem());
             int selected = list.getSelectedIndex();
@@ -342,7 +341,7 @@ public class ManageWin  extends BasicWin implements ActionListener,TableModelLis
             }
         }else if(e.getSource() == btnApprove){
             int row = table.getSelectedRow();
-            if(row == -1){
+            if(row == -1){ //合法性检查
                 JOptionPane.showMessageDialog(null, "请先在列表中选中用户");
             }else{
                 String uidStr = (String) tableModel.getValueAt(row, 0);
@@ -354,12 +353,12 @@ public class ManageWin  extends BasicWin implements ActionListener,TableModelLis
                     Socket socket = new Socket(address, port);
                     DataInputStream in = new DataInputStream(socket.getInputStream());
                     DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-                    out.writeUTF("$NewUserApprove$");
-                    out.writeUTF(uidStr+"#"+type);
+                    out.writeUTF("$NewUserApprove$");      //请求类型
+                    out.writeUTF(uidStr+"#"+type);         //请求数据,uid和用户类型
                     String str = in.readUTF();
-                    if(str.compareTo("$NewUserApprove$") == 0) {
+                    if(str.compareTo("$NewUserApprove$") == 0) { //回复类型
                         String msg2 = in.readUTF();
-                        if (msg2.compareTo("success") == 0) {
+                        if (msg2.compareTo("success") == 0) {   //回复数据判断处理
                             JOptionPane.showMessageDialog(null, "批准操作成功");
                             tableModel.removeRow(row);
                         } else if (msg2.compareTo("failure") == 0) {
@@ -372,7 +371,7 @@ public class ManageWin  extends BasicWin implements ActionListener,TableModelLis
             }
         }else if(e.getSource() == btnRefuse){
             int row = table.getSelectedRow();
-            if(row == -1){
+            if(row == -1){//合法性检查
                 JOptionPane.showMessageDialog(null, "请先在列表中选中用户");
             }else{
                 String uidStr = (String) tableModel.getValueAt(row, 0);
@@ -380,12 +379,12 @@ public class ManageWin  extends BasicWin implements ActionListener,TableModelLis
                     Socket socket = new Socket(address, port);
                     DataInputStream in = new DataInputStream(socket.getInputStream());
                     DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-                    out.writeUTF("$NewUserRefuse$");
-                    out.writeUTF(uidStr);
+                    out.writeUTF("$NewUserRefuse$");//请求类型
+                    out.writeUTF(uidStr);//请求数据,uid
                     String str = in.readUTF();
-                    if(str.compareTo("$NewUserRefuse$") == 0){
+                    if(str.compareTo("$NewUserRefuse$") == 0){//回复类型
                         String str2 = in.readUTF();
-                        if(str2.compareTo("success") == 0){
+                        if(str2.compareTo("success") == 0){//回复数据判断处理
                             JOptionPane.showMessageDialog(null, "拒绝操作成功");
                         } else if (str2.compareTo("failure") == 0) {
                             JOptionPane.showMessageDialog(null, "拒绝操作失败");
@@ -406,9 +405,9 @@ public class ManageWin  extends BasicWin implements ActionListener,TableModelLis
             Socket socket = new Socket(address, port);
             DataInputStream in = new DataInputStream(socket.getInputStream());
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-            out.writeUTF("$UserDelete$");
+            out.writeUTF("$UserDelete$"); //请求类型
             int num = uidDeleted.size();
-            out.writeUTF(String.valueOf(num));
+            out.writeUTF(String.valueOf(num)); //请求数据
             for(int i=0;i<num;i++){
                 out.writeUTF(uidDeleted.get(i).toString());
             }
@@ -424,14 +423,13 @@ public class ManageWin  extends BasicWin implements ActionListener,TableModelLis
                 break;
             }
         }
-
         try {
             Socket socket = new Socket(address, port);
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
             DataInputStream in = new DataInputStream(socket.getInputStream());
-            out.writeUTF("$UserUpdate$");
+            out.writeUTF("$UserUpdate$");     //请求类型
             int num = rowUpdated.size();
-            out.writeUTF(String.valueOf(num));
+            out.writeUTF(String.valueOf(num));   //请求数据
             for(int i=0;i<num;i++){
                 int row = rowUpdated.get(i);
                 String uidStr = (String) tableModel.getValueAt(row,0);

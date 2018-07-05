@@ -99,16 +99,16 @@ public class LoginWin extends BasicWin implements ActionListener {
                 Socket socket = new Socket(super.ADDRESS, super.PORT);
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
                 DataInputStream in = new DataInputStream(socket.getInputStream());
-                out.writeUTF("$login$");
+                out.writeUTF("$login$"); //发送请求类型
                 out.writeUTF(tfUname.getText() + "#" + tfPwd.getText());
                 String msg1 = in.readUTF();
-                if(msg1.compareTo("$login$") == 0){
+                if(msg1.compareTo("$login$") == 0){  //回复请求类型
                     String[] msg2 = in.readUTF().split("#");
-                    if(msg2[0].compareTo("success") == 0){
+                    if(msg2[0].compareTo("success") == 0){ //回复内容判断处理
                         JOptionPane.showMessageDialog(null, "登录成功");
                         tfUname.setEnabled(false);
                         tfPwd.setEnabled(false);
-                        User currentUser = new User();
+                        User currentUser = new User(); // 创建用户实例
                         currentUser.setUid(Integer.valueOf(msg2[1]));
                         currentUser.setType(msg2[2]);
                         currentUser.setUname(msg2[3]);
@@ -132,7 +132,6 @@ public class LoginWin extends BasicWin implements ActionListener {
                             JOptionPane.showMessageDialog(null, "登录失败，密码不正确");
                         }else if(msg2[1].compareTo("user_new")==0) {
                             JOptionPane.showMessageDialog(null, "登录失败，注册还未被批准");
-
                         }
                     }
                 }
@@ -141,11 +140,10 @@ public class LoginWin extends BasicWin implements ActionListener {
                 JOptionPane.showMessageDialog(null, "与服务器通信失败");
             }
         }else if(bt == btnRegister){
-            new RegisterWin();
+            new RegisterWin(); //注册功能
         }else if(bt == btnGuest){
-            new MainWin(null);
+            new MainWin(null); //游客登录
             this.dispose();
-
         }
     }
 }

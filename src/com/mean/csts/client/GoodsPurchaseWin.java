@@ -88,11 +88,12 @@ public class GoodsPurchaseWin extends BasicWin implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         JButton bt = (JButton)e.getSource();
         if(bt==btnPurchs) {
+            //数据合法性判断
             if(tfGnum.getText().length() == 0) {
                 JOptionPane.showMessageDialog(null, "请输入数量");
                 return;
             }
-            if(user.getWallet()<(goods.getPrice()*Integer.valueOf(tfGnum.getText()))) {
+            if(user.getWallet()<(goods.getPrice()*Integer.valueOf(tfGnum.getText()))) { //余额判断
                 JOptionPane.showMessageDialog(null, "余额不足");
                 return;
             }
@@ -100,19 +101,19 @@ public class GoodsPurchaseWin extends BasicWin implements ActionListener{
                 Socket socket = new Socket(address, port);
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
                 DataInputStream in = new DataInputStream(socket.getInputStream());
-                out.writeUTF("$purchaseRequest$");
-                out.writeUTF(String.valueOf(user.getToken())+"#"+goods.getGid()+"#"+tfGnum.getText());
+                out.writeUTF("$purchaseRequest$"); //请求类型
+                out.writeUTF(String.valueOf(user.getToken())+"#"+goods.getGid()+"#"+tfGnum.getText()); //请求数据
                 String msg1 = in.readUTF();
-                if(msg1.compareTo("$purchaseResponse$") == 0){
+                if(msg1.compareTo("$purchaseResponse$") == 0){ //回复类型
                     String msg2 = in.readUTF();
                     String strs[] = msg2.split("#");
-                    if(strs[0].compareTo("success") == 0){
+                    if(strs[0].compareTo("success") == 0){ //支付成功处理
                         user.setWallet(Double.valueOf(strs[1]));
                         JOptionPane.showMessageDialog(null, "支付成功");
                         jLabelWallet.setText(String.valueOf(user.getWallet()));
                         tfGnum.setEnabled(false);
                         btnPurchs.setEnabled(false);
-                    }else if(strs[0].compareTo("failure") == 0){
+                    }else if(strs[0].compareTo("failure") == 0){ //支付失败处理
                         switch(strs[1]){
                             case "no_user":{
                                 JOptionPane.showMessageDialog(null, "支付失败,未登录或登录过期");
