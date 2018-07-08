@@ -22,7 +22,7 @@ public class AccountPanel extends JPanel implements ActionListener {
     private Icon icon1 = null;
     private JLabel imageView;
 
-    public AccountPanel(String address, int port) {
+    public AccountPanel(InetAddress address, int port) {
         this.user = user;
         boxV1 = Box.createVerticalBox();
         boxV1.add(new JLabel("用户名："));
@@ -60,11 +60,7 @@ public class AccountPanel extends JPanel implements ActionListener {
         topBox.add(subBoxH2);
         add(topBox);
         validate();
-        try {
-            this.address = InetAddress.getByName(address);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
+        this.address = address;
         this.port = port;
     }
 

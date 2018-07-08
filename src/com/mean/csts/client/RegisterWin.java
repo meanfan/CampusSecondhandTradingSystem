@@ -17,6 +17,7 @@ public class RegisterWin extends BasicWin implements ActionListener {
     private JTextField tfUname, tfNickname, tfPwd, tfRepPwd;
     private JButton btnSubmit, btnClose;
     private InetAddress address;
+    private int port;
     private Socket socket;
     RegisterWin(){
         super(title,winWedth,winHeight);
@@ -66,9 +67,9 @@ public class RegisterWin extends BasicWin implements ActionListener {
         add(baseBox);
         validate();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        try {
-            address = InetAddress.getByName(super.ADDRESS);
-        } catch (UnknownHostException e) {e.printStackTrace(); }
+        address = super.ADDRESS;
+        port = super.PORT;
+
 
     }
     public static void main(String[] args) {
@@ -99,7 +100,7 @@ public class RegisterWin extends BasicWin implements ActionListener {
                 return;
             }
             try {       //与服务器通讯
-                socket = new Socket(super.ADDRESS, super.PORT);
+                socket = new Socket(address, port);
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
                 DataInputStream in = new DataInputStream(socket.getInputStream());
                 out.writeUTF("$register$");          //请求类型

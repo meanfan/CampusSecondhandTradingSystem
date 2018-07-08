@@ -5,9 +5,10 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public class BasicWin extends JFrame {
-    public String ADDRESS = "localhost";
+    public InetAddress ADDRESS;
     public int PORT = 2333;
     public int SCREEN_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
     public int SCREEN_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
@@ -26,6 +27,10 @@ public class BasicWin extends JFrame {
             }
         });
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        try {
+            ADDRESS = InetAddress.getByName("localhost");
+        } catch (UnknownHostException e) {e.printStackTrace(); }
+        PORT = 2333;
     }
     public BasicWin(String title,int winWedth,int winHeight) {
         this();

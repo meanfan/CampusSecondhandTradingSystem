@@ -70,9 +70,7 @@ public class LoginWin extends BasicWin implements ActionListener {
         add(topBox);
         validate();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        try {
-            address = InetAddress.getByName(super.ADDRESS);
-        } catch (UnknownHostException e) { e.printStackTrace(); }
+        address = super.ADDRESS;
         this.port = super.PORT;
         //this.msgListener = msgListener;
     }
@@ -117,7 +115,7 @@ public class LoginWin extends BasicWin implements ActionListener {
                         currentUser.setStatus("online");
                         currentUser.setWallet(Double.valueOf(msg2[6]));
                         if(currentUser.getType().compareTo("admin") == 0){
-                            new ManageWin(address,port);
+                            new ManageWin(currentUser);
                         }else if(currentUser.getType().compareTo("normal") == 0){
                             new MainWin(currentUser);
                         }else if(currentUser.getType().compareTo("guest") == 0){

@@ -8,7 +8,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.Vector;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -44,8 +43,8 @@ public class ManageWin  extends BasicWin implements ActionListener,TableModelLis
     private int Duid[]=new int[20];
     public InetAddress address;
     public int port;
-    public User user;
-    public ManageWin(InetAddress address,int port) {
+    public User currentUser;
+    public ManageWin(User user) {
         super(title,winWedth,winHeight);
         for(int i=0;i<20;i++)
         {
@@ -117,16 +116,15 @@ public class ManageWin  extends BasicWin implements ActionListener,TableModelLis
         //jScrollPane.setSize(500,600);
         //jScrollPane.add();
         add(jScrollPane,BorderLayout.CENTER);
-        this.address = address;
-        this.port = port;
+        this.address = super.ADDRESS;
+        this.port = super.PORT;
+        this.currentUser = user;
         validate();
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     public static void main(String[] args){
-        try {
-            new ManageWin(InetAddress.getByName("localhost"),2333);
-        } catch (UnknownHostException e) { e.printStackTrace(); }
+            new ManageWin(new User());
     }
 
     @Override
@@ -141,8 +139,9 @@ public class ManageWin  extends BasicWin implements ActionListener,TableModelLis
                         DataOutputStream out = new DataOutputStream(socket.getOutputStream());
                         DataInputStream in = new DataInputStream(socket.getInputStream());
                         out.writeUTF("$requestAllUser$");
+                        out.writeUTF(String.valueOf(currentUser.getToken()));
                         String msg1 = in.readUTF();
-                        if(msg1.compareTo("$requestAllUser$") == 0){
+                        if(msg1.compareTo("$responseAllUser$") == 0){
                             String msg2 = in.readUTF();
                             int num = Integer.valueOf(msg2);
                             System.out.println(num);
@@ -177,10 +176,11 @@ public class ManageWin  extends BasicWin implements ActionListener,TableModelLis
                                 rowUpdated = new Vector<>();
                                 validate();
                             }else{
-                                JOptionPane.showMessageDialog(null, "没有用户");
+                                JOptionPane.showMessageDialog(null, "没有用户或没有权限");
                             }
                         }
                     }catch(Exception ee){
+                        ee.printStackTrace();
                         JOptionPane.showMessageDialog(null, "与服务器通信失败");
                         return;
                     }
@@ -229,8 +229,9 @@ public class ManageWin  extends BasicWin implements ActionListener,TableModelLis
                         DataOutputStream out = new DataOutputStream(socket.getOutputStream());
                         DataInputStream in = new DataInputStream(socket.getInputStream());
                         out.writeUTF("$requestAllNewUser$");
+                        out.writeUTF(String.valueOf(currentUser.getToken()));
                         String msg1 = in.readUTF();
-                        if(msg1.compareTo("$requestAllNewUser$") == 0){
+                        if(msg1.compareTo("$responseAllNewUser$") == 0){
                             String msg2 = in.readUTF();
                             int num = Integer.valueOf(msg2);
                             System.out.println(num);
@@ -266,7 +267,7 @@ public class ManageWin  extends BasicWin implements ActionListener,TableModelLis
                             }else{
                                 remove(jScrollPane);
                                 validate();
-                                JOptionPane.showMessageDialog(null, "没有用户");
+                                JOptionPane.showMessageDialog(null, "没有用户或没有权限");
                             }
                         }
                     }catch(Exception ee){

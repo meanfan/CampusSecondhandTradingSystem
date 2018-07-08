@@ -186,15 +186,23 @@ public class MsgHandlerThread implements Runnable{
                     break;
                 }
                 case "$requestAllUser$":{                            //请求所有用户信息
+                    String str = in.readUTF();
+                    int token = Integer.valueOf(str);
+                    User Vila_user = SQLOperator.loginViladate(connection,token);
                     int num;
                     User[] users;
-                    users = SQLOperator.getAllUser(connection);
-                    if(users == null){
+                    if(Vila_user.getType().compareTo("admin")!=0){ //非管理员返回0
                         num = 0;
-                    }else {
-                        num = users.length;
+                        users = null;
+                    }else{
+                        users = SQLOperator.getAllUser(connection);
+                        if(users == null){
+                            num = 0;
+                        }else {
+                            num = users.length;
+                        }
                     }
-                    out.writeUTF("$requestAllUser$");
+                    out.writeUTF("$responseAllUser$");
                     out.writeUTF(String.valueOf(num));
                     for(int i=0;i<num;i++) {
                         if(users[i]==null) {
@@ -208,7 +216,7 @@ public class MsgHandlerThread implements Runnable{
                                 users[i].getStatus()+"#"+
                                 users[i].getWallet()
                         );
-                        System.out.println("user sent");
+                        //System.out.println("user sent");
                     }
                     break;
                 }
@@ -246,15 +254,23 @@ public class MsgHandlerThread implements Runnable{
                     break;
                 }
                 case "$requestAllNewUser$":{                      //获取所有新用户
+                    String str = in.readUTF();
+                    int token = Integer.valueOf(str);
+                    User Vila_user = SQLOperator.loginViladate(connection,token);
                     int num;
                     User[] users;
-                    users = SQLOperator.getAllNewUser(connection);
-                    if(users == null){
+                    if(Vila_user.getType().compareTo("admin")!=0) { //非管理员返回0
                         num = 0;
-                    }else {
-                        num = users.length;
+                        users = null;
+                    }else{
+                        users = SQLOperator.getAllNewUser(connection);
+                        if(users == null){
+                            num = 0;
+                        }else {
+                            num = users.length;
+                        }
                     }
-                    out.writeUTF("$requestAllNewUser$");
+                    out.writeUTF("$responseAllNewUser$");
                     out.writeUTF(String.valueOf(num));
                     for(int i=0;i<num;i++) {
                         if(users[i]==null) {

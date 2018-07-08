@@ -25,7 +25,7 @@ public class GoodsStockPanel extends JPanel implements ActionListener{
     private String path;
     private Icon icon1=null;
     private JLabel imageView;
-    GoodsStockPanel(String address,int port){
+    GoodsStockPanel(InetAddress address,int port){
         super();
         boxV0=Box.createVerticalBox();
         boxV0.add(new JLabel("图片："));
@@ -83,9 +83,7 @@ public class GoodsStockPanel extends JPanel implements ActionListener{
         baseBox.add(Box.createVerticalStrut(100));
         add(baseBox);
         validate();
-        try {
-            this.address = InetAddress.getByName(address);
-        } catch (UnknownHostException e) {e.printStackTrace();}
+        this.address = address;
         this.port = port;
     }
     public void setUser(User user){this.user=user;}

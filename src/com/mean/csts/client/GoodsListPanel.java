@@ -29,14 +29,12 @@ public class GoodsListPanel extends JPanel implements ActionListener {
     public int port;
     private Socket socket;
     private int currenPage, numOfEachPage;
-    public GoodsListPanel(String address,int port) {
+    public GoodsListPanel(InetAddress address,int port) {
         super();
         currenPage = 1;
         numOfEachPage = 5;
         iv = new ItemView[5];
-        try {
-            this.address = InetAddress.getByName(address);
-        } catch (UnknownHostException e) {e.printStackTrace();}
+        this.address = address;
         this.port = port;
         subBox1 = Box.createVerticalBox();
         jPanel = new JPanel();
