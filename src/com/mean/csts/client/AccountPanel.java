@@ -6,6 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -83,7 +86,19 @@ public class AccountPanel extends JPanel implements ActionListener {
         showUserInfo();
     }
 
-    private void logout() {
+    public static void logout(InetAddress address,int port,String uname) {
+        //TODO 登出
+        Socket socket = null;
+        try {
+            socket = new Socket(address, port);
+            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+            DataInputStream in = new DataInputStream(socket.getInputStream());
+            out.writeUTF("$LogoutRequest$"); //请求类型
+            out.writeUTF(uname);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -92,11 +107,11 @@ public class AccountPanel extends JPanel implements ActionListener {
             if (user == null) {
                 System.exit(0);
             } else {
-                logout();
+                logout(address,port,user.getUname());
                 System.exit(0);
             }
         } else if (e.getSource() == btnLogout) {
-            logout();
+            logout(address,port,user.getUname());
             System.exit(0);
         }
     }

@@ -3,6 +3,8 @@ package com.mean.csts.client;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -17,7 +19,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import com.mean.csts.data.User;
 
-public class ManageWin  extends BasicWin implements ActionListener,TableModelListener {
+public class ManageWin  extends BasicWin implements ActionListener,TableModelListener,WindowListener {
     public static String title = "校园二手商品交易平台-管理";
     public static int winWedth = 520;
     public static int winHeight = 750;
@@ -121,7 +123,8 @@ public class ManageWin  extends BasicWin implements ActionListener,TableModelLis
         this.currentUser = user;
         validate();
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        addWindowListener(this);
+
     }
     public static void main(String[] args){
             new ManageWin(new User());
@@ -470,6 +473,43 @@ public class ManageWin  extends BasicWin implements ActionListener,TableModelLis
 
             }
         }
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        AccountPanel.logout(address,port,currentUser.getUname());
+        this.dispose();
+        System.exit(0);
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
     }
 }
 

@@ -283,6 +283,25 @@ public class SQLOperator {
             return false;
         }
     }
+    public static boolean setUserLogout(Connection connection,String uname){   //设置用户token
+        String sql = "update user SET status =?, token =? where username=?";
+        try {
+            //预处理sql语句
+            PreparedStatement presta = connection.prepareStatement(sql);
+            //设置语句value值
+            presta.setString(1,"offline");
+            presta.setInt(2,0);
+            presta.setString(3,uname);
+            //执行sql语句
+            presta.execute();
+            System.out.println("SQLO:用户已注销");
+            return true;
+        } catch (SQLException e) {
+            System.out.println("SQLO:用户注销失败");
+            e.printStackTrace();
+            return false;
+        }
+    }
     public static boolean setUserWallet(Connection connection,int uid,double wallet){  //设置用户钱包
         String sql = "update user SET wallet =? where uid=?";
         try {

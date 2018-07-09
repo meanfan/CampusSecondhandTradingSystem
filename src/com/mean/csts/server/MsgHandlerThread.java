@@ -308,6 +308,14 @@ public class MsgHandlerThread implements Runnable{
                     }
                     break;
                 }
+                case "$LogoutRequest$":{
+                    String str = in.readUTF();
+                    //int token = Integer.valueOf(str);
+                    if(SQLOperator.setUserLogout(connection,str)){
+                        System.out.println("用户已注销");
+                    }
+                    break;
+                }
             }
         }catch(Exception e){
 
