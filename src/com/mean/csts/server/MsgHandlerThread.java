@@ -107,15 +107,18 @@ public class MsgHandlerThread implements Runnable{
                             }else{
                                 out.writeUTF("success#"+String.valueOf(rstNum));
                                 for(i=0;i<rstNum;i++){
-                                    System.out.println(goods[i].toString());
-                                    //out.write(goods[i].getImage());
+                                    //System.out.println(goods[i].toString());
                                     out.writeUTF(String.valueOf(goods[i].getGid()) + "#" +
                                             goods[i].getName() + "#" +
                                             String.valueOf(goods[i].getAmount())+ "#" +
                                             String.valueOf(goods[i].getPrice()) + "#" +
                                             goods[i].getContent() + "#" +
-                                            goods[i].getGid()
+                                            goods[i].getGid()+"#"+goods[i].getImageLength()
                                     );
+                                    if(goods[i].getImage() !=null && goods[i].getImageLength() > 0){
+                                        out.write(goods[i].getImage());
+                                        System.out.println("imageSent:"+rstNum);
+                                    }
                                     System.out.println("rstSent:"+rstNum);
                                 }
                             }
@@ -162,8 +165,6 @@ public class MsgHandlerThread implements Runnable{
                 }
                 case "$GoodsStock$":{                                 //上架商品
                     int token = Integer.valueOf(in.readUTF());
-                    byte[] buf=new byte[3145728];
-                    //in.read(buf);
                     String str = in.readUTF();
                     String[] strs = str.split("#");
                     Goods goods = new Goods();
@@ -171,6 +172,15 @@ public class MsgHandlerThread implements Runnable{
                     goods.setAmount(Integer.valueOf(strs[1]));
                     goods.setPrice(Double.valueOf(strs[2]));
                     goods.setContent(strs[3]);
+                    int imageLength = Integer.valueOf(strs[4]);
+                    byte[] image;
+                    if(imageLength>0){
+                        image = new byte[imageLength];
+                        in.read(image);
+                    }else{
+                        image = null;
+                    }
+                    goods.setImage(image);
                     User user = SQLOperator.loginViladate(connection,token);
                     if(user == null){
                         System.out.println("商品上架失败,用户验证失败");
@@ -178,7 +188,7 @@ public class MsgHandlerThread implements Runnable{
                         out.writeUTF("failure");
                     }else{
                         goods.setUid(user.getUid());
-                        SQLOperator.insertGoods(connection,goods,buf,user.getUid());
+                        SQLOperator.insertGoods(connection,goods,image,user.getUid());
                         System.out.println("商品上架成功");
                         out.writeUTF("$GoodsStock$");
                         out.writeUTF("success");

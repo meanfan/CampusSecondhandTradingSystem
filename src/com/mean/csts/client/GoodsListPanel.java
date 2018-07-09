@@ -83,7 +83,7 @@ public class GoodsListPanel extends JPanel implements ActionListener {
             btnPrev.setEnabled(true);
             for(int i=0;i<5;i++){
                 if(goodsList[i] != null){
-                    System.out.println("1:"+goodsList[i].toString());
+                    System.out.println(i+":"+goodsList[i].toString());
                     iv[i] = new ItemView(address,port,goodsList[i],user);
                     iv[i].addMouseListener(iv[i]);
                 }else{
@@ -117,9 +117,7 @@ public class GoodsListPanel extends JPanel implements ActionListener {
                     int i;
                     for(i=0;i<gotNum;i++){
                         goodsList[i] = new Goods();
-                        byte[] image = new byte[3145728];
-                        //in.read(image);
-                        goodsList[i].setImage(image);
+                        byte[] image;
                         String str3 = in.readUTF();
                         //System.out.println("str("+str3+")");
                         String[] msg3 = str3.split("#");
@@ -129,6 +127,15 @@ public class GoodsListPanel extends JPanel implements ActionListener {
                         goodsList[i].setPrice(Double.valueOf(msg3[3]));
                         goodsList[i].setContent(msg3[4]);
                         goodsList[i].setUid(Integer.valueOf(msg3[5]));
+                        int imageLength = Integer.valueOf(msg3[6]);
+                        System.out.println("imageLength:"+imageLength);
+                        if(imageLength > 0){
+                            image = new byte[imageLength];
+                            in.read(image);
+                            goodsList[i].setImage(image);
+                        }else {
+                            goodsList[i].setImage(null);
+                        }
                         //System.out.println("3:"+goodsList[i].toString());
                     }
                     for(;i<num;i++){
@@ -185,7 +192,7 @@ class ItemView extends JPanel implements MouseListener {
         super();
         setAddress(address,port);
         setUser(user);
-        System.out.println("2:"+goods.toString());
+        //System.out.println("2:"+goods.toString());
         setBackground(Color.WHITE);
         this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         this.goods = goods;
@@ -193,7 +200,7 @@ class ItemView extends JPanel implements MouseListener {
         gl.setHgap(4);
         setLayout(gl);
         labelIcon = new JLabel();
-        labelIcon.setIcon(new ImageIcon("src/com/mean/csts/client/default.jpg"));
+        labelIcon.setIcon(byte2image(goods.getImage()));
         add(labelIcon);
         labelName= new JLabel();
         labelName.setText(goods.getName());
@@ -214,9 +221,15 @@ class ItemView extends JPanel implements MouseListener {
         this.address = address;
         this.port = port;
     }
-    public Image byte2image(byte[] data){
-            Image img=Toolkit.getDefaultToolkit().createImage(data,0,data.length);
-            return img;
+    public ImageIcon byte2image(byte[] data){
+        ImageIcon icon;
+        if(data == null || data.length == 0){
+            icon = new ImageIcon("src/com/mean/csts/client/default.jpg");
+        }else{
+            icon = new ImageIcon(data);
+
+        }
+            return icon;
     }
 
     @Override

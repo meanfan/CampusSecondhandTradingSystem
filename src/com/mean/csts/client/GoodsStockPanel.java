@@ -56,7 +56,7 @@ public class GoodsStockPanel extends JPanel implements ActionListener{
         subBoxH0=Box.createHorizontalBox();
         subBoxH0.add(Box.createHorizontalStrut(20));
         subBoxH0.add(boxV0);
-        btnOpen=new JButton("打开文件");
+        btnOpen=new JButton("选择图片");
         btnOpen.addActionListener(this);
         imageView = new JLabel();
         imageView.setPreferredSize(new Dimension(128,128));
@@ -88,8 +88,8 @@ public class GoodsStockPanel extends JPanel implements ActionListener{
     }
     public void setUser(User user){this.user=user;}
     public byte[] image2byte(String path){
-        byte[] data = null;
-        FileImageInputStream input = null;
+        byte[] data;
+        FileImageInputStream input;
         try {
             input = new FileImageInputStream(new File(path));
             ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -102,11 +102,9 @@ public class GoodsStockPanel extends JPanel implements ActionListener{
             output.close();
             input.close();
         }
-        catch (FileNotFoundException ex1) {
-            ex1.printStackTrace();
-        }
-        catch (IOException ex1) {
-            ex1.printStackTrace();
+        catch (Exception e) {
+            //e.printStackTrace();
+            return null;
         }
         return data;
     }
@@ -155,13 +153,31 @@ public class GoodsStockPanel extends JPanel implements ActionListener{
                 DataInputStream in = new DataInputStream(socket.getInputStream());
                 out.writeUTF("$GoodsStock$"); //请求类型
                 out.writeUTF(String.valueOf(user.getToken())); //请求数据
-                //out.write(image2byte(path));
-                out.writeUTF(tfGname.getText() + "#" + tfGnum.getText()+"#"+tfGprice.getText()+"#"+tfGcontent.getText());
+                byte[] img = image2byte(path);
+                int imageLength;
+                if(img == null || img.length == 0){
+                    imageLength = 0;
+                }else{
+                    imageLength = img.length;
+                }
+                out.writeUTF(tfGname.getText() + "#" +
+                        tfGnum.getText() + "#" +
+                        tfGprice.getText() + "#" +
+                        tfGcontent.getText() + "#" +
+                        imageLength);
+                if(imageLength>0){
+                    out.write(img);
+                }
                 String msg1 = in.readUTF();
                 if(msg1.compareTo("$GoodsStock$") == 0){ //回复类型
                     String msg2 = in.readUTF();          //回复数据
                     if(msg2.compareTo("success") == 0){  //回复数据处理
                         JOptionPane.showMessageDialog(null, "发布成功");
+                        tfGname.setText("");
+                        tfGnum.setText("");
+                        tfGprice.setText("");
+                        tfGcontent.setText("");
+                        imageView.setIcon(new ImageIcon("src/com/mean/csts/client/default.jpg"));
                     }else if(msg2.compareTo("failure") == 0){
                         JOptionPane.showMessageDialog(null, "发布失败");
                     }
@@ -170,6 +186,7 @@ public class GoodsStockPanel extends JPanel implements ActionListener{
                 }
                 socket.close();
             }catch(Exception ee){
+                ee.printStackTrace();
                 JOptionPane.showMessageDialog(null, "与服务器通信失败");
                 return;
             }

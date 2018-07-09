@@ -137,7 +137,11 @@ public class SQLOperator {
                 goods[i].setGid(gid);
                 goods[i].setName(name);
                 goods[i].setAmount(amount);
-                //goods[i].setImage(image);
+                if(image == null || image.length == 0){
+                    goods[i].setImage(null);
+                }else{
+                    goods[i].setImage(image);
+                }
                 goods[i].setContent(content);
                 goods[i].setPrice(price);
                 goods[i].setUid(uid);

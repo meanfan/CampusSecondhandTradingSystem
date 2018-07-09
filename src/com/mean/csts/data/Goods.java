@@ -32,8 +32,13 @@ public class Goods{
     public byte[] getImage() {
         return image;
     }
-    public int getImageLength() { return image.length; }
-
+    public int getImageLength() {
+        if(image == null){
+            return 0;
+        }else{
+            return image.length;
+        }
+    }
     public String getContent() {
         return content;
     }
@@ -59,8 +64,13 @@ public class Goods{
     }
 
     public void setImage(byte[] image) {
-        this.image = new byte[image.length];
-        System.arraycopy(image,0,this.image,0,image.length);
+        if(image == null){
+            this.image = null;
+        }else{
+            this.image = new byte[image.length];
+            System.arraycopy(image,0,this.image,0,image.length);
+        }
+
     }
 
     public void setContent(String content) {
