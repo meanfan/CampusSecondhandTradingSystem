@@ -13,7 +13,7 @@ import java.net.UnknownHostException;
 import com.mean.csts.data.User;
 
 public class LoginWin extends BasicWin implements ActionListener {
-    public static String title = "登录";
+    public static String title = "校园二手商品交易平台-登录";
     public static int winWedth = 400;
     public static int winHeight = 380;
     public InetAddress address;

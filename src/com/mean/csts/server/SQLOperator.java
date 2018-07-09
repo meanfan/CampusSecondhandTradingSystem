@@ -2,7 +2,6 @@ package com.mean.csts.server;
 
 import com.mean.csts.data.Goods;
 import com.mean.csts.data.User;
-
 import java.sql.*;
 
 public class SQLOperator {
