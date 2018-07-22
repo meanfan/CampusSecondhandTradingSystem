@@ -2,28 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="733fc19e-5f2b-4c64-9935-26282be6184c" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/GuestListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/LoginListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/ManageListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/RegisterListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/toRegisterListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/mean/csts/client/gui/panel/ItemView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/mean/csts/client/util/Util.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CampusSecondhandTradingSystem/com/mean/csts/client/default.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CampusSecondhandTradingSystem/com/mean/csts/client/loginPic.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mean/csts/client/AccountPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mean/csts/client/gui/panel/AccountPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mean/csts/client/BasicWin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mean/csts/client/gui/frame/BasicWin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mean/csts/client/GoodsInfoWin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mean/csts/client/gui/frame/GoodsInfoWin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mean/csts/client/GoodsListPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mean/csts/client/gui/panel/GoodsListPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mean/csts/client/GoodsPurchaseWin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mean/csts/client/gui/frame/GoodsPurchaseWin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mean/csts/client/GoodsStockPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mean/csts/client/gui/panel/GoodsStockPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mean/csts/client/LoginWin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mean/csts/client/gui/frame/LoginWin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mean/csts/client/MainWin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mean/csts/client/gui/frame/MainWin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mean/csts/client/ManageWin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mean/csts/client/gui/frame/ManageWin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mean/csts/client/RegisterWin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mean/csts/client/gui/frame/RegisterWin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mean/csts/client/default.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mean/csts/client/res/pic/default.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mean/csts/client/loginPic.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mean/csts/client/res/pic/loginPic.jpg" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -58,8 +38,8 @@
       <file leaf-file-name="ManageWin.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/frame/ManageWin.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1739">
-              <caret line="132" column="62" lean-forward="true" selection-start-line="132" selection-start-column="62" selection-end-line="132" selection-end-column="62" />
+            <state relative-caret-position="2024">
+              <caret line="130" column="5" selection-start-line="130" selection-start-column="5" selection-end-line="130" selection-end-column="5" />
               <folding>
                 <element signature="e#4501#4502#0" expanded="true" />
                 <element signature="e#4540#4541#0" expanded="true" />
@@ -71,8 +51,8 @@
       <file leaf-file-name="ManageListener.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/ManageListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="91" selection-start-line="91" selection-end-line="91" />
+            <state relative-caret-position="240">
+              <caret line="101" column="47" lean-forward="true" selection-start-line="101" selection-start-column="47" selection-end-line="101" selection-end-column="47" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -80,10 +60,19 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="471">
+              <caret line="68" column="5" lean-forward="true" selection-start-line="68" selection-start-column="5" selection-end-line="68" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="LoginWin.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/frame/LoginWin.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="86">
+            <state relative-caret-position="361">
               <caret line="25" column="5" lean-forward="true" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
               <folding>
                 <element signature="e#3306#3307#0" expanded="true" />
@@ -93,11 +82,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LoginListener.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="LoginListener.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/LoginListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
-              <caret line="54" column="68" selection-start-line="54" selection-start-column="68" selection-end-line="54" selection-end-column="68" />
+            <state relative-caret-position="323">
+              <caret line="56" column="53" lean-forward="true" selection-start-line="56" selection-start-column="53" selection-end-line="56" selection-end-column="53" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -144,7 +133,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/mean/csts/data/Data.java" />
         <option value="$PROJECT_DIR$/src/com/mean/csts/client/MsgHandler.java" />
         <option value="$PROJECT_DIR$/src/com/mean/csts/client/MsgHandlerThread.java" />
         <option value="$PROJECT_DIR$/src/com/mean/csts/UserAdmin.java" />
@@ -192,9 +180,10 @@
         <option value="$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/RegisterListener.java" />
         <option value="$PROJECT_DIR$/src/com/mean/csts/client/gui/frame/MainWin.java" />
         <option value="$PROJECT_DIR$/src/com/mean/csts/client/gui/frame/RegisterWin.java" />
-        <option value="$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/ManageListener.java" />
-        <option value="$PROJECT_DIR$/src/com/mean/csts/client/gui/frame/ManageWin.java" />
         <option value="$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/LoginListener.java" />
+        <option value="$PROJECT_DIR$/src/com/mean/csts/client/gui/frame/ManageWin.java" />
+        <option value="$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/ManageListener.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -315,6 +304,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="add_unversioned_files" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../FileUploadDownloadwithAccount" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
@@ -487,12 +477,12 @@
       <window_info anchor="right" id="Palette&#9;" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5021716" side_tool="true" weight="0.1632653" />
       <window_info anchor="right" id="Maven Projects" order="5" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49782845" visible="true" weight="0.1632653" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49782845" visible="true" weight="0.1632653" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="right" id="Coverage" order="0" side_tool="true" weight="0.32953313" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info id="Designer" order="5" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18132465" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18132465" />
       <window_info anchor="bottom" id="Statistic" order="10" sideWeight="0.49945712" weight="0.29897958" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32857144" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -519,13 +509,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/server/SQLOperator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/mean/csts/data/Data.java" />
     <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/MsgHandlerThread.java" />
     <entry file="file://$PROJECT_DIR$/src/com/mean/csts/server/MsgHandlerThread.java">
@@ -808,30 +791,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/ManageListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="91" selection-start-line="91" selection-end-line="91" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/frame/ManageWin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1739">
-          <caret line="132" column="62" lean-forward="true" selection-start-line="132" selection-start-column="62" selection-end-line="132" selection-end-column="62" />
-          <folding>
-            <element signature="e#4501#4502#0" expanded="true" />
-            <element signature="e#4540#4541#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/frame/LoginWin.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="86">
+        <state relative-caret-position="361">
           <caret line="25" column="5" lean-forward="true" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
           <folding>
             <element signature="e#3306#3307#0" expanded="true" />
@@ -840,13 +802,41 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/frame/ManageWin.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2024">
+          <caret line="130" column="5" selection-start-line="130" selection-start-column="5" selection-end-line="130" selection-end-column="5" />
+          <folding>
+            <element signature="e#4501#4502#0" expanded="true" />
+            <element signature="e#4540#4541#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/LoginListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="54" column="68" selection-start-line="54" selection-start-column="68" selection-end-line="54" selection-end-column="68" />
+        <state relative-caret-position="323">
+          <caret line="56" column="53" lean-forward="true" selection-start-line="56" selection-start-column="53" selection-end-line="56" selection-end-column="53" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/ManageListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="101" column="47" lean-forward="true" selection-start-line="101" selection-start-column="47" selection-end-line="101" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="471">
+          <caret line="68" column="5" lean-forward="true" selection-start-line="68" selection-start-column="5" selection-end-line="68" selection-end-column="5" />
         </state>
       </provider>
     </entry>
