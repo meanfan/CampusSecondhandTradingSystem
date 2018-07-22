@@ -1,4 +1,4 @@
-package com.mean.csts.client;
+package com.mean.csts.client.gui.frame;
 
 import javax.swing.*;
 

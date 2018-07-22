@@ -1,4 +1,4 @@
-package com.mean.csts.client;
+package com.mean.csts.client.gui.frame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +10,7 @@ import java.net.UnknownHostException;
 import javax.swing.*;
 import com.mean.csts.data.Goods;
 import com.mean.csts.data.User;
+import com.mean.csts.client.gui.panel.ItemView;
 
 public class GoodsPurchaseWin extends BasicWin implements ActionListener{
     public static int winWedth =400;

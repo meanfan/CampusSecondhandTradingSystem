@@ -1,4 +1,4 @@
-package com.mean.csts.client;
+package com.mean.csts.client.gui.panel;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -24,7 +24,7 @@ public class GoodsStockPanel extends JPanel implements ActionListener{
     private String path;
     private Icon icon1=null;
     private JLabel imageView;
-    GoodsStockPanel(InetAddress address,int port){
+    public GoodsStockPanel(InetAddress address,int port){
         super();
         boxV0=Box.createVerticalBox();
         boxV0.add(new JLabel("图片："));

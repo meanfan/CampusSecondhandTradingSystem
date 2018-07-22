@@ -1,4 +1,4 @@
-package com.mean.csts.client;
+package com.mean.csts.client.gui.panel;
 
 import com.mean.csts.data.User;
 

@@ -1,14 +1,17 @@
-package com.mean.csts.client;
+package com.mean.csts.client.gui.frame;
 
+import com.mean.csts.client.gui.panel.AccountPanel;
+import com.mean.csts.client.gui.panel.GoodsListPanel;
+import com.mean.csts.client.gui.panel.GoodsStockPanel;
 import com.mean.csts.data.User;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class MainWin extends BasicWin{
-    public static String title = "校园二手商品交易平台";
-    public static int winWedth = 520;
-    public static int winHeight = 750;
+    private static String title = "校园二手商品交易平台";
+    private static int winWedth = 520;
+    private static int winHeight = 750;
     public User user;
     private GoodsListPanel goodsListPanel;
     private GoodsStockPanel goodsStockPanel;
