@@ -29,7 +29,7 @@ public class GoodsListPanel extends JPanel {
         }
         return instance;
     }
-    public GoodsListPanel() {
+    private GoodsListPanel() {
         super();
         currenPage = 1;
         numOfEachPage = 5;

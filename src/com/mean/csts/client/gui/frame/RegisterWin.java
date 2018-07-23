@@ -27,7 +27,7 @@ public class RegisterWin extends BasicWin{
         }
         return instance;
     }
-    public RegisterWin(){
+    private RegisterWin(){
         super(title,winWedth,winHeight);
         boxV1 = Box.createVerticalBox();
         boxV1.add(new JLabel("用户名："));

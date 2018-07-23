@@ -2,6 +2,7 @@ package com.mean.csts.client.gui.listener;
 
 import com.mean.csts.client.gui.frame.BasicWin;
 import com.mean.csts.client.gui.panel.GoodsStockPanel;
+import com.mean.csts.client.util.Util;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -66,7 +67,7 @@ public class GoodsStockListener implements ActionListener {
                 DataInputStream in = new DataInputStream(goodsStockPanel.socket.getInputStream());
                 out.writeUTF("$GoodsStock$"); //请求类型
                 out.writeUTF(String.valueOf(goodsStockPanel.user.getToken())); //请求数据
-                byte[] img = goodsStockPanel.image2byte(goodsStockPanel.path);
+                byte[] img = Util.image2byte(goodsStockPanel.path);
                 int imageLength;
                 if(img == null || img.length == 0){
                     imageLength = 0;
@@ -99,7 +100,7 @@ public class GoodsStockListener implements ActionListener {
                 }
                 goodsStockPanel.socket.close();
             }catch(Exception ee){
-                ee.printStackTrace();
+                //ee.printStackTrace();
                 JOptionPane.showMessageDialog(null, "与服务器通信失败");
                 return;
             }

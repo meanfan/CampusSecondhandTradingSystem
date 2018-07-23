@@ -24,7 +24,7 @@ public class MainWin extends BasicWin{
         }
         return instance;
     }
-    public MainWin() {
+    private MainWin() {
         super(title,winWedth,winHeight);
         JTabbedPane p=new JTabbedPane(JTabbedPane.TOP);
         goodsListPanel = GoodsListPanel.getInstance();

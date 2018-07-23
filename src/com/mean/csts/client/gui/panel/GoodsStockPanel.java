@@ -97,26 +97,6 @@ public class GoodsStockPanel extends JPanel{
         this.port = BasicWin.PORT;
     }
     public void setUser(User user){this.user=user;}
-    public byte[] image2byte(String path){
-        byte[] data;
-        FileImageInputStream input;
-        try {
-            input = new FileImageInputStream(new File(path));
-            ByteArrayOutputStream output = new ByteArrayOutputStream();
-            byte[] buf = new byte[3145728];
-            int numBytesRead = 0;
-            while ((numBytesRead = input.read(buf)) != -1) {
-                output.write(buf, 0, numBytesRead);
-            }
-            data = output.toByteArray();
-            output.close();
-            input.close();
-        }
-        catch (Exception e) {
-            //e.printStackTrace();
-            return null;
-        }
-        return data;
-    }
+
 
 }
