@@ -380,7 +380,7 @@ public class ManageListener implements ActionListener,TableModelListener,WindowL
 
     @Override
     public void windowClosing(WindowEvent e) {
-        AccountPanel.logout(manageWin.address,manageWin.port,manageWin.currentUser.getUname());
+        AccountListener.logout(manageWin.address,manageWin.port,manageWin.currentUser.getUname());
         manageWin.dispose();
         System.exit(0);
     }

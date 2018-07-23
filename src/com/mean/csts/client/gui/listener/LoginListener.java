@@ -56,9 +56,9 @@ public class LoginListener implements ActionListener {
                         ManageWinInstance.setVisible(true);
                         ManageWinInstance.validate();
                     }else if(currentUser.getType().compareTo("normal") == 0){
-                        new MainWin(currentUser);
+                        MainWin.getInstance().setUser(currentUser);
                     }else if(currentUser.getType().compareTo("guest") == 0){
-                        new MainWin(null);
+                        MainWin.getInstance().setUser(null);
                     }
                     System.out.println(currentUser.toString());
                     loginWin.dispose();

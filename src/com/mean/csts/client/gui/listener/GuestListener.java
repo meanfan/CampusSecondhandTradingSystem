@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 public class GuestListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
-        new MainWin(null);
+        MainWin.getInstance().setUser(null);
         LoginWin.getInstance().dispose();
 
     }

@@ -1,5 +1,7 @@
 package com.mean.csts.client.gui.panel;
 
+import com.mean.csts.client.gui.frame.BasicWin;
+import com.mean.csts.client.gui.listener.AccountListener;
 import com.mean.csts.data.User;
 
 import javax.swing.*;
@@ -11,19 +13,26 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 
-public class AccountPanel extends JPanel implements ActionListener {
+public class AccountPanel extends JPanel{
+    private static AccountPanel instance = null;
     public InetAddress address;
     private Socket socket;
     public int port;
-    private Box topBox, subBoxH1, subBoxH2, boxV1, boxV2;
-    private JLabel labelUname, labelNickname, labelWallet;
-    private JButton btnLogout, btnQuit;
-    private User user;
+    public Box topBox, subBoxH1, subBoxH2, boxV1, boxV2;
+    public JLabel labelUname, labelNickname, labelWallet;
+    public JButton btnLogout, btnQuit;
+    public User user;
     private String path;
     private Icon icon1 = null;
-    private JLabel imageView;
+    public JLabel imageView;
 
-    public AccountPanel(InetAddress address, int port) {
+    public static AccountPanel getInstance() {
+        if(instance == null){
+            instance = new AccountPanel();
+        }
+        return instance;
+    }
+    private AccountPanel() {
         this.user = user;
         boxV1 = Box.createVerticalBox();
         boxV1.add(new JLabel("用户名："));
@@ -48,9 +57,9 @@ public class AccountPanel extends JPanel implements ActionListener {
         subBoxH1.add(Box.createHorizontalStrut(20));
         subBoxH2 = Box.createHorizontalBox();
         btnLogout = new JButton("注销退出");
-        btnLogout.addActionListener(this);
+        btnLogout.addActionListener(new AccountListener());
         btnQuit = new JButton("    退出    ");
-        btnQuit.addActionListener(this);
+        btnQuit.addActionListener(new AccountListener());
         subBoxH2.add(btnLogout);
         subBoxH2.add(Box.createHorizontalStrut(20));
         subBoxH2.add(btnQuit);
@@ -61,11 +70,11 @@ public class AccountPanel extends JPanel implements ActionListener {
         topBox.add(subBoxH2);
         add(topBox);
         validate();
-        this.address = address;
-        this.port = port;
+        this.address = BasicWin.ADDRESS;
+        this.port = BasicWin.PORT;
     }
-
     private void showUserInfo() {
+
         if (user == null) {
             subBoxH1.setVisible(false);
             btnLogout.setVisible(false);
@@ -84,33 +93,4 @@ public class AccountPanel extends JPanel implements ActionListener {
         showUserInfo();
     }
 
-    public static void logout(InetAddress address,int port,String uname) {
-        //TODO 登出
-        Socket socket = null;
-        try {
-            socket = new Socket(address, port);
-            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-            DataInputStream in = new DataInputStream(socket.getInputStream());
-            out.writeUTF("$LogoutRequest$"); //请求类型
-            out.writeUTF(uname);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnQuit) {
-            if (user == null) {
-                System.exit(0);
-            } else {
-                logout(address,port,user.getUname());
-                System.exit(0);
-            }
-        } else if (e.getSource() == btnLogout) {
-            logout(address,port,user.getUname());
-            System.exit(0);
-        }
-    }
 }

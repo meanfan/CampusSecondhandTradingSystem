@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainWin extends BasicWin{
+    public static MainWin instance = null;
     private static String title = "校园二手商品交易平台";
     private static int winWedth = 520;
     private static int winHeight = 750;
@@ -16,6 +17,13 @@ public class MainWin extends BasicWin{
     private GoodsListPanel goodsListPanel;
     private GoodsStockPanel goodsStockPanel;
     private AccountPanel accountPanel;
+
+    public static MainWin getInstance() {
+        if(instance == null){
+            instance = new MainWin();
+        }
+        return instance;
+    }
     public MainWin() {
         super(title,winWedth,winHeight);
         JTabbedPane p=new JTabbedPane(JTabbedPane.TOP);
@@ -24,22 +32,21 @@ public class MainWin extends BasicWin{
         p.validate();
         goodsStockPanel = new GoodsStockPanel(super.ADDRESS,super.PORT);
         p.add("上架",goodsStockPanel);
-        accountPanel = new AccountPanel(super.ADDRESS,super.PORT);
+        accountPanel = AccountPanel.getInstance();
         p.add("账户",accountPanel);
         p.validate();
         this.add(p,BorderLayout.CENTER);
-        this.validate();;
+        this.validate();
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setVisible(true);
     }
-    public MainWin(User currentUser){
-        this();
+    public void setUser(User currentUser){
         user = currentUser;
         goodsStockPanel.setUser(user);
         goodsListPanel.setUser(user);
         accountPanel.setUser(user);
     }
     public static void main(String[] args){
-        new MainWin();
+        MainWin.getInstance().setUser(null);
     }
 }
