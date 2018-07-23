@@ -27,10 +27,11 @@ public class MainWin extends BasicWin{
     public MainWin() {
         super(title,winWedth,winHeight);
         JTabbedPane p=new JTabbedPane(JTabbedPane.TOP);
-        goodsListPanel = new GoodsListPanel(super.ADDRESS,super.PORT);
+        goodsListPanel = GoodsListPanel.getInstance();
+        new Thread(new GetGoodsListThread()).start();
         p.add("在售",goodsListPanel);
         p.validate();
-        goodsStockPanel = new GoodsStockPanel(super.ADDRESS,super.PORT);
+        goodsStockPanel = GoodsStockPanel.getInstance();
         p.add("上架",goodsStockPanel);
         accountPanel = AccountPanel.getInstance();
         p.add("账户",accountPanel);
@@ -45,6 +46,13 @@ public class MainWin extends BasicWin{
         goodsStockPanel.setUser(user);
         goodsListPanel.setUser(user);
         accountPanel.setUser(user);
+    }
+    class GetGoodsListThread implements Runnable{
+        @Override
+        public void run() {
+            System.out.println("开始获取商品列表线程");
+            goodsListPanel.goodsListListener.refreshGoodsList(1,goodsListPanel.numOfEachPage);
+        }
     }
     public static void main(String[] args){
         MainWin.getInstance().setUser(null);

@@ -1,7 +1,6 @@
 package com.mean.csts.client.gui.listener;
 
 import com.mean.csts.client.gui.frame.ManageWin;
-import com.mean.csts.client.gui.panel.AccountPanel;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;

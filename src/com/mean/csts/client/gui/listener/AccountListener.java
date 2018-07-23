@@ -2,7 +2,6 @@ package com.mean.csts.client.gui.listener;
 
 import com.mean.csts.client.gui.frame.BasicWin;
 import com.mean.csts.client.gui.panel.AccountPanel;
-import com.mean.csts.data.User;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

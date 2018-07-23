@@ -2,17 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="733fc19e-5f2b-4c64-9935-26282be6184c" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/AccountListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CampusSecondhandTradingSystem/com/mean/csts/client/res/pic/default.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CampusSecondhandTradingSystem/com/mean/csts/client/res/pic/loginPic.jpg" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/GoodsListListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/GoodsStockListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/mean/csts/client/gui/frame/MainWin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mean/csts/client/gui/frame/MainWin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/GuestListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/GuestListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/LoginListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/LoginListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/AccountListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/AccountListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/ManageListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/ManageListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/mean/csts/client/gui/panel/AccountPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mean/csts/client/gui/panel/AccountPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mean/csts/client/gui/panel/GoodsListPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mean/csts/client/gui/panel/GoodsListPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mean/csts/client/gui/panel/GoodsStockPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mean/csts/client/gui/panel/GoodsStockPanel.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,23 +30,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="GoodsPurchaseWin.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/frame/GoodsPurchaseWin.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="MainWin.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/frame/MainWin.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="512">
-              <caret line="34" column="50" selection-start-line="34" selection-start-column="50" selection-end-line="34" selection-end-column="50" />
+            <state relative-caret-position="390">
+              <caret line="35" column="32" lean-forward="true" selection-start-line="35" selection-start-column="32" selection-end-line="35" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -59,11 +45,8 @@
       <file leaf-file-name="ManageListener.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/ManageListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="379" lean-forward="true" selection-start-line="379" selection-end-line="379" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="57">
+              <caret line="3" selection-start-line="3" selection-end-line="3" />
             </state>
           </provider>
         </entry>
@@ -83,11 +66,8 @@
       <file leaf-file-name="AccountPanel.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/panel/AccountPanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1378">
-              <caret line="76" lean-forward="true" selection-start-line="76" selection-end-line="76" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="48">
+              <caret line="6" column="21" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -95,11 +75,8 @@
       <file leaf-file-name="AccountListener.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/AccountListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="48" column="27" lean-forward="true" selection-start-line="48" selection-start-column="27" selection-end-line="48" selection-end-column="27" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="76">
+              <caret line="4" selection-start-line="4" selection-end-line="4" />
             </state>
           </provider>
         </entry>
@@ -119,8 +96,8 @@
       <file leaf-file-name="GoodsListPanel.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/panel/GoodsListPanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="218">
-              <caret line="118" selection-start-line="118" selection-end-line="118" />
+            <state relative-caret-position="437">
+              <caret line="23" column="10" selection-start-line="23" selection-start-column="10" selection-end-line="23" selection-end-column="10" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -128,11 +105,35 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="toRegisterListener.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/toRegisterListener.java">
+      <file leaf-file-name="GoodsListListener.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/GoodsListListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="19" column="1" lean-forward="true" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
+            <state relative-caret-position="199">
+              <caret line="23" column="54" lean-forward="true" selection-start-line="23" selection-start-column="54" selection-end-line="23" selection-end-column="54" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GoodsStockPanel.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/panel/GoodsStockPanel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-579">
+              <caret line="21" column="25" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GoodsStockListener.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/GoodsStockListener.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1881">
+              <caret line="99" column="47" lean-forward="true" selection-start-line="99" selection-start-column="47" selection-end-line="99" selection-end-column="47" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -155,9 +156,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/mean/csts/UserAdmin.java" />
-        <option value="$PROJECT_DIR$/src/com/mean/csts/UserAnonymous.java" />
-        <option value="$PROJECT_DIR$/src/com/mean/csts/UserRegistered.java" />
         <option value="$PROJECT_DIR$/src/com/mean/csts/client/GoodsInfoWin.java" />
         <option value="$PROJECT_DIR$/src/com/mean/csts/MainWinGUI.form" />
         <option value="$PROJECT_DIR$/src/com/mean/csts/MainWinGUI.java" />
@@ -191,7 +189,6 @@
         <option value="$PROJECT_DIR$/src/com/mean/csts/client/LoginWin.java" />
         <option value="$PROJECT_DIR$/src/com/mean/csts/client/GoodsListPanel.java" />
         <option value="$PROJECT_DIR$/src/com/mean/csts/client/gui/frame/GoodsPurchaseWin.java" />
-        <option value="$PROJECT_DIR$/src/com/mean/csts/client/gui/panel/GoodsStockPanel.java" />
         <option value="$PROJECT_DIR$/src/com/mean/csts/client/gui/panel/ItemView.java" />
         <option value="$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/LoginWinListener.java" />
         <option value="$PROJECT_DIR$/src/com/mean/csts/client/gui/frame/BasicWin.java" />
@@ -205,6 +202,10 @@
         <option value="$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/AccountListener.java" />
         <option value="$PROJECT_DIR$/src/com/mean/csts/client/gui/panel/AccountPanel.java" />
         <option value="$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/ManageListener.java" />
+        <option value="$PROJECT_DIR$/src/com/mean/csts/client/gui/panel/GoodsListPanel.java" />
+        <option value="$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/GoodsListListener.java" />
+        <option value="$PROJECT_DIR$/src/com/mean/csts/client/gui/panel/GoodsStockPanel.java" />
+        <option value="$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/GoodsStockListener.java" />
         <option value="$PROJECT_DIR$/src/com/mean/csts/client/gui/frame/MainWin.java" />
       </list>
     </option>
@@ -331,7 +332,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.importing" />
+    <property name="settings.editor.selected.configurable" value="preferences.toDoOptions" />
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -362,7 +363,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.LoginWin">
+  <component name="RunManager" selected="Application.MainWin">
     <configuration name="GoodsPurchaseWin" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.mean.csts.client.gui.frame.GoodsPurchaseWin" />
       <module name="CampusSecondhandTradingSystem" />
@@ -468,9 +469,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.LoginWin" />
-        <item itemvalue="Application.Server" />
         <item itemvalue="Application.MainWin" />
+        <item itemvalue="Application.Server" />
+        <item itemvalue="Application.LoginWin" />
         <item itemvalue="Application.ManageWin" />
         <item itemvalue="Application.GoodsPurchaseWin" />
       </list>
@@ -499,11 +500,11 @@
       <window_info anchor="right" id="Palette&#9;" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5021716" side_tool="true" weight="0.1632653" />
       <window_info anchor="right" id="Maven Projects" order="5" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49782845" weight="0.1632653" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49782845" visible="true" weight="0.1632653" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info id="Designer" order="5" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18132465" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18132465" />
       <window_info anchor="bottom" id="Statistic" order="10" sideWeight="0.49945712" weight="0.29897958" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
@@ -530,15 +531,16 @@
       <option name="time" value="6" />
     </breakpoint-manager>
   </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand>
+      <path>
+        <item name="CampusSecondhandTradingSystem" type="b2602c69:ProjectViewProjectNode" />
+        <item name="CampusSecondhandTradingSystem" type="462c0819:PsiDirectoryNode" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/MsgHandlerThread.java" />
-    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/server/MsgHandlerThread.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/frame/LoginWin.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1026">
@@ -652,16 +654,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/AcitonListener.java" />
     <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/panel.java" />
-    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/panel/GoodsStockPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="494">
-          <caret line="26" column="11" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/frame/GoodsInfoWin.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
@@ -763,16 +755,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/panel/GoodsListPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="118" selection-start-line="118" selection-end-line="118" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/GuestListener.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
@@ -780,6 +762,20 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/AccountListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/panel/AccountPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="6" column="21" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -793,30 +789,47 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/AccountListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="48" column="27" lean-forward="true" selection-start-line="48" selection-start-column="27" selection-end-line="48" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/panel/AccountPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1378">
-          <caret line="76" lean-forward="true" selection-start-line="76" selection-end-line="76" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/ManageListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="379" lean-forward="true" selection-start-line="379" selection-end-line="379" />
+        <state relative-caret-position="57">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/panel/GoodsListPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="23" column="10" selection-start-line="23" selection-start-column="10" selection-end-line="23" selection-end-column="10" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/GoodsListListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="23" column="54" lean-forward="true" selection-start-line="23" selection-start-column="54" selection-end-line="23" selection-end-column="54" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/listener/GoodsStockListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1881">
+          <caret line="99" column="47" lean-forward="true" selection-start-line="99" selection-start-column="47" selection-end-line="99" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/panel/GoodsStockPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-579">
+          <caret line="21" column="25" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -825,8 +838,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/mean/csts/client/gui/frame/MainWin.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="512">
-          <caret line="34" column="50" selection-start-line="34" selection-start-column="50" selection-end-line="34" selection-end-column="50" />
+        <state relative-caret-position="390">
+          <caret line="35" column="32" lean-forward="true" selection-start-line="35" selection-start-column="32" selection-end-line="35" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
