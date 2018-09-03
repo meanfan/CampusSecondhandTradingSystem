@@ -1,5 +1,6 @@
 package com.mean.csts.client.gui.listener;
 
+import com.mean.csts.client.gui.frame.BasicWin;
 import com.mean.csts.client.gui.frame.ManageWin;
 
 import javax.swing.*;
@@ -379,7 +380,8 @@ public class ManageListener implements ActionListener,TableModelListener,WindowL
 
     @Override
     public void windowClosing(WindowEvent e) {
-        AccountListener.logout(manageWin.address,manageWin.port,manageWin.currentUser.getUname());
+        manageWin = ManageWin.getInstance();
+        AccountListener.logout(BasicWin.ADDRESS,BasicWin.PORT,manageWin.currentUser.getUname());
         manageWin.dispose();
         System.exit(0);
     }
