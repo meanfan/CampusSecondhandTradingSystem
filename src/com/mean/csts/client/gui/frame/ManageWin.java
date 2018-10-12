@@ -1,26 +1,15 @@
 package com.mean.csts.client.gui.frame;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.net.InetAddress;
-import java.net.Socket;
 import java.util.Vector;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 import com.mean.csts.client.gui.listener.ManageListener;
-import com.mean.csts.client.gui.panel.AccountPanel;
-import com.mean.csts.data.User;
+import com.mean.csts.pojo.User;
 
 public class ManageWin  extends BasicWin{
     private static ManageWin instance  = null;

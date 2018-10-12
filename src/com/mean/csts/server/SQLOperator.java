@@ -1,7 +1,7 @@
 package com.mean.csts.server;
 
-import com.mean.csts.data.Goods;
-import com.mean.csts.data.User;
+import com.mean.csts.pojo.Goods;
+import com.mean.csts.pojo.User;
 import java.sql.*;
 
 public class SQLOperator {

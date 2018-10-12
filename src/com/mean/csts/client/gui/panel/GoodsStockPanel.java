@@ -1,19 +1,14 @@
 package com.mean.csts.client.gui.panel;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 
-import javax.imageio.ImageIO;
-import javax.imageio.stream.FileImageInputStream;
 import javax.swing.*;
 
 import com.mean.csts.client.gui.frame.BasicWin;
 import com.mean.csts.client.gui.listener.GoodsStockListener;
-import com.mean.csts.data.User;
+import com.mean.csts.pojo.User;
 
 public class GoodsStockPanel extends JPanel{
     private static GoodsStockPanel instance;

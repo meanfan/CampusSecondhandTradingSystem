@@ -8,8 +8,8 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import javax.swing.*;
-import com.mean.csts.data.Goods;
-import com.mean.csts.data.User;
+import com.mean.csts.pojo.Goods;
+import com.mean.csts.pojo.User;
 import com.mean.csts.client.gui.panel.ItemView;
 
 public class GoodsPurchaseWin extends BasicWin implements ActionListener{

@@ -3,7 +3,7 @@ package com.mean.csts.client.gui.listener;
 import com.mean.csts.client.gui.frame.BasicWin;
 import com.mean.csts.client.gui.panel.GoodsListPanel;
 import com.mean.csts.client.gui.panel.ItemView;
-import com.mean.csts.data.Goods;
+import com.mean.csts.pojo.Goods;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

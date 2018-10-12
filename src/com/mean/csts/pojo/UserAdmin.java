@@ -1,6 +1,4 @@
-package com.mean.csts.data;
-
-import com.mean.csts.data.User;
+package com.mean.csts.pojo;
 
 public class UserAdmin extends User {
     public static final String Type = "admin";

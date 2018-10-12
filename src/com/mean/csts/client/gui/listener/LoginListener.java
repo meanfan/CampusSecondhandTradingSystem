@@ -1,7 +1,7 @@
 package com.mean.csts.client.gui.listener;
 
 import com.mean.csts.client.gui.frame.*;
-import com.mean.csts.data.User;
+import com.mean.csts.pojo.User;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

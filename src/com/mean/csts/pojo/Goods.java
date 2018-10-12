@@ -1,4 +1,4 @@
-package com.mean.csts.data;
+package com.mean.csts.pojo;
 
 public class Goods{
     public int gid;

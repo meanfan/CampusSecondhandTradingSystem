@@ -1,8 +1,8 @@
 package com.mean.csts.server;
 
-import com.mean.csts.data.Goods;
-import com.mean.csts.data.User;
-import com.mean.csts.data.UserNew;
+import com.mean.csts.pojo.Goods;
+import com.mean.csts.pojo.User;
+import com.mean.csts.pojo.UserNew;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -177,6 +177,8 @@ public class MsgHandlerThread implements Runnable{
                     if(imageLength>0){
                         image = new byte[imageLength];
                         in.read(image);
+                        System.out.println("goodsPicGotLength: "+ imageLength);
+
                     }else{
                         image = null;
                     }

@@ -1,4 +1,4 @@
-package com.mean.csts.data;
+package com.mean.csts.pojo;
 
 public class User {
     private int uid;

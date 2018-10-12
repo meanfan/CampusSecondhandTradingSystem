@@ -1,8 +1,8 @@
 package com.mean.csts.client.gui.panel;
 
 import com.mean.csts.client.gui.frame.GoodsPurchaseWin;
-import com.mean.csts.data.Goods;
-import com.mean.csts.data.User;
+import com.mean.csts.pojo.Goods;
+import com.mean.csts.pojo.User;
 
 import javax.swing.*;
 import java.awt.*;

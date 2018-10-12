@@ -81,6 +81,8 @@ public class GoodsStockListener implements ActionListener {
                         imageLength);
                 if(imageLength>0){
                     out.write(img);
+                    System.out.println("imgLength: "+img.length);
+                    System.out.println("goodsPicSentLength: "+ imageLength);
                 }
                 String msg1 = in.readUTF();
                 if(msg1.compareTo("$GoodsStock$") == 0){ //回复类型
